@@ -1,0 +1,133 @@
+<!-- <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button (click)="back()">
+      <ion-icon size="large" color="primary" name="close"></ion-icon>
+    </ion-button>
+</ion-buttons>
+<ion-title text-center>
+  
+</ion-title>
+</ion-toolbar> -->
+<ion-content  [style.background-size]="'100% ' + shouldHeight">
+    
+  <div >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1"></ion-col>
+        <ion-col class="center">
+            <h4 class="title" style="color: #3880ff;">
+                SIGN UP
+              </h4>
+          <form #registerForm=ngForm>
+         
+          <ion-list class="" >
+            <ion-item text-wrap>
+                <ion-icon name="person" slot="start" size="small"></ion-icon>
+                <ion-input clearInput  type="text"  name="name" [(ngModel)]="data.name" required placeholder="Shop name" >
+                </ion-input>
+            </ion-item>
+          </ion-list>
+          <ion-list class="" >
+              <ion-item text-wrap>
+                  <ion-icon name="call" slot="start" size="small"></ion-icon>
+                  <ion-input clearInput  type="phone"  name="contact" [(ngModel)]="data.contact" required placeholder="Contact" >
+                  </ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-list class="" no-lines>
+                <ion-item text-wrap>
+                    <ion-icon name="mail" slot="start" size="small"></ion-icon>
+                    <ion-input   type="email"  name="email" [(ngModel)]="data.email" required placeholder="Email Address" >
+                    </ion-input>
+                </ion-item>
+              </ion-list>
+            <ion-list class="" no-lines>
+                  <ion-item text-wrap>
+                      <ion-icon name="pin" slot="start" size="small"></ion-icon>
+                      <ion-input   type="text"  name="location" [(ngModel)]="data.location" required placeholder="Location" >
+                      </ion-input>
+                  </ion-item>
+            </ion-list>
+            <ion-list class="" no-lines>
+                <ion-item text-wrap>
+                    <ion-icon name="time" slot="start" size="small"></ion-icon>
+                    <ion-input   type="text"  name="open" [(ngModel)]="data.open" required placeholder="Open Hours" >
+                    </ion-input>
+                </ion-item>
+                
+              </ion-list>
+              <ion-list class="" no-lines>
+                  <ion-item text-wrap>
+                      <ion-icon name="globe" slot="start" size="small"></ion-icon>
+                      <ion-input   type="text"  name="website" [(ngModel)]="data.website" required placeholder="Website" >
+                      </ion-input>
+                  </ion-item>
+                </ion-list>
+          <ion-list class="" no-lines>
+            <ion-item text-wrap>
+                <ion-icon name="lock" slot="start" size="small"></ion-icon>
+                <ion-icon slot="end" [name]="passwordIcon" (click)='hideShowPassword()' size="small"></ion-icon>
+                <ion-input  [type]="passwordType" clearOnEdit="false" type="password"  name="password" [(ngModel)]="data.password" required placeholder="********" >
+                </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div class="form-group">
+              <ion-button expand="block" shape="round" [disabled]="!registerForm.valid" (click)="register()" color="primary" width="70%">Sign Up</ion-button>
+          </div>
+          <div class="form-group extra" style="color: #3880ff;">
+            Have an account ?<br/><a routerLink="/tabs/login" class="link">Login</a>
+          </div>
+         <!--
+          <fieldset class="title">
+              <legend>Or</legend>
+            </fieldset>
+            <div>
+              <ion-button extend="full" shape="round" (click)="google()">
+                <ion-icon slot="start" name="logo-google"></ion-icon>
+                Sign up with Google
+              </ion-button>
+            </div>
+           --> 
+        </form>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </div>
+  <div *ngIf="verify">
+    <!--VERIFY PHONE NUMBER-->
+    <ion-card>
+      <ion-card-header text-center>
+        <ion-item>
+        <ion-icon size="large" name="arrow-back" (click)="verify = false"></ion-icon>&nbsp;&nbsp;&nbsp;
+        <h4>Verify your Phone number</h4>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list no-lines>
+            <ion-label><h4>Enter your phone number to receive verification code</h4></ion-label>
+          <ion-item>
+            
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-input type="phone" [(ngModel)]="data.phone" clearInput></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button style="margin-top:20px;margin-bottom:50px"expand="block" shape="round" (click)="sendCode()">Send code</ion-button>
+        <div *ngIf="code">
+            <ion-list no-lines style="height: 100px;vertical-align: center">
+              <ion-item text-center>
+                <ion-input type="number"  clearInput placeholder="Code"></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-button style="margin-top:20px;margin-bottom:10px"expand="block" shape="round" (click)="sendCode()">Verify</ion-button>
+        </div>
+
+      
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+</ion-content>

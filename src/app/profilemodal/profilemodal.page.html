@@ -1,0 +1,43 @@
+<ion-header style="background-color: #3880ff;">
+    <ion-toolbar color="primary" >
+        <ion-buttons (click)="close()" slot="start">
+          <ion-icon name="arrow-back" size="large"></ion-icon>
+        </ion-buttons>
+        <ion-title>Update Profile Information</ion-title>
+      </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+
+    <div style="margin-top: 20px ;">
+        <ion-card>
+          <ion-item>
+              <ion-label>Shop Name :</ion-label>
+              <ion-input type="text" placeholder="QuickMatt"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label position="Email">Email</ion-label>
+              <ion-input type="email" placeholder="quickmark@gmail.com"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label >Contact :</ion-label>
+              <ion-input type="text" placeholder="02205798212"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label >Location :</ion-label>
+              <ion-input type="text" placeholder="shop location"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label >Open hours :</ion-label>
+              <ion-input type="text" placeholder="9:00AM -  8:00PM Mon - Sat"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label>Website :</ion-label>
+              <ion-input type="text" placeholder="https://wesite.com"></ion-input>
+          </ion-item>
+        
+        </ion-card>
+        <ion-button expand="block" shape="round">Save</ion-button>
+        </div>
+</ion-content>

@@ -1,9 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Two
-    </ion-title>
-  </ion-toolbar>
+<ion-header style="background-color: #3880ff;">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+          </ion-buttons>
+      <ion-title>
+       Chats
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-icon name="log-out"  (click)="logout()"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+
+    
+  <!--no messages yet-->
+  <div class="ion-text-center" *ngIf="myChat.length == 0" style="margin-top: 200px;">
+    <ion-label>You have no messages</ion-label>
+  </div>
+    <ion-card (click)="chatModal(chat)" *ngFor="let chat of myChat ">
+        <ion-row>
+           <ion-col size="2"> <ion-avatar><img src="../../assets/images/icon.png" alt="img"></ion-avatar></ion-col>
+           <ion-col padding> 
+              <span>{{chat.SendTo}}</span><br>
+              <span>{{msg}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+      <ion-fab vertical="bottom" horizontal="end" (click)="newChatModal()">
+        <ion-fab-button icon-only>
+          <ion-icon name="chatbubbles"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+</ion-content>

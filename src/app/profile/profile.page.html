@@ -1,0 +1,52 @@
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+        <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
+  <ion-title>
+    Profile
+  </ion-title>
+  
+</ion-toolbar>
+</ion-header>
+<ion-content>
+  
+
+<div class="profile_pic" no-padding>
+  <ion-avatar style="margin-top:15px;"><img src="{{image_profile}}"></ion-avatar>
+  <ion-icon (click)="pickFile()" float-right color="primary" name="camera" slot="end"></ion-icon>
+</div>
+<div class="profile">
+    
+</div>
+<div>
+<ion-card>
+  <ion-item>
+      <ion-label>Shop Name :</ion-label>
+      <ion-text>QuickMatt</ion-text>
+  </ion-item>
+  <ion-item>
+      <ion-label >Email :</ion-label>
+      <ion-text>quickmark@gmail.com</ion-text>
+  </ion-item>
+  <ion-item>
+      <ion-label >Contact :</ion-label>
+      <ion-text>02205798212</ion-text>
+  </ion-item>
+  <ion-item>
+      <ion-label >Location :</ion-label>
+      <ion-text>harambee house ruduma road</ion-text>
+  </ion-item>
+  <ion-item>
+      <ion-label >Open hours :</ion-label>
+      <ion-text>9:00AM -  8:00PM Mon - Sat</ion-text>
+  </ion-item>
+  <ion-item>
+      <ion-label>Website :</ion-label>
+      <ion-text>https://quickmatt.com</ion-text>
+  </ion-item>
+
+</ion-card>
+<ion-button expand="block" shape="round" (click)="update()">Update</ion-button>
+</div>
+</ion-content>

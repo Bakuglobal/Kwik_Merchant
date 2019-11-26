@@ -1,5 +1,7 @@
 {
   "name": "kwik-merchant",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

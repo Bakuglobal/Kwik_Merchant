@@ -1,0 +1,18 @@
+ion-toolbar {
+    border-radius: 10px;
+    // margin-top: 27px;
+}
+.profile{
+   height: 20px;
+}
+.profile_pic{
+    margin-top:15px;
+    padding-left:40%;
+    ion-avatar{
+        border:2px solid #3880ff ;
+    }
+    ion-icon{
+        padding-top:0px ;
+        padding-right: 70%
+    }
+}

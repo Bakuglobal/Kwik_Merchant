@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +9,11 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(
+    private menuCtrl: MenuController,
+    public service: FirestoreService,
+  ) {
+    this.menuCtrl.enable(true);
+  }
 
 }

@@ -1,0 +1,48 @@
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary" >
+    <ion-buttons (click)="close()" slot="start">
+      <ion-icon name="arrow-back" size="large"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create Post</ion-title>
+   <ion-buttons slot="end">
+    <ion-button (click)="post()">POST</ion-button>
+   </ion-buttons>
+  
+</ion-toolbar>
+</ion-header>
+<ion-content>
+    
+  <ion-buttons>
+    <ion-chip>
+      <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar>
+      <ion-label>QuickMatt</ion-label>
+      </ion-chip><br>
+      <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label>
+    
+  </ion-buttons>
+
+  <ion-textarea [(ngModel)]="postText" placeholder="What is happening at your shop ?" style="min-height: 200px;">
+
+  </ion-textarea>
+  <div *ngIf="images.length != 0">
+    <ion-grid no-padding>
+      <ion-col *ngFor="let img of images">
+        <img [src]="img">
+      </ion-col>
+    </ion-grid>
+  </div>
+  <div  *ngIf="videos.length != 0">
+    <ion-grid no-padding>
+      <ion-col *ngFor="let vid of videos">
+        <video  controls [src]="vid"></video>
+      </ion-col>
+    </ion-grid>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-label (click)="actionSheet()">Add to your post</ion-label>
+    <ion-icon (click)="pickFile(image)" name="image" slot="end"></ion-icon>
+    <ion-icon (click)="pickFile(video)" name="videocam" slot="end"></ion-icon>
+  </ion-item>
+</ion-footer>

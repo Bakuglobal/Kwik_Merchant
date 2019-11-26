@@ -1,0 +1,69 @@
+<!-- <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button (click)="back()">
+      <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
+    </ion-button>
+    <ion-title text-center style="color: #3880ff;text-align: center;font-size: 14pt;">
+     <h5 class="title"> Login  to Continue</h5> 
+    </ion-title>
+</ion-buttons>
+</ion-toolbar> -->
+
+<ion-content  [style.background-size]="'100% ' + shouldHeight">
+  <div class="">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1">
+          
+        </ion-col>
+        <ion-col class="center">
+
+          <form #loginform=ngForm>
+
+            <img src="/assets/images/icon.png" class="logo">
+
+            <ion-list   >
+              <ion-item >
+                <ion-icon name="mail" slot="start" size="small"></ion-icon>
+                  <ion-input clearInput name="email" [(ngModel)]="data.email" required type="text" placeholder="Email Address"></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-list    >
+                <ion-item >
+                    <ion-icon name="lock" slot="start" size="small"></ion-icon>
+                    <ion-icon slot="end" [name]="passwordIcon" (click)='hideShowPassword()' size="small"></ion-icon>
+                    
+                    <ion-input  [type]="passwordType" clearOnEdit="false" type="password"  name="password" [(ngModel)]="data.password" required placeholder="********" >
+                    
+                    </ion-input>
+                  </ion-item>
+            </ion-list>
+           
+          
+            <div class="form-group">
+              <ion-button width="40%" shape="round" [disabled]="!loginform.valid" (click)="submit()" color="primary" >Login</ion-button>
+            </div>
+
+            <div class="form-group extra" style="color: #3880ff;">
+              Don't have an account<br/><a routerLink="/tabs/signup" class="link" style="color: #3880ff;">Sign up</a>
+            </div>
+            <h6 text-center (click)="reset()" style="padding-top: 10px;color: #3880ff">Forgot password?</h6>
+
+            <!-- <fieldset class="title">
+              <legend>Or</legend>
+            </fieldset>
+            <div class="" >
+              <ion-button extend="full" shape="round" (click)="login()">
+                <ion-icon slot="start" name="logo-googleplus"></ion-icon>
+                Sign in with Google
+              </ion-button>
+            </div> -->
+        
+          </form>
+
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

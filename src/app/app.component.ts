@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
+import { DatabaseService } from './database.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { FirestoreService } from './services/firestore.service';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +15,99 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  navigate ;
+  // userID ;
+ shop = [];
+ 
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    public platform: Platform,
+    public splashScreen: SplashScreen,
+    public statusBar: StatusBar,
+    public navCtrl: Router,
+    public menuCtrl: MenuController,
+    public db: DatabaseService,
+    public firestore: AngularFirestore,
+    public af: AngularFireAuth,
+    public service: FirestoreService
   ) {
+   
     this.initializeApp();
+   
+    this.sideMenu();
+
+    this.getInfo();
+    
+
   }
 
+
+  
+ async getInfo(){
+     let userID = localStorage.getItem('userID')
+     if(userID != null) {
+    this.firestore.collection('shops',ref => ref.where('userID','==',userID)).get().subscribe(res => {
+      res.docChanges().forEach(change =>{
+        if(change.type == 'added'){
+          this.shop.push(change.doc.data());
+          console.log(this.shop);
+        }
+        if(change.type == 'modified'){
+          this.shop.length = 0 ;
+          this.shop.push(change.doc.data());
+        }
+        if(change.type == 'modified'){
+          this.shop.length = 0;
+          this.shop.push(change.doc.data());
+        }
+      })
+    })
+  }
+  }
+  
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
     });
   }
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "Home",
+        url   : "tabs",
+        icon  : "home"
+      },
+      // {
+      //   title : "Chat",
+      //   url   : "/tabs/tab2",
+      //   icon  : "chatboxes"
+      // },
+      {
+        title : "Soko",
+        url   : "/tabs/tab3",
+        icon  : "card"
+      },
+      {
+        title : "Notifications",
+        url   : "/tabs/notifications",
+        icon  : "notifications"
+      },
+      {
+        title : "Profile",
+        url   : "/tabs/profile",
+        icon  : "contacts"
+      }
+     
+    ]
+  }
+  logout() {
+    this.menuCtrl.close();
+    localStorage.clear();
+    this.service.hiddenTabs = true ;
+    this.db.logout();
+    
+  }
+
 }
