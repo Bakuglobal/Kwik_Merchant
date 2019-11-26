@@ -81,6 +81,7 @@ redirect(){
   const id = localStorage.getItem('userID');
   if(id !== null){
     this.navCtrl.navigate(['tabs/tab1']);
+    
   }
 }
 
