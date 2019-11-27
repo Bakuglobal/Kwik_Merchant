@@ -9,6 +9,7 @@ import { async } from "@angular/core/testing";
 import { DatabaseService } from '../database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Location } from '@angular/common';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-signup',
@@ -45,7 +46,8 @@ export class SignupPage implements OnInit {
     public googleplus:GooglePlus,
     public menuCtrl: MenuController,
     public service: FirestoreService,
-    public location : Location
+    public location : Location,
+    public af : AngularFirestore
   ) { 
     this.provider = new firebase.auth.GoogleAuthProvider();
     this.service.hiddenTabs = true;
@@ -110,10 +112,12 @@ export class SignupPage implements OnInit {
           "Location": data.location,
           "Open Hours": data.open,
           "Website": data.website,
-          "userID": this.userID
+          "userID": this.userID,
+          
         }
         this.db.saveShop(shop).then(res => {console.log(res)}).catch(err => {console.log(err)});
       }
+      
     
       // Loader
       async presentLoading() {
