@@ -1,5 +1,6 @@
 
 <ion-content>
+<!--   
 <div class= "">
     <ion-toolbar>
         <ion-buttons slot="start">
@@ -15,32 +16,25 @@
           <form  #productForm="ngForm" (ngSubmit)="addProduct()">
           <ion-list>
             <ion-item>
-              <!-- <ion-label>Barcode : </ion-label> -->
               <ion-input type="number" ([ngModel])="data.barcode" placeholder="scan barcode" required></ion-input>
               <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Product name :</ion-label> -->
               <ion-input type="text" ([ngModel])="data.name" placeholder="Enter Product name" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Category :</ion-label> -->
               <ion-input type="text" ([ngModel])="data.category" placeholder="Enter Category" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Wholesale Price : Kshs</ion-label> -->
               <ion-input type="number" ([ngModel])="data.wholesalePrice" placeholder="Enter Wholesale Price" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Retail Price : Kshs</ion-label> -->
               <ion-input type="number" ([ngModel])="data.retailPrice" placeholder="Enter Retail Price" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Receiving Quantity :</ion-label> -->
               <ion-input type="number" ([ngModel])="data.quantity" placeholder="Enter quantity" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Description</ion-label> -->
               <ion-input type="text" ([ngModel])="data.description" placeholder="Enter description" required></ion-input>
             </ion-item>
             <ion-item>
@@ -61,6 +55,87 @@
                     </ion-card-content>
                 </ion-card>
         </div>
+</div> -->
+<div *ngIf="newProduct">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="back()">
+            <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      </ion-toolbar>
+    <form  #productForm="ngForm" (ngSubmit)="addProduct()">
+    <ion-list>
+      <ion-item>
+        <ion-input type="number" ([ngModel])="data.barcode" placeholder="scan barcode *" required></ion-input>
+        <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" ([ngModel])="data.name" placeholder="Enter Product name *" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Pick Category</ion-label>
+        <ion-select okText="Okay" cancelText="Dismiss" slot="end">
+          <ion-select-option *ngFor="let cat of categories" required ([ngModel])="data.category">{{cat}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" ([ngModel])="data.wholesalePrice" placeholder="Enter Wholesale Price *" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" ([ngModel])="data.retailPrice" placeholder="Enter Retail Price *" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" ([ngModel])="data.quantity" placeholder="Enter quantity *" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" ([ngModel])="data.description" placeholder="Enter description *" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Image:</ion-label>
+        <ion-label>{{file}}</ion-label>
+        <ion-icon slot="end" name="camera" (click)="openCamera()"></ion-icon>
+      </ion-item>
+      <ion-button expand="full "  type="submit" shape="round">Save</ion-button>
+    </ion-list>
+  </form>
+  </div>
+<div *ngIf="!newProduct">
+  <ion-item>
+    <ion-label> Pick Category</ion-label>
+    <ion-select okText="Okay" cancelText="Dismiss" value=" ---">
+      <ion-select-option value="----" *ngFor="let cat of categories">{{cat}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item text-center>
+    <ion-col>
+      <ion-label>Product</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label>Price</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label>Status</ion-label>
+    </ion-col>
+  </ion-item>
+  <ion-item *ngFor="let prod of products" text-center>
+    <ion-col >
+      <ion-label>{{prod.name}}</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label>{{prod.price}}</ion-label>
+    </ion-col>
+    <ion-col slot="end">
+      <ion-label>{{prod.status}}</ion-label>
+    </ion-col>
+  </ion-item>
+</div>
+<div *ngIf="!newProduct">
+  <ion-fab vertical="bottom" horizontal="end" (click)="new()">
+    <ion-fab-button>
+      <ion-icon name="add" size="large"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>
 </ion-content>
 

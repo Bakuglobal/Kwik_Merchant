@@ -26,7 +26,7 @@ export class Tab3Page {
   liked = false ;
   h = false ;
   Addcomment = false ;
-
+  post : String; 
    
   constructor(
     private navCtrl: Router,

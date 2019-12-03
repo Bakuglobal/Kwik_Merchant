@@ -6,6 +6,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatabaseService } from '../database.service';
 import { Camera ,  CameraOptions} from '@ionic-native/camera/ngx';
+import { Product } from '../models/product';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -13,21 +15,25 @@ import { Camera ,  CameraOptions} from '@ionic-native/camera/ngx';
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
 })
+
 export class ProductsPage implements OnInit {
   data = {
-    barcode : '',
-    name: '',
-    category: '',
-    wholesalePrice: '',
-    retailPrice: '',
-    quantity: '',
-    description: '',
-    image: ''
-
+    "barcode" : "" ,
+    "name" : "" ,
+    "category" : "" ,
+    "wholesalePrice" : "" ,
+    "retailPrice" : "" ,
+    "quantity" : "" ,
+    "description" : "" ,
+    "image" : "" ,
   }
 file: File ;
- newProduct = false ;
- spinner = false ;
+newProduct = false ;
+spinner = false ;
+products = [] ;
+categories = [
+   "stationery","beverages",
+ ] ;
 
   constructor(
     private navCtrl: Router,
@@ -36,10 +42,11 @@ file: File ;
     private scannner : BarcodeScanner,
     private http : HttpClient,
     private db: DatabaseService,
-    private camera: Camera
+    private camera: Camera,
+    private alertCtrl :  AlertController
   ) {
 
-    this.service.hiddenTabs = true ;
+    // this.service.hiddenTabs = true ;
    }
 
   ngOnInit() {
@@ -47,8 +54,6 @@ file: File ;
   back(){
     // this.location.back();
     this.newProduct = false ;
-    this.spinner = false ;
-    this.navCtrl.navigate(['tabs/tab3' ]);
     
   }
 
@@ -57,23 +62,23 @@ file: File ;
   }
 
   addProduct(){
-   if(this.data.name != '' || this.data.barcode != '' || this.data.category != ''|| this.data.retailPrice != ''|| this.data.quantity != '' || this.data.description != ''){
+   if(this.data.name != "" || this.data.barcode != "" || this.data.category != "" || this.data.retailPrice !=  "" || this.data.quantity != "" || this.data.description != ""){
     this.spinner = true ;
     //upload image and get url
 
     //upload product info
     this.updateDb(this.data).subscribe(res => {
       if(res == 'successful'){
-        alert(res)
+        alert(JSON.stringify(res));
         this.spinner = false ;
         this.newProduct = false ;
       }else {
         this.spinner = false ;
-        alert(res)
+        alert(JSON.stringify(res))
       }
     })
   }else {
-    alert("Fill in the fields marked with * ")
+    this.showAlert("Fill in the fields marked with * ")
   }
   }
   scan(){
@@ -150,5 +155,20 @@ file: File ;
           });
       }
       
+  }
+
+  //Alert controller 
+  async showAlert(msg) {
+    const alert = await this.alertCtrl.create({
+      header: "Missing data",
+      message: msg , 
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel'
+        }
+      ]
+    });
+    await alert.present();
   }
 }

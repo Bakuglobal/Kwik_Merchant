@@ -62,4 +62,11 @@ export class InfomodalPage implements OnInit {
     })
     await com.present();
   }
+  share(){
+
+  }
+  infoModal(shop){
+    
+
+  }
 }
