@@ -64,14 +64,7 @@ export class LoginPage implements OnInit {
     this.menuCtrl.enable(true);
     this.location.back();
   }
-  // ngAfterViewInit() {
-  //   this.backButtonSubscription = this.platform.backButton.subscribe(() => {
-  //     navigator['app'].exitApp();
-  //   });
-  //  }
-  // ngOnDestroy() { 
-  //   this.backButtonSubscription.unsubscribe();
-  // }
+  
   hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
@@ -106,7 +99,7 @@ next(resp) {
   this.loading.dismiss();
   this.menuCtrl.enable(true);
   this.service.hiddenTabs = false ;
-  this.ref.getInfo();
+  this.ref.getInfo(id);
   this.navCtrl.navigate(['tabs/tab1']);
 }
 

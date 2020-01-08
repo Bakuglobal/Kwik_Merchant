@@ -26,8 +26,10 @@ export class ProductsPage implements OnInit {
 
   }
 file: File ;
- newProduct = false ;
- spinner = false ;
+showProducts = true ;
+spinner = false ;
+products = [];
+categories = [] ;
 
   constructor(
     private navCtrl: Router,
@@ -39,22 +41,28 @@ file: File ;
     private camera: Camera
   ) {
 
-    this.service.hiddenTabs = true ;
+    // this.service.hiddenTabs = true ;
    }
 
   ngOnInit() {
+    //get all products
+    this.service.allProducts().subscribe(res => {
+      this.products.push(res) ;
+      console.log('products' + res.toString())
+    })
+    //get all categories
+    this.service.allCategories().subscribe(res => {
+      this.categories.push(res);
+      console.log('categories' + JSON.stringify(res.toString()))
+    })
   }
+
   back(){
-    // this.location.back();
-    this.newProduct = false ;
-    this.spinner = false ;
-    this.navCtrl.navigate(['tabs/tab3' ]);
+    this.showProducts = true ;
     
   }
 
-  new(){
-    this.newProduct = true ;
-  }
+ 
 
   addProduct(){
    if(this.data.name != '' || this.data.barcode != '' || this.data.category != ''|| this.data.retailPrice != ''|| this.data.quantity != '' || this.data.description != ''){
@@ -62,18 +70,9 @@ file: File ;
     //upload image and get url
 
     //upload product info
-    this.updateDb(this.data).subscribe(res => {
-      if(res == 'successful'){
-        alert(res)
-        this.spinner = false ;
-        this.newProduct = false ;
-      }else {
-        this.spinner = false ;
-        alert(res)
-      }
-    })
+   
   }else {
-    alert("Fill in the fields marked with * ")
+    alert("Please fill all the fields ")
   }
   }
   scan(){
@@ -95,6 +94,9 @@ file: File ;
       this.fileEvent(img)
     })
   }
+
+
+//add a new product to database
 
   updateDb(data){
      let header  = new HttpHeaders () ;

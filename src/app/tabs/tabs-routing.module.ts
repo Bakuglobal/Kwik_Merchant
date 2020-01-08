@@ -56,6 +56,9 @@ const routes: Routes = [
         loadChildren: () => import('../signup/signup.module').then(m => m.SignupPageModule)
       },
       { path: 'products', loadChildren: () => import('../products/products.module').then(m => m.ProductsPageModule), canActivate :[AuthService] },
+      {
+        path: 'dashboard', loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardPageModule)
+      },
 
       {
         path: '',

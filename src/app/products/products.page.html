@@ -1,67 +1,80 @@
 
 <ion-content>
-<div class= "">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button (click)="back()">
-            <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
-          </ion-button>
-      </ion-buttons>
-      </ion-toolbar>
-        <div *ngIf="!newProduct" style="background-image: url('../../assets/images/scan.jpg')">
-         
-        </div>
-        <div *ngIf="newProduct">
+
+      <!-- Show on loading the page -->
+
+    <div *ngIf="showProducts" >
+          <ion-item>
+            <ion-label >Select Category</ion-label>
+             <ion-select placeholder="All" required   slot="end">
+              <ion-select-option selected>All</ion-select-option>
+              <ion-select-option *ngFor="let cat of categories">{{cat}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item text-center>
+            <ion-col>Product</ion-col>
+            <ion-col>Price</ion-col>
+            <ion-col>Status</ion-col>
+          </ion-item>
+          <ion-item *ngFor="let item of products" text-center>
+            <ion-col>{{item.name}}</ion-col>
+            <ion-col>{{item.unit_price}}</ion-col>
+            <ion-col>{{item.deleted}}</ion-col>
+          </ion-item>
+    </div>
+
+ <!-- Show only when adding a new product -->
+
+<div *ngIf="!showProducts" >
+          <ion-buttons slot="start">
+            <ion-button (click)="back()">
+              <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
           <form  #productForm="ngForm" (ngSubmit)="addProduct()">
           <ion-list>
             <ion-item>
-              <!-- <ion-label>Barcode : </ion-label> -->
               <ion-input type="number" ([ngModel])="data.barcode" placeholder="scan barcode" required></ion-input>
               <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Product name :</ion-label> -->
               <ion-input type="text" ([ngModel])="data.name" placeholder="Enter Product name" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Category :</ion-label> -->
-              <ion-input type="text" ([ngModel])="data.category" placeholder="Enter Category" required></ion-input>
+              <ion-label>Select Category </ion-label>
+              <ion-select placeholder="Select Category" required  ([ngModel])="data.category" slot="end">
+                <ion-select-option *ngFor="let cat of categories">{{cat}}</ion-select-option>
+              </ion-select>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Wholesale Price : Kshs</ion-label> -->
               <ion-input type="number" ([ngModel])="data.wholesalePrice" placeholder="Enter Wholesale Price" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Retail Price : Kshs</ion-label> -->
               <ion-input type="number" ([ngModel])="data.retailPrice" placeholder="Enter Retail Price" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Receiving Quantity :</ion-label> -->
               <ion-input type="number" ([ngModel])="data.quantity" placeholder="Enter quantity" required></ion-input>
             </ion-item>
             <ion-item>
-              <!-- <ion-label>Description</ion-label> -->
-              <ion-input type="text" ([ngModel])="data.description" placeholder="Enter description" required></ion-input>
+              <ion-input type="text" required ([ngModel])="data.description" placeholder="Enter description" ></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>Image:</ion-label>
               <ion-label>{{file}}</ion-label>
               <ion-icon slot="end" name="camera" (click)="openCamera()"></ion-icon>
             </ion-item>
-            <ion-button expand="full "  type="submit" shape="round">Save</ion-button>
+            <ion-button expand="full "  type="submit" shape="round" [disabled]="ngForm != valid">Save</ion-button>
           </ion-list>
         </form>
-        </div>
-        <ion-spinner *ngIf="spinner"  name="circles"></ion-spinner>
-        <div style="position: fixed;bottom: 0px ;width: 100%;" *ngIf="!newProduct">
-              <ion-card padding>
-                    <ion-card-title style="color: white;">  Add anew product to the Inventory</ion-card-title>
-                    <ion-card-content>
-                        <ion-button expand="block" shape="round" (click)="new()">Add</ion-button>
-                    </ion-card-content>
-                </ion-card>
-        </div>
-</div>
+  </div>
+
+        <!-- Float button for adding a new product -->
+            <ion-fab vertical="bottom" horizontal="end"  slot="fixed" *ngIf="showProducts">
+              <ion-fab-button (click)="showProducts = false">
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+
 </ion-content>
 
  

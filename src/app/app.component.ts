@@ -32,18 +32,16 @@ export class AppComponent {
   ) {
    
     this.initializeApp();
-   
+    let userID = localStorage.getItem('userID')
     this.sideMenu();
-
-    this.getInfo();
+    this.getInfo(userID);
     
 
   }
 
 
   
- async getInfo(){
-     let userID = localStorage.getItem('userID')
+ async getInfo(userID){
      if(userID != null) {
     this.firestore.collection('shops',ref => ref.where('userID','==',userID)).get().subscribe(res => {
       res.docChanges().forEach(change =>{
@@ -75,15 +73,15 @@ export class AppComponent {
     this.navigate =
     [
       {
-        title : "Home",
+        title : "Dashboard",
         url   : "tabs",
         icon  : "home"
       },
-      // {
-      //   title : "Chat",
-      //   url   : "/tabs/tab2",
-      //   icon  : "chatboxes"
-      // },
+      {
+        title : "Scan",
+        url   : "tabs/tab1",
+        icon  : "qr-scanner"
+      },
       {
         title : "Soko",
         url   : "/tabs/tab3",

@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'profilemodal', loadChildren: './profilemodal/profilemodal.module#ProfilemodalPageModule' },
   { path: 'infomodal', loadChildren: './infomodal/infomodal.module#InfomodalPageModule' },
   { path: 'postmodal', loadChildren: './postmodal/postmodal.module#PostmodalPageModule' },
-  { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },
+  { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+
   
 ];
 @NgModule({
