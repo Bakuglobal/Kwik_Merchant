@@ -20,7 +20,7 @@
             </ion-col>
             <ion-col *ngIf="shop.length == 0">
                 <ion-icon color="warning"name="warning"></ion-icon><br>
-                <a routerLink="tabs/login">Log in</a>
+                <a (click)="login()">Log in</a>
             </ion-col>
           </ion-row>
       </div>

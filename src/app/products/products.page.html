@@ -4,14 +4,14 @@
       <!-- Show on loading the page -->
 
     <div *ngIf="showProducts" >
-          <ion-item>
+          <ion-item color="medium">
             <ion-label >Select Category</ion-label>
-             <ion-select placeholder="All" required   slot="end">
+             <ion-select placeholder="All" required   slot="end" [(ngModel)]="selectedCategory" (ionChange)="setFilteredItems()">
               <ion-select-option selected>All</ion-select-option>
-              <ion-select-option *ngFor="let cat of categories">{{cat}}</ion-select-option>
+              <ion-select-option *ngFor="let cat of categories">{{cat.category}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item text-center>
+          <ion-item text-center color="light">
             <ion-col>Product</ion-col>
             <ion-col>Price</ion-col>
             <ion-col>Status</ion-col>
@@ -21,6 +21,12 @@
             <ion-col>{{item.unit_price}}</ion-col>
             <ion-col>{{item.deleted}}</ion-col>
           </ion-item>
+    </div>
+
+    <!-- show loading spinner when searching for the shops products -->
+
+    <div class="loader" *ngIf="showLoader"> 
+      <ion-spinner name="lines" color="primary"></ion-spinner>
     </div>
 
  <!-- Show only when adding a new product -->

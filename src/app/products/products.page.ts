@@ -28,8 +28,12 @@ export class ProductsPage implements OnInit {
 file: File ;
 showProducts = true ;
 spinner = false ;
-products = [];
-categories = [] ;
+products ;
+categories  ;
+selectedCategory: string ;
+unfilteredProducts ;
+showLoader = true ;
+
 
   constructor(
     private navCtrl: Router,
@@ -47,19 +51,36 @@ categories = [] ;
   ngOnInit() {
     //get all products
     this.service.allProducts().subscribe(res => {
-      this.products.push(res) ;
-      console.log('products' + res.toString())
+      this.unfilteredProducts = res ;
+      this.products = res ;
+      if(this.products.length > 0){this.showLoader = false}
+      console.log('products' + this.products)
     })
     //get all categories
     this.service.allCategories().subscribe(res => {
-      this.categories.push(res);
-      console.log('categories' + JSON.stringify(res.toString()))
+      this.categories = res ;
+      console.log('categories' + this.categories)
     })
   }
 
   back(){
     this.showProducts = true ;
     
+  }
+  setFilteredItems(){
+    if(this.selectedCategory != null || this.selectedCategory != ''){
+      this.products = this.filterItems()
+      console.log(this.products)
+    }
+    if(this.selectedCategory  == "All"){
+      this.products = this.unfilteredProducts ;
+    }
+    
+  }
+  filterItems() {
+    return this.unfilteredProducts.filter(item => {
+      return item.category.toLowerCase().indexOf(this.selectedCategory.toLowerCase()) > -1;
+    });
   }
 
  

@@ -39,7 +39,10 @@ export class AppComponent {
 
   }
 
-
+login(){
+  this.menuCtrl.close();
+  this.navCtrl.navigate(['tabs/login'])
+}
   
  async getInfo(userID){
      if(userID != null) {

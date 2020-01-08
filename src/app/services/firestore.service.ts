@@ -27,7 +27,8 @@ export class FirestoreService {
   let header  = new HttpHeaders () ;
      header.append('Content-Type','application/json');
      header.append('Access-Control-Allow-Origin','*');
- return this.http.get('https://kwik-db-api.glitch.me/api/allProducts',{headers: header})
+  return this.http.get('https://kwik-db-api.glitch.me/api/allProducts',{headers: header})
+  
 }
 
 //Get all categories of products
