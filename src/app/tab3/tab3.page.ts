@@ -26,6 +26,7 @@ export class Tab3Page {
   liked = false ;
   h = false ;
   Addcomment = false ;
+  post: string ;
 
    
   constructor(
