@@ -18,6 +18,7 @@ export class AppComponent {
   navigate ;
   // userID ;
  shop = [];
+ email ;
  
   constructor(
     public platform: Platform,
@@ -33,6 +34,7 @@ export class AppComponent {
    
     this.initializeApp();
     let userID = localStorage.getItem('userID')
+    this.email = localStorage.getItem('email');
     this.sideMenu();
     this.getInfo(userID);
     
@@ -40,8 +42,8 @@ export class AppComponent {
   }
 
 login(){
-  this.menuCtrl.close();
   this.navCtrl.navigate(['tabs/login'])
+  this.menuCtrl.close();
 }
   
  async getInfo(userID){

@@ -1,9 +1,65 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-toolbar >
+    <ion-title text-center color="primary">Dashboard</ion-title>
+  </ion-toolbar>
+
+  <div >
+      <ion-row >
+        <ion-col size="4" class="main-nav" tappable (click)="stock()">
+        <ion-card class="card" padding>
+          <ion-card-title>
+            <ion-icon color="primary" name="pricetags"></ion-icon>
+          </ion-card-title>
+          <ion-card-content>
+            Stock
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4" class="main-nav" tappable (click)="sales()"> 
+        <ion-card class="card" padding>
+          <ion-card-title>
+            <ion-icon color="primary" name="pulse"></ion-icon>
+          </ion-card-title>
+          <ion-card-content>
+            Sales
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4" class="main-nav" tappable (click)="orders()">
+        <ion-card class="card" padding>
+          <ion-card-title>
+            <ion-icon color="primary" name="podium"></ion-icon>
+          </ion-card-title>
+          <ion-card-content>
+            Orders
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      </ion-row>
+  </div>
+
+  <div>
+      <ion-label style="padding-left:20px ;" color="primary">Open Oders</ion-label>
+    <div  *ngIf="loader" text-center> 
+      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner> 
+    </div>
+      
+
+      <div *ngIf="!loader" >
+          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)"> 
+            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><br><br>
+            <div style="text-align:start;">
+              Order for {{item.Products[0]}}, {{item.Products[1]}}, {{item.Products[2]}}, {{item.Products[3]}} ...
+            </div>
+            <span style="float: left;bottom: 0;margin-top: 10px;">
+              {{item.username}}
+            </span>
+            <span style="float: right;bottom:0;margin-top: 10px;">
+              {{item.Date }} Ago
+            </span>
+          </ion-card>
+      </div>
+  </div>
+
 
 </ion-content>

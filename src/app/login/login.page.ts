@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     public  ref: AppComponent
    
   ) { 
-    this.redirect();
+    
     this.service.hiddenTabs = true ; 
   }
 
@@ -69,19 +69,12 @@ export class LoginPage implements OnInit {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
 }
-//redirect to home if logged in before
-redirect(){
-  const id = localStorage.getItem('userID');
-  if(id !== null){
-    this.navCtrl.navigate(['tabs/tab1']);
-    
-  }
-}
 
 submit() {
   this.presentLoading();
   this.db.login(this.data.email, this.data.password).then(
     resp => {
+      localStorage.setItem('email',this.data.email);
       this.next(resp);
     },
     error => {
