@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'infomodal', loadChildren: './infomodal/infomodal.module#InfomodalPageModule' },
   { path: 'postmodal', loadChildren: './postmodal/postmodal.module#PostmodalPageModule' },
   { path: 'products', loadChildren: './products/products.module#ProductsPageModule' },  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'orders', loadChildren: './orders/orders.module#OrdersPageModule' },
 
   
 ];
