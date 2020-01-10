@@ -39,6 +39,9 @@ export class InfomodalPage implements OnInit {
   inbrowser(){
     console.log("Opens link in the app");
   }
+  infoModal(shop){
+
+  }
   like(){
     if(this.liked == false){
       this.likes.count++ ;
@@ -63,6 +66,6 @@ export class InfomodalPage implements OnInit {
     await com.present();
   }
   share(){
-    
+
   }
 }
