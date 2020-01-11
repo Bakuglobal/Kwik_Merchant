@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { Shop } from '../models/shops' ;
+import { ModalController } from '@ionic/angular';
+import { OrdersPage } from '../orders/orders.page';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +14,7 @@ import { Shop } from '../models/shops' ;
 export class DashboardPage implements OnInit {
 
   Myorders = [];
+  orderId = [] ;
   date:  Date ;
   userDetails: Shop ;
   userID;
@@ -21,10 +24,11 @@ export class DashboardPage implements OnInit {
   constructor(
     private fs: AngularFirestore,
     private navCtrl: Router,
-    private service: FirestoreService
+    private service: FirestoreService,
+    private modal: ModalController
     
   ) { 
-    
+    this.service.hiddenTabs = false ;
   }
 
   ngOnInit() {
@@ -49,6 +53,7 @@ export class DashboardPage implements OnInit {
       query.docChanges().forEach(change => {
         if(change.type == 'added'){
           console.log(change.doc.data())
+         this.orderId.push(change.doc.id);
          this.userDetails = change.doc.data() ;
   
         }
@@ -72,7 +77,7 @@ export class DashboardPage implements OnInit {
   //get orders 
 async Orders(){
 
-   this.fs.collection('Orders').ref.where('shop', '==', this.userDetails.Shopname)
+   this.fs.collection('Orders').ref.where('shop', '==', this.userDetails.Shopname).where('status','==','open')
    .onSnapshot(querySnapshot => {
      querySnapshot.docChanges().forEach(change => {
        if (change.type === 'added') {
@@ -94,8 +99,11 @@ async Orders(){
  }
 
  //view order
- openOrder(item){
-   
+ async openOrder(item){
+   console.log(item)
+   this.service.setItems(item);
+   this.service.hiddenTabs = true ;
+   this.navCtrl.navigate(['tabs/orders']);
  } 
 
 }

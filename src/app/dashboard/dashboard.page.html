@@ -47,7 +47,7 @@
 
       <div *ngIf="!loader" >
           <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)"> 
-            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><br><br>
+            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">Pending</ion-label><br><br>
             <div style="text-align:start;">
               Order for {{item.Products[0]}}, {{item.Products[1]}}, {{item.Products[2]}}, {{item.Products[3]}} ...
             </div>

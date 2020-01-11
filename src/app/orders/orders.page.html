@@ -1,9 +1,51 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>orders</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon color="primary" (click)="close()" name="arrow-back" size="large"></ion-icon>
+    </ion-buttons>
+    <ion-title text-center color="primary"> {{prod.username}}'s Order</ion-title>
+  </ion-toolbar>
+
+<!-- Display order details -->
+<ion-item *ngFor="let item of prod.Products" >
+  <ion-col>
+    <img class="img" src="{{item.image}}">
+  </ion-col>
+  <ion-col  class="details" size="7">
+    <ion-label style="text-align: left;">{{item}} </ion-label><br>
+    <ion-label >Kshs. <b>40</b></ion-label>
+
+  </ion-col >
+  <ion-col style="text-align: right;">
+  <ion-label><b>1 x</b></ion-label>
+  </ion-col>
+</ion-item>
+<div style="margin-top: 40px;">
+  <ion-label color="primary" style="font-size: large;font-weight: bold;float: left;">Total</ion-label>
+  <ion-label color="primary" style="font-size: larger;font-weight: bold;float: right;">Kshs. 00 : 00</ion-label>
+</div>
+
+
+  <!-- Bottom buttons for decline or accept -->
+ 
+  <div class="bottom">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card color="danger" text-center>
+            <ion-card-content style="font-weight:bold ;">Decline</ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card  color="success" text-center>
+            <ion-card-content style="font-weight:bold ;">Accept</ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  
+
 
 </ion-content>

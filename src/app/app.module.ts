@@ -39,6 +39,7 @@ import { ProfilemodalPageModule } from './profilemodal/profilemodal.module';
 import { FileSizeFormatPipe } from './tab3/file-size-format.pipe';
 import { Camera} from '@ionic-native/camera/ngx'
 import { HttpClientModule } from '@angular/common/http';
+import { OrdersPageModule } from './orders/orders.module';
 
 @NgModule({
   declarations: [AppComponent,FileSizeFormatPipe],
@@ -58,7 +59,8 @@ import { HttpClientModule } from '@angular/common/http';
     NewchatmodalPageModule,
     CommentsPageModule,
     InfomodalPageModule,
-    ProfilemodalPageModule
+    ProfilemodalPageModule,
+    OrdersPageModule
 
 
   ],

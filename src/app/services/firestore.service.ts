@@ -14,11 +14,13 @@ export class FirestoreService {
   products = [] ;
   categories = [] ;
   userDetails : Shop ;
+  items ;
 
   constructor(
     private fauth: AngularFireAuth,
     private http: HttpClient,
-    private fs: AngularFirestore
+    private fs: AngularFirestore,
+  
   ) { }
 
   async UserID(){
@@ -47,5 +49,14 @@ export class FirestoreService {
  getShop(id){
    return this.fs.collection('shops').ref.where('userID','==',id);
 }
+
+//set order for view
+setItems(item){
+  this.items = item ;
+}
+getItems(){
+  return this.items ;
+}
+
 
 }
