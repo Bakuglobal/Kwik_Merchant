@@ -30,7 +30,7 @@
           <ion-list class="" >
               <ion-item text-wrap>
                   <ion-icon name="call" slot="start" size="small"></ion-icon>
-                  <ion-input clearInput  type="phone"  name="contact" [(ngModel)]="data.contact" required placeholder="Contact" >
+                  <ion-input clearInput  type="tel"  name="contact" [(ngModel)]="data.contact" required placeholder="Contact" >
                   </ion-input>
               </ion-item>
             </ion-list>
@@ -44,22 +44,22 @@
             <ion-list class="" no-lines>
                   <ion-item text-wrap>
                       <ion-icon name="pin" slot="start" size="small"></ion-icon>
-                      <ion-input   type="text"  name="location" [(ngModel)]="data.location" required placeholder="Location" >
+                      <ion-input   type="search"  name="location" [(ngModel)]="data.location" required placeholder="Location" >
                       </ion-input>
                   </ion-item>
             </ion-list>
             <ion-list class="" no-lines>
                 <ion-item text-wrap>
-                    <ion-icon name="time" slot="start" size="small"></ion-icon>
-                    <ion-input   type="text"  name="open" [(ngModel)]="data.open" required placeholder="Open Hours" >
-                    </ion-input>
+                    <ion-icon name="time" slot="start" size="small"></ion-icon>Open From &nbsp;&nbsp;
+                    <ion-input   type="time"  name="open" [(ngModel)]="data.openStart" required placeholder="Open Hours" multiple="true"></ion-input> To&nbsp;&nbsp;
+                    <ion-input   type="time"  name="open" [(ngModel)]="data.openStop" required placeholder="Open Hours" multiple="true"></ion-input>
                 </ion-item>
                 
               </ion-list>
               <ion-list class="" no-lines>
                   <ion-item text-wrap>
                       <ion-icon name="globe" slot="start" size="small"></ion-icon>
-                      <ion-input   type="text"  name="website" [(ngModel)]="data.website" required placeholder="Website" >
+                      <ion-input   type="url"  name="website" [(ngModel)]="data.website" required placeholder="Website" >
                       </ion-input>
                   </ion-item>
                 </ion-list>
@@ -75,7 +75,7 @@
           <div class="form-group">
               <ion-button expand="block" shape="round" [disabled]="!registerForm.valid" (click)="register()" color="primary" width="70%">Sign Up</ion-button>
           </div>
-          <div class="form-group extra" style="color: #00ade5;">
+          <div class="form-group extra" style="color: var(--ion-color-primary);">
             Have an account ?<br/><a routerLink="/tabs/login" class="link">Login</a>
           </div>
          <!--

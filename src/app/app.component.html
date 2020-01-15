@@ -14,11 +14,11 @@
           </ion-col>
         </ion-row>
         <ion-row text-center>
-            <ion-col text-center *ngIf="shop.length > 0" style="color: white;">
-              <ion-label  #name>{{shop[0].Shopname}}</ion-label><br>
-             <ion-label #email>{{email}}</ion-label>
+            <ion-col text-center *ngIf="loggedIn" style="color: white;">
+              <ion-label  #name>{{shop.Shopname}}</ion-label><br>
+             <ion-label #email>{{shop.Email}}</ion-label>
             </ion-col>
-            <ion-col *ngIf="userID == null">
+            <ion-col *ngIf="!loggedIn">
                 <ion-icon color="warning"name="warning"></ion-icon><br>
                 <a (click)="login()">Log in</a>
             </ion-col>
@@ -34,7 +34,7 @@
               </ion-item>
             </ion-menu-toggle>
             </ion-list>
-            <ion-list *ngIf="shop.length > 0">
+            <ion-list *ngIf="loggedIn">
               <ion-item >
                   <ion-button menuClose (click)="logout()" class="button-cover">
                     <ion-icon slot="start" name="lock" extend="full"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

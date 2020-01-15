@@ -16,8 +16,8 @@ import { FirestoreService } from './services/firestore.service';
 })
 export class AppComponent {
   navigate ;
-  // userID ;
- shop = [];
+ loggedIn = false;
+ shop;
  email ;
  
   constructor(
@@ -51,16 +51,18 @@ login(){
     this.firestore.collection('shops',ref => ref.where('userID','==',userID)).get().subscribe(res => {
       res.docChanges().forEach(change =>{
         if(change.type == 'added'){
-          this.shop.push(change.doc.data());
+          this.shop = change.doc.data();
           console.log(this.shop);
+          this.loggedIn = true ;
         }
         if(change.type == 'modified'){
           this.shop.length = 0 ;
-          this.shop.push(change.doc.data());
+          this.shop = change.doc.data();
+          this.loggedIn = true ;
         }
         if(change.type == 'modified'){
           this.shop.length = 0;
-          this.shop.push(change.doc.data());
+          this.shop = change.doc.data();
         }
       })
     })

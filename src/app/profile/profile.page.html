@@ -13,7 +13,7 @@
   
 
 <div class="profile_pic" no-padding>
-  <ion-avatar style="margin-top:15px;"><img src="{{image_profile}}"></ion-avatar>
+  <ion-avatar style="margin-top:15px;"><img src="{{profile.logo}}"></ion-avatar>
   <ion-icon (click)="pickFile()" float-right color="primary" name="camera" slot="end"></ion-icon>
 </div>
 <div class="profile">
@@ -23,27 +23,27 @@
 <ion-card>
   <ion-item>
       <ion-label>Shop Name :</ion-label>
-      <ion-text>QuickMatt</ion-text>
+      <ion-text>{{profile.Shopname}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label >Email :</ion-label>
-      <ion-text>quickmark@gmail.com</ion-text>
+      <ion-text>{{profile.Email}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label >Contact :</ion-label>
-      <ion-text>02205798212</ion-text>
+      <ion-text>{{profile.Contacts}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label >Location :</ion-label>
-      <ion-text>harambee house ruduma road</ion-text>
+      <ion-text>{{profile.Location}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label >Open hours :</ion-label>
-      <ion-text>9:00AM -  8:00PM Mon - Sat</ion-text>
+      <ion-text>{{profile.OpenHours}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label>Website :</ion-label>
-      <ion-text>https://quickmatt.com</ion-text>
+      <ion-text>{{profile.Website}}</ion-text>
   </ion-item>
 
 </ion-card>

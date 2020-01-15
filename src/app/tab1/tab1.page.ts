@@ -39,6 +39,7 @@ export class Tab1Page {
     private service: FirestoreService
   ) {
     this.service.hiddenTabs = false ;
+    
   }
 
   ngOnInit(){

@@ -1,6 +1,9 @@
 <ion-content>
   <ion-toolbar >
-    <ion-title text-center color="primary">Dashboard</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title  color="primary">Dashboard</ion-title>
   </ion-toolbar>
 
   <div >
@@ -31,7 +34,7 @@
             <ion-icon color="primary" name="podium"></ion-icon>
           </ion-card-title>
           <ion-card-content>
-            Orders
+             Orders
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -46,16 +49,16 @@
       
 
       <div *ngIf="!loader" >
-          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)"> 
-            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">Pending</ion-label><br><br>
+          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item,Myorders.indexOf(item))"> 
+            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">{{item.status}}</ion-label><br><br>
             <div style="text-align:start;">
-              Order for {{item.Products[0]}}, {{item.Products[1]}}, {{item.Products[2]}}, {{item.Products[3]}} ...
+              Order for {{item.products[0].product}}, {{item.products[1].product}}, {{item.products[2].product}}, {{item.products[3].product}} ...
             </div>
             <span style="float: left;bottom: 0;margin-top: 10px;">
               {{item.username}}
             </span>
             <span style="float: right;bottom:0;margin-top: 10px;">
-              {{item.Date }} Ago
+              {{item.Date.toDate() | date: 'mm'}} Mins Ago
             </span>
           </ion-card>
       </div>

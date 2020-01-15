@@ -2,9 +2,15 @@ ion-card{
     border-radius: 10px;
     
 }
-.bottom{
-    position: fixed;
-    bottom:0;
-    left: 0;
-    right: 0;
+
+.details{
+    
+    text-align: start;
+}
+.img{
+    object-position: center;
+    object-fit: contain;
+}
+.qty{
+    justify-content: center;
 }

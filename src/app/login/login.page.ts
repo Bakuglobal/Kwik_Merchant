@@ -93,7 +93,7 @@ next(resp) {
   this.menuCtrl.enable(true);
   this.service.hiddenTabs = false ;
   this.ref.getInfo(id);
-  this.navCtrl.navigate(['tabs/tab1']);
+  this.navCtrl.navigate(['tabs/dashboard']);
 }
 
 // Loader

@@ -20,12 +20,13 @@ export class SignupPage implements OnInit {
 
   shouldHeight = document.body.clientHeight + 'px'
   
-  public data: { email: any; password: any ; contact: any ; name: any ;location: any ;open: any ;website: any} = {
+  public data: { email: any; password: any ; contact: any ; name: any ;location: any ;openStart: any;openStop: any ;website: any} = {
     email: null,
     password: null,
     contact: null ,
     name: null,
-    open: null,
+    openStart: null,
+    openStop: null,
     website: null,
     location: null
   };
@@ -71,49 +72,28 @@ export class SignupPage implements OnInit {
       async register() {
         this.presentLoading();
         
-        this.db.register(this.data.email, this.data.password).then(
+        this.db.register(this.data.email, this.data.password, this.data.name, this.data.contact,this.data.website,this.data.location,this.data.openStart,this.data.openStop).then(
           resp => {
-           
+            console.log(resp);
             this.loading.dismiss();
-            this.navigation.navigate(["tabs/login"]);
+            this.navigation.navigate(["tabs/dashboard"]);
           },
           error => {
             this.presentToast(error.message);
             this.loading.dismiss();
           }
         );
-        this.getUserID()
-        this.saveShop(this.data);
+        // this.saveShop(this.data);
         this.data.email = null;
         this.data.password = null;
         this.data.contact = null;
         this.data.location = null;
         this.data.name = null;
         this.data.website = null;
-        this.data.open = null ;
+        this.data.openStart = null ;
+        this.data.openStop = null
       }
-      getUserID(){
-        this.db.getCurrentUser().then(user => {
-          this.userID = user.uid 
-          console.log("userID"+ this.userID);
-          console.log("user"+ user);
-        })
-      }
-      saveShop(data){
-        localStorage.setItem('name',data.name);
-        localStorage.setItem('email',data.email);
-        localStorage.setItem('userID',this.userID)
-        let shop = {
-          "Shop name": data.name,
-          "Email" : data.email,
-          "Contacts" :data.contact,
-          "Location": data.location,
-          "Open Hours": data.open,
-          "Website": data.website,
-          "userID": this.userID
-        }
-        this.db.saveShop(shop).then(res => {console.log(res)}).catch(err => {console.log(err)});
-      }
+     
     
       // Loader
       async presentLoading() {

@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Shop } from '../models/shops' ;
+import { Observable } from 'rxjs';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 
 @Injectable({
@@ -20,6 +22,7 @@ export class FirestoreService {
     private fauth: AngularFireAuth,
     private http: HttpClient,
     private fs: AngularFirestore,
+    public db: AngularFireDatabase,
   
   ) { }
 
@@ -51,12 +54,49 @@ export class FirestoreService {
 }
 
 //set order for view
-setItems(item){
+setItems(item,index){
   this.items = item ;
+  this.items.docID = index ;
 }
 getItems(){
   return this.items ;
 }
-
+ 
+// //Get orders
+//     async Orders(){
+//   return new Observable(observer => {
+//         const unsubscribe = this.fs.collection('Orders').ref.where('shop', '==', 'Kakila Organic').where('status','==','open')
+//         .onSnapshot(querySnapshot => {
+//           querySnapshot.docChanges().forEach(change => {
+//            return change ;
+//           });
+//       });
+      
+//       }
+//       })
+//     }
+getOrders() {
+      let orders = [];
+      return new Observable(observer => {
+        const unsubscribe = this.fs.collection("Orders").ref.where('shop', '==', 'Kakila Organic').where('status','==','open')
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach(function(doc) {
+            orders.push(doc.data());
+          });
+    
+            observer.next(orders);
+          });
+    
+        return () => {
+          unsubscribe();
+        };
+      });
+    }  
+    getUserDetails(key) {
+      return this.db.list('users', ref => {
+        let q = ref.orderByKey().equalTo(key);
+        return q;
+      });
+    }  
 
 }

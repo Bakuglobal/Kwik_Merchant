@@ -61,30 +61,33 @@ export class DatabaseService {
     return this.af.auth.signInWithEmailAndPassword(email, password);
   }
   
-  register(email: any, password: any) {
+  register(email: any, password: any,name: any,phone: any,website: any,location: any,openStart: any,openStop: any) {
     return this.af.auth
       .createUserWithEmailAndPassword(email, password)
       .then((authData: any) => {
-        let value = {
-          name: 'your name',
-          phone: '',
-          email: email,
-          wallet: 0,
-          shop: 'none'
+        localStorage.setItem('userID', authData.user.uid);
+        let userData = {
+          "Shopname": name,
+          "Contacts": phone,
+          "Email": email,
+          "Website": website,
+          "logo": '',
+          "userID": localStorage.getItem('userID'),
+          "Location": location,
+          "OpenHours": openStart+''+'Am'+''+openStop+''+'PM'
         };
 
-        this.operationUser
-          .update(authData.user.uid, value)
-          .catch(error => console.log(error));
+        this.createUser(userData);
       });
   }
 
-  //Save shop details to firestore
-  saveShop(data){
-    return this.firestore.collection('shops').add(data) ;
-  }
+  
   getShopInfo(id){
     return this.firestore.collection('shops',ref => ref.where('userID','==', id)).get();
+  }
+  //create a user account
+  createUser(data){
+    this.firestore.collection('shops').add(data);
   }
 
 
