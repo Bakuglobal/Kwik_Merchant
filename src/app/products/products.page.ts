@@ -1,12 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { Location } from '@angular/common';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatabaseService } from '../database.service';
-import { Camera ,  CameraOptions} from '@ionic-native/camera/ngx';
-
+import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { ActionSheetController, ModalController, ToastController, LoadingController } from '@ionic/angular';
+import { CategoryPage } from '../category/category.page';
+import { UploadService } from '../upload/upload.service';
+import { File } from '@ionic-native/file/ngx';
+import { Storage } from '@ionic/storage';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 @Component({
   selector: 'app-products',
@@ -14,164 +24,253 @@ import { Camera ,  CameraOptions} from '@ionic-native/camera/ngx';
   styleUrls: ['./products.page.scss'],
 })
 export class ProductsPage implements OnInit {
-  data = {
-    barcode : '',
-    name: '',
-    category: '',
-    wholesalePrice: '',
-    retailPrice: '',
-    quantity: '',
-    description: '',
-    image: ''
-
-  }
-file: File ;
-showProducts = true ;
-spinner = false ;
-products ;
-categories  ;
-selectedCategory: string ;
-unfilteredProducts ;
-showLoader = true ;
-
+  // variables
+  type = true;
+  existing = false;
+  newProduct = false;
+  category: string;
+  productForm: FormGroup;
+  value = '';
+  scannedcode = '';
+  image = ''
+  images = [];
+  categories;
+  products ;
+  unfilteredProducts ;
+  shop ;
+  loading ;
 
   constructor(
     private navCtrl: Router,
     private service: FirestoreService,
-    private location: Location,
-    private scannner : BarcodeScanner,
-    private http : HttpClient,
+    private asc: ActionSheetController,
+    private scannner: BarcodeScanner,
+    private http: HttpClient,
     private db: DatabaseService,
-    private camera: Camera
+    private camera: Camera,
+    private formBuilder: FormBuilder,
+    private modal: ModalController,
+    private upload: UploadService,
+    private file: File,
+    private loader: LoadingController,
+    private load: LoadingController,
+    private storage: Storage,
+    private ref: ChangeDetectorRef,
+    private webview: WebView,
+    private fs: AngularFirestore,
+    private imagePicker: ImagePicker,
+    private cropService: Crop,
+    private fileChooser: FileChooser,
+
   ) {
 
-    // this.service.hiddenTabs = true ;
-   }
+    this.service.hiddenTabs = true;
 
-  ngOnInit() {
-    //get all products
-    this.service.allProducts().subscribe(res => {
-      this.unfilteredProducts = res ;
-      this.products = res ;
-      if(this.products.length > 0){this.showLoader = false}
-      console.log('products' + this.products)
-    })
-    //get all categories
-    this.service.allCategories().subscribe(res => {
+    this.productForm = formBuilder.group({
+      productName: ['', Validators.required],
+      barcode: [this.scannedcode],
+      category: [this.value, Validators.required],
+      quantity: ['', Validators.required],
+      unit: ['', Validators.required],
+      price: ['', Validators.required],
+      description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
+      status: [''],
+      // image: [this.image, Validators.required]
+    });
+
+    this.service.getallcategories(this.db.getshopname()).valueChanges().subscribe(res => {
       this.categories = res ;
-      console.log('categories' + this.categories)
     })
+    this.shop = this.db.getshopname() ;
+    this.getproducts();
   }
 
-  back(){
-    this.showProducts = true ;
+  async getproducts(){
+    await this.fs.collection(this.shop).valueChanges().subscribe(res => {
+      console.log(res)
+      this.products =  res ;
+      this.unfilteredProducts = res ;
+
+    })
+ }
+// toObject(arr) {
+//   var rv = {};
+//   for (var i = 0; i < arr.length; ++i)
+//     rv[i] = arr[i];
     
-  }
-  setFilteredItems(){
-    if(this.selectedCategory != null || this.selectedCategory != ''){
-      this.products = this.filterItems()
-      console.log(this.products)
+//   return rv;
+// }
+//  updateprod(){
+//    this.products.forEach(item => {
+//      item.stock = 0 ;
+//      item.description = '' ;
+//     //  item =  this.toObject(this.products);
+//      this.fs.collection(this.shop).add(item);
+//    });
+// }
+  
+  // filter products
+  setFilteredItems() {
+    if (this.category !== null || this.category !== '') {
+      this.products = this.filterItems();
+      console.log(this.products);
     }
-    if(this.selectedCategory  == "All"){
-      this.products = this.unfilteredProducts ;
-    }
-    
   }
   filterItems() {
     return this.unfilteredProducts.filter(item => {
-      return item.category.toLowerCase().indexOf(this.selectedCategory.toLowerCase()) > -1;
+      return item.category.toLowerCase().indexOf(this.category.toLowerCase()) > -1;
     });
   }
+  
 
+  ngOnInit() {
+  }
+  back() {
+    this.service.hiddenTabs = false;
+    this.close();
+    this.navCtrl.navigate(['tabs/stock']);
+  }
+  addNewProduct() {
+    this.newProduct = true;
+    this.type = false;
+  }
+  existingProduct() {
+    this.existing = true;
+    this.type = false;
+  }
+  close() {
+    this.existing = false;
+    this.type = true;
+    this.newProduct = false;
+    this.category = null;
+  }
+  viewProduct(item) {
+    this.service.hiddenTabs = true;
+    this.service.setProduct(item);
+    console.log(item)
+    this.navCtrl.navigate(['tabs/productmodal']);
+  }
+  addProduct() {
+    console.log(this.productForm.value);
+    this.productForm.reset();
+    this.category = '';
+    this.Toast('uploading...');
+    this.upload.presentToast('Product upload successful');
+
+
+  }
+  scan() {
+    this.scannner.scan().then(code => {
+      if (code.cancelled) { return; }
+      this.scannedcode = code.toString();
+    });
+  }
+  async selectCategory() {
+    const actionSheet = await this.asc.create({
+      header: 'Categories',
+      buttons: this.createButtons()
+    });
+    await actionSheet.present();
+  }
+  createButtons() {
+    const buttons = [];
+    
+    console.log(this.categories.categories)
+    // tslint:disable-next-line: forin
+    for (let index in this.categories.categories) {
+      const button = {
+        text: this.categories.categories[index].name,
+        // icon: this.Allcategories[index].icon,
+        handler: () => {
+          console.log('button text ' + this.categories.categories[index].name);
+          this.value = this.categories.categories[index].name;
+          return true;
+        }
+      };
+      buttons.push(button);
+    }
+    const adbutton = {
+      text: 'Add New',
+      cssClass: 'asc',
+      handler: () => {
+        console.log('adding new');
+        this.categoryModal();
+      }
+    };
+    buttons.push(adbutton);
+    return buttons;
+  }
+  async categoryModal() {
+    const modal = await this.modal.create({
+      component: CategoryPage,
+      componentProps: { shopname: this.db.getshopname() }
+    });
+    localStorage.setItem('shop', this.db.getshopname());
+    await modal.present();
+  }
  
+  async selectImage() {
+    const actionSheet = await this.asc.create({
+      header: "Select Image Source",
+      buttons: [
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.openImagePickerCrop();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+  openImagePickerCrop(){
+    this.imagePicker.hasReadPermission().then(
+      (result) => {
+        if(result == false){
+          // no callbacks required as this opens a popup which returns async
+          this.imagePicker.requestReadPermission();
+        }
+        else if(result == true){
+          this.imagePicker.getPictures({
+            maximumImagesCount: 1
+          }).then(
+            (results) => {
+              for (var i = 0; i < results.length; i++) {
+                this.cropService.crop(results[i], {quality: 75}).then(
+                  newImage => {
+                    this.uploadImageToFirebase(newImage);
+                  },
+                  error => alert("Error cropping image"+error)
+                );
+              }
+            }, (err) => alert(err)
+          ).catch(err => console.log(err));
+        }
+      }, (err) => {
+        alert(err);
+      }).catch(err => alert(err))
+    }
+    uploadImageToFirebase(image){
+      image = this.webview.convertFileSrc(image);
+    
+      //uploads img to firebase storage
+      this.upload.uploadImage(image)
+      .then(photoURL => {
 
-  addProduct(){
-   if(this.data.name != '' || this.data.barcode != '' || this.data.category != ''|| this.data.retailPrice != ''|| this.data.quantity != '' || this.data.description != ''){
-    this.spinner = true ;
-    //upload image and get url
-
-    //upload product info
-   
-  }else {
-    alert("Please fill all the fields ")
-  }
-  }
-  scan(){
-    this.scannner.scan().then( barcode => {
-      this.data.barcode = barcode.toString() ;
-    })
-  }
-  openCamera(){
-      const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        sourceType: this.camera.PictureSourceType.CAMERA,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        targetHeight: 100,
+        this.upload.presentToast('Image was updated successfully');
+        
+        })
       }
-    this.camera.getPicture(options).then(img => {
-      this.file = img ;
-      this.fileEvent(img)
-    })
-  }
-
-
-//add a new product to database
-
-  updateDb(data){
-     let header  = new HttpHeaders () ;
-     header.append('Content-Type','application/json');
-     header.append('Access-Control-Allow-Origin','*');
-
-     let postdata = {
-      "name": data.name,
-      "category": data.category,
-      "supplier_id": null,
-      "item_number": data.barcode,
-      "description": data.description,
-      "cost_price": data.wholesalePrice,
-      "unit_price": data.retailPrice,
-      "reorder_level": 1,
-      "receiving_quantity": data.quantity,
-      "pic_filename": data.image,
-      "allow_alt_description": 0,
-      "is_serialized": 0,
-      "stock_type": 0,
-      "item_type": 0,
-      "tax_category_id": 0,
-      "deleted": 0,
-      "custom1": "",
-      "custom2": "",
-      "custom3": "",
-      "custom4": "",
-      "custom5": "",
-      "custom6": "",
-      "custom7": "",
-      "custom8": "",
-      "custom9": "",
-      "custom10": ""
-  }
-
-   return this.http.post("https://kwik-db-api.glitch.me/api/addproducts", postdata, {headers: header})
-  }
-  public fileEvent(img) {
-
-    let header  = new HttpHeaders () ;
-    header.append('Content-Type','application/json');
-    header.append('Access-Control-Allow-Origin','*');
-
-      // const elem = event.target;
-      if (img != null) {
-          console.log(img);
-          console.log('uploading images')
-          this.http.post('http://157.245.134.245/uploads',img, {headers: header}).subscribe(res => {
-              console.log('succ' + res )
-              this.data.image = 'http://157.245.134.245/uploads'+ img
-          }, error => {
-            console.log(error);
-          });
-      }
-      
-  }
+    async Toast(msg){
+      this.loading = await this.loader.create({
+        message: msg,
+        duration: 2000,
+      });
+      await this.loading.present();
+    }
+ 
 }

@@ -4,9 +4,15 @@
     <ion-buttons slot="start">
       <ion-icon color="primary" (click)="close()" name="arrow-back" size="large"></ion-icon>
     </ion-buttons>
-    <ion-title text-center color="primary"> {{prod.username}}'s Order <br>{{userDetail.phone}}</ion-title>
+    <ion-title text-center color="primary" *ngIf="view"> {{prod.username}}'s Order <br></ion-title>
+    <ion-buttons slot="end" style="margin-right: 50px;">
+      <ion-icon color="success" (click)="callUserNumber(userDetail.phone)" name="call" size="large"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
-
+  <div *ngIf="!view" style="margin-top: 30%;text-align: center;">
+    <ion-spinner name="circles" color="primary"></ion-spinner>
+  </div>
+<div *ngIf="view">
 <!-- Display order details -->
 <ion-item *ngFor="let item of prod.products" >
   <ion-col size="3">
@@ -21,29 +27,36 @@
   <ion-label><b>{{item.count}} x {{item.quantity}}</b></ion-label>
   </ion-col>
 </ion-item>
+<div text-center style="margin-top: 10px;">
+    <ion-label>Order notes</ion-label>
+    <p>
+      {{prod.notes}}
+    </p>
+    <p *ngIf="prod.notes == ''" style="color: var(--ion-color-medium);">No notes for this order</p>
+</div>
 <div style="margin-top: 40px;margin-bottom: 10px;" padding>
   <ion-label color="primary" style="font-size: large;font-weight: bold;float: left;">Total</ion-label>
   <ion-label color="primary" style="font-size: larger;font-weight: bold;float: right;">Kshs. {{getTotalCart() | number:'1.1-5'}}</ion-label>
 </div>
 
+ 
 
-
-
+</div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="view">
 <!-- Bottom buttons for decline or accept -->
 
   <div class="bottom">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card color="danger" text-center (click)="decline(prod.docID)">
-            <ion-card-content style="font-weight:bold ;">Decline</ion-card-content>
+          <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="isready">
+            <ion-card-content style="font-weight:bold ;">Ready</ion-card-content>
           </ion-card>
         </ion-col>
         <ion-col>
-          <ion-card  color="success" text-center (click)="accept(prod.docID)">
-            <ion-card-content style="font-weight:bold ;">Accept</ion-card-content>
+          <ion-card  color="success" text-center (click)="paid(prod.OrderID)">
+            <ion-card-content style="font-weight:bold ;">Paid</ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>

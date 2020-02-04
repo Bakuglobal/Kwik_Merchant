@@ -1,9 +1,14 @@
 export interface Product {
-    Date: string;
-    Products: [];
-    shop: string;
-    status: string;
-    username: string;
-    userphone:string;
+    category?: any;
+    shop?: any;
+    product?: any;
+    quantity?: any;
+    currentprice?: any;
+    status?: any;
+    image?: any;
+    initialprice?: any;
+    description?: any;
+    stock?: any;
+
 
   }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -14,12 +14,12 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 
 
-//FIREBASE
-import { AngularFireModule } from '@angular/fire';
+// FIREBASE
+import { AngularFireModule, } from '@angular/fire';
 import { AngularFireStorageModule, AngularFireStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database'; 
+import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ChatmodalPageModule } from './chatmodal/chatmodal.module';
 import { PostmodalPageModule } from './postmodal/postmodal.module';
@@ -27,30 +27,42 @@ import { SokomodalPageModule } from './sokomodal/sokomodal.module';
 import { NewchatmodalPageModule } from './newchatmodal/newchatmodal.module';
 import { CommentsPageModule } from './comments/comments.module';
 import { InfomodalPageModule } from './infomodal/infomodal.module';
-import  {FileChooser} from '@ionic-native/file-chooser/ngx';
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
 import { File} from '@ionic-native/file/ngx';
 import {MediaCapture} from '@ionic-native/media-capture/ngx';
 import {Media} from '@ionic-native/media/ngx';
 import { IonicStorageModule} from '@ionic/storage';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Contacts } from '@ionic-native/contacts';
 import { ProfilemodalPageModule } from './profilemodal/profilemodal.module';
 import { FileSizeFormatPipe } from './tab3/file-size-format.pipe';
-import { Camera} from '@ionic-native/camera/ngx'
+import { Camera} from '@ionic-native/camera/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { OrdersPageModule } from './orders/orders.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SettingsPageModule } from './settings/settings.module';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Firebase } from '@ionic-native/firebase/ngx';
+import { CategoryPageModule } from './category/category.module';
+import { WebView } from '@ionic-native/ionic-webview/ngx' ;
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { OrderPreviewPageModule } from './order-preview/order-preview.module';
+import { ViewNotificationPageModule } from './view-notification/view-notification.module';
 
 @NgModule({
-  declarations: [AppComponent,FileSizeFormatPipe],
+  declarations: [AppComponent, FileSizeFormatPipe],
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireStorageModule,
-    IonicModule.forRoot(), 
+    IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     ChatmodalPageModule,
@@ -60,14 +72,19 @@ import { OrdersPageModule } from './orders/orders.module';
     CommentsPageModule,
     InfomodalPageModule,
     ProfilemodalPageModule,
-    OrdersPageModule
-
+    OrdersPageModule,
+    ReactiveFormsModule,
+    SettingsPageModule,
+    CategoryPageModule,
+    OrderPreviewPageModule,
+    ViewNotificationPageModule
 
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
+    ImagePicker,
     Contacts,
     OpenNativeSettings,
     BarcodeScanner,
@@ -77,11 +94,18 @@ import { OrdersPageModule } from './orders/orders.module';
     FileChooser,
     Geolocation,
     NativeGeocoder,
-    GooglePlus,
     FilePath,
+    Keyboard,
+    Crop,
     File,
     MediaCapture,
     Media,
+    WebView,
+    OneSignal,
+    CallNumber,
+    Firebase,
+    Camera,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

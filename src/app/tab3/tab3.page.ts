@@ -12,7 +12,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FirestoreService } from '../services/firestore.service';
 
 
- 
+
 
 @Component({
   selector: 'app-tab3',
@@ -22,49 +22,51 @@ import { FirestoreService } from '../services/firestore.service';
 export class Tab3Page {
   videos = [];
   images = [];
-  likes = {"count": 0} ;
+  likes = {count: 0} ;
   liked = false ;
   h = false ;
   Addcomment = false ;
   post: string ;
 
-   
+
+
   constructor(
     private navCtrl: Router,
     private modalCtrl: ModalController,
     private fileChooser: FileChooser,
     private filePath: FilePath,
     private asC: ActionSheetController,
-    private storage: AngularFireStorage, 
+    private storage: AngularFireStorage,
     private database: AngularFirestore,
     private camera: Camera,
-    private service : FirestoreService
+    private service: FirestoreService
 
 
   ) {
-   
+
   this.service.hiddenTabs = false ;
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit(): void {
-    
+
   }
-  onScroll(event){
-    if(event.detail.scrollTop == 0){
+  onScroll(event) {
+    if (event.detail.scrollTop === 148) {
       this.service.hiddenTabs = false ;
-      console.log("00000000")
-    }else{
+      console.log('00000000');
+    } else {
     if (event.detail.scrollTop > 30) {
-      console.log(">>>> 30");
+      console.log('>>>> 30');
       this.service.hiddenTabs = true ;
     } else {
       this.service.hiddenTabs = false ;
     }
   }
   }
- 
 
-  async share(){
+
+  async share() {
     const asc = await this.asC.create({
       animated: true ,
       backdropDismiss: true ,
@@ -72,12 +74,12 @@ export class Tab3Page {
       buttons: [{
         icon: 'logo-whatsapp',
         text: 'Whatsapp',
-        
+
         handler: () => {
-          
+
         }
       },
-      
+
       {
         text: 'Cancel',
         role: 'cancel'
@@ -85,57 +87,57 @@ export class Tab3Page {
     ]
     });
     await asc.present();
-    
+
   }
-  async comments(){
+  async comments() {
     const com = await this.modalCtrl.create({
       component: CommentsPage,
       componentProps: {}
 
-    })
+    });
     await com.present();
   }
-  like(){
-    if(this.liked == false){
+  like() {
+    if (this.liked === false) {
       this.likes.count++ ;
       this.liked = true ;
-    }else {
+    } else {
       this.likes.count--;
       this.liked = false ;
     }
-   if(this.h == false){
+    if (this.h === false) {
      this.h = true ;
-   }else{
+   } else {
     this.h = false ;
    }
-    
+
   }
-  async infoModal(url){
+  async infoModal(url) {
     const modal = await this.modalCtrl.create({
       component: InfomodalPage,
       componentProps: {
         shopname: url
       }
-    })
+    });
     await modal.present();
    }
-  async openPostModal(){
+  async openPostModal() {
     const modal = await this.modalCtrl.create({
       component: PostmodalPage,
       componentProps: {}
-    })
+    });
     await modal.present();
    }
-   async postFile(url){
+   async postFile(url) {
     const modal = await this.modalCtrl.create({
       component: PostmodalPage,
       componentProps: {url}
-    })
+    });
     await modal.present();
    }
-  pickFile(value){
-    if(value == 'image'){
-        //pick images
+  pickFile(value) {
+    if (value === 'image') {
+        // pick images
         const options: CameraOptions = {
           quality: 100,
           destinationType: this.camera.DestinationType.FILE_URI,
@@ -143,17 +145,17 @@ export class Tab3Page {
           encodingType: this.camera.EncodingType.JPEG,
           mediaType: this.camera.MediaType.PICTURE,
           targetHeight: 100,
-        }
+        };
         this.camera.getPicture(options).then((image) => {
           this.images.push(image);
-          //send image to create post modal
+          // send image to create post modal
           this.postFile(this.images);
         }, (err) => {
-          //handle err
-        })
+          // handle err
+        });
 
-    }else{
-     //pick videos
+    } else {
+     // pick videos
      const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -161,12 +163,12 @@ export class Tab3Page {
       // encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.VIDEO,
       targetHeight: 100,
-    }
-    this.camera.getPicture(options).then((video) => {
+    };
+     this.camera.getPicture(options).then((video) => {
       this.videos.push(video);
-    },(err) => {
-      //handel err
-    })
+    }, (err) => {
+      // handel err
+    });
 
     }
 

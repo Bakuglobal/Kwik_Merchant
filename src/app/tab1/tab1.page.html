@@ -1,18 +1,14 @@
-<ion-header style="background-color: #00ade5">
-
-  <ion-toolbar color="primary" *ngIf="scanbutton" >
+<ion-content>
+  <div class="top">
+  <ion-toolbar  *ngIf="scanbutton"  color="primary">
     <ion-buttons slot="start">
-        <ion-menu-button autoHide="false" #menu></ion-menu-button>
+        <ion-menu-button autoHide="false" #menu ></ion-menu-button>
       </ion-buttons>
-  <ion-title>
+  <ion-title >
     Kwik Merchant
   </ion-title>
-  <ion-buttons slot="end">
-    <ion-icon name="notifications" size="large" (click)="notifications()"></ion-icon>
-  </ion-buttons>
 </ion-toolbar>
-</ion-header>
-<ion-content>
+</div>
 <div>
  <!--create list button-->
  <div style="text-align: center;margin-top: 200px;font-size: 0.9em;" (click)=scan() *ngIf="scanbutton">

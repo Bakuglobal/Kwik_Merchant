@@ -1,18 +1,32 @@
-<ion-header style="background-color: #00ade5;">
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-          </ion-buttons>
-      <ion-title>
-        Notifications
-      </ion-title>
+<ion-content color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" padding>
+      <ion-menu-button color=""></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+
   </ion-toolbar>
-</ion-header>
-<ion-content>
-  
 
+  <ion-card class="card-main">
 
-<div class="ion-text-center"style="margin-top: 200px;">
-  <ion-label>You have no Notifications</ion-label>
-</div>
+    <div class="ion-text-center" style="margin-top: 200px;" *ngIf="!none">
+      <ion-label padding>You have no Notifications</ion-label>
+    </div>
+    <!-- Unread notices -->
+    <!-- <ion-label padding color="primary">Unread Notifications</ion-label> -->
+    <!-- <ion-card class="notice-unread" padding (click)="viewNotice(item)">
+      <ion-card-title>9DOB4K Order canceled</ion-card-title>
+      <ion-card-content>Mangoes, sugar,maize...</ion-card-content>
+      <ion-label style="float: left;">James</ion-label>
+      <ion-label style="float: right;">4:30Pm</ion-label>
+    </ion-card> -->
+  <!-- read notices -->
+  <!-- <ion-label padding color="primary">Read Notifications </ion-label> -->
+  <ion-card class="notice-unread" padding (click)="viewNotice(item)" *ngFor="let item of notices">
+    <ion-card-title>{{item.Title}}</ion-card-title>
+    <ion-card-content>{{item.message}}</ion-card-content>
+    <ion-label style="float: left;"></ion-label>
+    <ion-label style="float: right;">4:30Pm</ion-label>
+  </ion-card>
+  </ion-card>
 </ion-content>

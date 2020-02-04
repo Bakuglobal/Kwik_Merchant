@@ -1,7 +1,4 @@
-ion-toolbar{
-  border-radius: 10px;
-  // margin-top: 27px;
-}
+
 .btn{
    position:fixed;
    width: 100%;
@@ -92,4 +89,11 @@ table{
 }
 ion-card {
   border-radius: 10px ;
+}
+ion-toolbar{
+  margin-top: 0px;
+  background-color: va(--ion-color-primary);
+  padding-bottom: 20px;
+  color: white;
+  width: 100%;
 }

@@ -2,13 +2,15 @@ import { Component, OnInit ,OnDestroy, AfterViewInit  } from '@angular/core';
 import { LoadingController, ToastController, Events, AlertController, MenuController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
-import {GooglePlus} from '@ionic-native/google-plus/ngx';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { DatabaseService } from '../database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Location } from '@angular/common';
 import { AppComponent} from '../app.component' ;
-
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { OneSignalService } from '../one-signal.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,8 @@ export class LoginPage implements OnInit {
 
   public data: { email: any; password: any } = {
     email: null,
-    password: null
+    password: null,
+
   };
 
   loading: any;
@@ -29,7 +32,7 @@ export class LoginPage implements OnInit {
   errorCode: any;
 
   errorMessage: any;
-  user ;
+  userId ;
 
   passwordType: string = 'password';
  passwordIcon: string = 'eye-off';
@@ -39,25 +42,34 @@ export class LoginPage implements OnInit {
     public loadingController: LoadingController,
     public toastController: ToastController,
     public navCtrl: Router,
-    public googleplus:GooglePlus,
     public events: Events,
     private alertCtrl: AlertController,
     public menuCtrl: MenuController,
     private platform: Platform,
     private service: FirestoreService,
     private location : Location,
-    public  ref: AppComponent
-   
+    public  ref: AppComponent,
+    private oneSignal: OneSignal,
+    private notice: OneSignalService,
+    private fs: AngularFirestore,
+    private fcm: FCM
   ) { 
     
     this.service.hiddenTabs = true ; 
+    this.userId = localStorage.getItem('userID');
   }
 
   
   ngOnInit() {
     
     this.menuCtrl.enable(false);
+    this.redirect();
 
+  }
+  redirect(){
+    if(this.userId !== undefined){
+      this.navCtrl.navigate(['tabs/dashboard'])
+    }
   }
   back(){
     this.service.hiddenTabs = false;
@@ -74,12 +86,11 @@ submit() {
   this.presentLoading();
   this.db.login(this.data.email, this.data.password).then(
     resp => {
-      localStorage.setItem('email',this.data.email);
       this.next(resp);
     },
     error => {
       this.loading.dismiss();
-      this.presentToast(error.message);
+      this.presentToast('wrong email and password match','bottom');
       
     }
   );
@@ -90,9 +101,11 @@ next(resp) {
   const id = resp.user.uid;console.log('user id is----:'+id)
   localStorage.setItem('userID', id);
   this.loading.dismiss();
-  this.menuCtrl.enable(true);
+  this.ref.getUserDet(id);
+  let shopname = this.db.getshopname();
+  this.notice.sendTokenToFirebase(shopname);
   this.service.hiddenTabs = false ;
-  this.ref.getInfo(id);
+  this.menuCtrl.enable(true);
   this.navCtrl.navigate(['tabs/dashboard']);
 }
 
@@ -105,29 +118,18 @@ async presentLoading() {
 }
 
 // Toaster
-async presentToast(data) {
+async presentToast(data,position) {
   const toast = await this.toastController.create({
     message: data,
-    duration: 3000
+    duration: 3000,
+    position: position
   });
   toast.present();
 }
 
 // Google sign in
 
-login(){
-  this.googleplus.login({
-    'webClientId':'587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com',
-    'offline':true
-  }).then(res=>{
-    firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.IdToken))
-    .then(suc=>{
-      alert("login successful")
-    }).catch(ns=>{
-      alert("login not successful")
-    })
-  })
-}
+
 //forgot password
 reset(){
   this.password();
@@ -135,8 +137,8 @@ reset(){
 }
 async forgotPassword(email){
    return firebase.auth().sendPasswordResetEmail(email)
-   .then(res =>  this.presentToast('Password reset link send to '+' '+email))
-   .catch(error => this.presentToast('No user record with '+email))
+   .then(res =>  this.presentToast('Password reset link send to '+' '+email,'bottom'))
+   .catch(error => this.presentToast('No user record with '+email,'bottom'))
    
 }
 async password(){
@@ -167,4 +169,7 @@ async password(){
   });
   pop.present();
 }
+
+
+
 }

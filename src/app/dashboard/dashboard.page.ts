@@ -5,6 +5,8 @@ import { FirestoreService } from '../services/firestore.service';
 import { Shop } from '../models/shops' ;
 import { ModalController } from '@ionic/angular';
 import { OrdersPage } from '../orders/orders.page';
+import { User } from '../models/user';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,146 +15,112 @@ import { OrdersPage } from '../orders/orders.page';
 })
 export class DashboardPage implements OnInit {
 
-  Myorders = [];
-  docID = [] ;
-  shopDocID = []
-  date:  Date ;
-  userDetails: Shop ;
-  userID;
-  login = false ;
-  loader = true ;
-  postsObserver ;
-  orderd;
+// variables
+
+      Myorders = [];
+      filterOrder ;
+      searchTerm;
+      date: Date ;
+      shopname;
+      userID;
+      login = false ;
+      loader = true ;
+      search = false ;
+      inputSearch = false ;
 
   constructor(
-    private fs: AngularFirestore,
-    private navCtrl: Router,
-    private service: FirestoreService,
-    private modal: ModalController,
-    
-  ) { 
-    this.service.hiddenTabs = false ;
-    
+        private fs: AngularFirestore,
+        private navCtrl: Router,
+        private service: FirestoreService,
+        private modal: ModalController,
+        private db: DatabaseService
+  ) {
+        this.service.hiddenTabs = false ;
+        this.date = new Date() ;
   }
-
-  ngOnInit() {
-    const _this = this; // 'this' inside 'subscribe' refers to the observable object
-
-    this.date = new Date() ;
-    this.userID = localStorage.getItem('userID') ;
-    if(this.userID != null){
-      console.log('Today is date ==> '+ this.date)
-      this.getShop();
-      this.Orders();
-      
-      
-    }else{
-      this.login = true ;
+  // scroll events
+  onScroll(event) {
+    if (event.detail.scrollTop === 148) {
+      this.inputSearch = true ;
+    } else {
+      this.inputSearch = false ;
     }
-
-  // this.postsObserver = this.service.getOrders();
-  // this.postsObserver
-  //   .subscribe({
-  //     next(posts) {
-  //       _this.Myorders.push(posts);
-  //       console.log(_this.Myorders);
-  //       _this.loader = false ;
-  //     },
-  //     error(error) { console.log(error); }, // optional
-  //   });
   }
+// ionviewwill enter function
+ionViewWillEnter() {
+  this.getShop();
+}
+  // oninit method
 
-  
-  
-
-  //to sales page
-  sales(){
-    this.navCtrl.navigate(['tabs/sales']);
-  }
-  //to stock page
-  stock(){
-    this.navCtrl.navigate(['tabs/stock'])
-  }
-  //to orders stats page
-  orders(){
-    this.navCtrl.navigate(['tabs/order-stats']);
-  }
-
-
-  //get the shop name
- async   getShop(){
-      return await this.service.getShop(this.userID).onSnapshot(query => {
-      query.docChanges().forEach(change => {
-        if(change.type == 'added'){
-          console.log(change.doc.data())
-         this.shopDocID.push(change.doc.id);
-         this.userDetails = change.doc.data() ;
-  
+        ngOnInit() {
+          this.userID = localStorage.getItem('userID') ;
+          console.log(this.userID);
+          if (this.userID != null) {
+            // this.getOrders();
+          } else {
+            this.login = true ;
+          }
         }
-        if(change.type == 'modified'){
-          console.log(change.doc.data())
-  
-  
+  // show searchbar
+        showsearch() {
+          if (this.search === false ) {
+            this.search = true ;
+          } else {
+            this.search = false ;
+          }
         }
-        if(change.type == 'removed'){
-          console.log(change.doc.data())
-  
+  // filter searchbar
+        setFilteredItems() {
+          if (this.searchTerm !== null || this.searchTerm !== '') {
+            this.Myorders = this.filterItems();
+            console.log(this.Myorders);
+          }
         }
-      })
-      this.Orders();
-    })
-  
-    console.log(this.userDetails);
-  }
-//get orders from firestore
- async Orders(){
+        filterItems() {
+          return this.filterOrder.filter(item => {
+            return item.OrderID.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+          });
+        }
 
-  return await this.fs.collection('Orders').ref.where('shop', '==', 'Kakila Organic').where('status','==','open')
-    .onSnapshot(querySnapshot => {
-      querySnapshot.docChanges().forEach(change => {
-        if (change.type === 'added') {
-          console.log('New oder: ', change.doc.data());
-          this.docID.push(change.doc.id);
-          this.Myorders.push(change.doc.data());
-                  
-        } 
-        if (change.type === 'modified') {
-          console.log('Modified order: ', change.doc.data());
-          //find index of product in local array
-          let id = change.doc.id ;
-          let index = this.docID.indexOf(id)
- 
-          let modified =  change.doc.data() ;
-          
-          //replace the product in the local array <--Myorders--> with the modified one
-          this.Myorders[index] = modified;
- 
-          } 
-        if (change.type === 'removed'){
-          console.log('Removed order: ', change.doc.data());
-          //find index of product in local array
-          let id = change.doc.id ;
-          let index = this.docID.indexOf(id)
- 
-          let removed =  change.doc.data() ;
-          
-          //remove the order from the local array <--Myorders--> 
-          this.Myorders.splice(index,1);
-         
-        }
-      });
-      this.loader = false ;
-  });
-  
-  }
- 
 
- //view order
- async openOrder(item,index){
-   console.log(item)
-   this.service.setItems(item,this.docID[index]);
-   this.service.hiddenTabs = true ;
-   this.navCtrl.navigate(['tabs/orders']);
- } 
+// to sales page
+        sales() {
+          this.service.hiddenTabs = true ;
+          this.navCtrl.navigate(['tabs/sales']);
+        }
+// to stock page
+        stock() {
+          this.service.hiddenTabs = true ;
+          this.navCtrl.navigate(['tabs/stock']);
+        }
+// to orders stats page
+        orders() {
+          this.service.hiddenTabs = true ;
+          this.navCtrl.navigate(['tabs/order-stats']);
+        }
+
+
+// get the shop name
+       async  getShop() {
+         this.shopname = localStorage.getItem('shop');
+         console.log(this.shopname);
+         this.getOrders();
+        }
+// get orders from firestore
+        getOrders() {
+          this.service.getTodaysOrders(this.shopname).valueChanges().subscribe(res => {
+              this.Myorders = res ;
+              this.filterOrder = res ;
+              console.log(this.Myorders);
+              this.loader = false ;
+            });
+          }
+// view order
+       openOrder(item) {
+        console.log(item);
+        this.service.setItems(item);
+        this.service.hiddenTabs = true ;
+        this.navCtrl.navigate(['tabs/orders']);
+      }
 
 }

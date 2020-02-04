@@ -19,6 +19,8 @@ export class DatabaseService {
 
   private pathUsers = '/users';
   operationUser: AngularFireList<User> = null;
+  userid ;
+  shopname ;
 
   constructor(
     
@@ -26,7 +28,7 @@ export class DatabaseService {
     private af: AngularFireAuth,
     private navCtrl: Router,
     private firestore: AngularFirestore,
-    public http: HttpClient
+    public http: HttpClient,
   ) { 
     this.operationUser = db.list(this.pathUsers);
   }
@@ -61,35 +63,42 @@ export class DatabaseService {
     return this.af.auth.signInWithEmailAndPassword(email, password);
   }
   
-  register(email: any, password: any,name: any,phone: any,website: any,location: any,openStart: any,openStop: any) {
+  register(data) {
     return this.af.auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(data.email, data.password)
       .then((authData: any) => {
         localStorage.setItem('userID', authData.user.uid);
+        this.userid = authData.user.uid ;
         let userData = {
-          "Shopname": name,
-          "Contacts": phone,
-          "Email": email,
-          "Website": website,
+          "shop": data.name,
+          "Contacts": data.contact,
+          "Email": data.email,
+          "Website": data.website,
           "logo": '',
-          "userID": localStorage.getItem('userID'),
-          "Location": location,
-          "OpenHours": openStart+''+'Am'+''+openStop+''+'PM'
+          "Location": data.location,
+          "Open": data.openStart+''+'Am',
+          "Close":data.openStop+''+'PM'
         };
-
         this.createUser(userData);
-      });
+        
+      }).catch(err => console.log(err))
   }
 
   
   getShopInfo(id){
-    return this.firestore.collection('shops',ref => ref.where('userID','==', id)).get();
+    return this.firestore.collection('shops').doc(id).valueChanges();
   }
   //create a user account
   createUser(data){
-    this.firestore.collection('shops').add(data);
+    this.firestore.collection('shops').doc(this.userid).set(data);
   }
-
+// set shopname to share across pages
+setShopname(name){
+  this.shopname = name ;
+}
+getshopname(){
+  return this.shopname ;
+}
 
  
     

@@ -4,11 +4,12 @@ import { ToastController, LoadingController, MenuController } from "@ionic/angul
 
 
 import * as firebase from 'firebase/app';
-import {GooglePlus} from '@ionic-native/google-plus/ngx';
-import { async } from "@angular/core/testing";
 import { DatabaseService } from '../database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { Location } from '@angular/common';
+import { User } from '../models/user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-signup',
@@ -17,39 +18,47 @@ import { Location } from '@angular/common';
 })
 export class SignupPage implements OnInit {
  
+// variables
+      shouldHeight = document.body.clientHeight + 'px'
+      data: User ;
+      public registerForm: FormGroup;
+      loading: any;
+      verify = false ;
+      code = false ;
+      passwordType: string = 'password';
+      passwordIcon: string = 'eye-off';
+      provider ;
+      userID ;
 
-  shouldHeight = document.body.clientHeight + 'px'
-  
-  public data: { email: any; password: any ; contact: any ; name: any ;location: any ;openStart: any;openStop: any ;website: any} = {
-    email: null,
-    password: null,
-    contact: null ,
-    name: null,
-    openStart: null,
-    openStop: null,
-    website: null,
-    location: null
-  };
 
-  loading: any;
-  verify = false ;
-  code = false ;
-  passwordType: string = 'password';
-  passwordIcon: string = 'eye-off';
-   provider ;
-   userID ;
   constructor(
     public db: DatabaseService,
     public navigation: Router,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    public googleplus:GooglePlus,
     public menuCtrl: MenuController,
     public service: FirestoreService,
-    public location : Location
-  ) { 
+    public location : Location,
+    private formBuilder: FormBuilder,
+    private ref: AppComponent
+  ) 
+  { 
     this.provider = new firebase.auth.GoogleAuthProvider();
     this.service.hiddenTabs = true;
+
+    // formbuilder
+    this.registerForm = this.formBuilder.group({
+        email: ['',Validators.required],
+        password: ['',Validators.required],
+        contact: ['',Validators.required] ,
+        name:[ '', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+        openStart: ['',Validators.required],
+        openStop: ['',Validators.required],
+        website: ['',Validators.required],
+        location: ['',Validators.required]
+
+    })
+
 
   }
 
@@ -71,11 +80,15 @@ export class SignupPage implements OnInit {
     
       async register() {
         this.presentLoading();
-        
-        this.db.register(this.data.email, this.data.password, this.data.name, this.data.contact,this.data.website,this.data.location,this.data.openStart,this.data.openStop).then(
+        let data = this.registerForm.value ;
+        console.log(data);
+        this.db.register(data).then(
           resp => {
             console.log(resp);
             this.loading.dismiss();
+            this.service.hiddenTabs =false ;
+            this.menuCtrl.enable(true);
+            this.ref.getUserDet(localStorage.getItem('userID'));
             this.navigation.navigate(["tabs/dashboard"]);
           },
           error => {
@@ -84,14 +97,6 @@ export class SignupPage implements OnInit {
           }
         );
         // this.saveShop(this.data);
-        this.data.email = null;
-        this.data.password = null;
-        this.data.contact = null;
-        this.data.location = null;
-        this.data.name = null;
-        this.data.website = null;
-        this.data.openStart = null ;
-        this.data.openStop = null
       }
      
     

@@ -1,9 +1,10 @@
-export class User {
-    key?: any;
-    name?: any;
-    phone?: any;
-    email?: any;
-    country?: any;
-    gender?: any;
-    wallet?: number;
+export interface User {
+    Email?: any;
+    password?: any;
+    contact?: any ;
+    shop?: any;
+    openStart?: any;
+    openStop?: any;
+    website?: any;
+    location?: any;
 }

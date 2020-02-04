@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-toolbar color="primary" padding>
+    <ion-buttons>
+      <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
+      <ion-title text-center>{{OrderID}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="body">
+    <h4>Ordered from {{username}}</h4>
+    <ion-row  class="top" padding>
+      <ion-col>
+        Product
+      </ion-col>
+      <ion-col>
+        Price
+      </ion-col>
+      <ion-col>
+        Quantity
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of products" padding>
+      <ion-col>
+        {{item.product}}
+      </ion-col>
+      <ion-col>
+        {{item.currentprice}}
+      </ion-col>
+      <ion-col>
+        {{item.quantity}}
+      </ion-col>
+    </ion-row>
+    <h4>Order Notes</h4>
+    <ion-row padding>
+      <p >
+        {{notes}}
+      </p>
+      <p *ngIf="notes == ''">
+        No notes
+      </p>
+    </ion-row>
+    <ion-row padding>
+     Picked  &nbsp; &nbsp; <span class="pick">{{Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+    </ion-row>
+  </div>
+</ion-content>

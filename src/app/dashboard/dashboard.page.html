@@ -1,64 +1,70 @@
-<ion-content>
-  <ion-toolbar >
-    <ion-buttons slot="start">
-      <ion-menu-button color="primary"></ion-menu-button>
-    </ion-buttons>
-    <ion-title  color="primary">Dashboard</ion-title>
-  </ion-toolbar>
+<ion-content color="primary" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="top">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-menu-button color=""></ion-menu-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-icon name="search" size="large" (click)="showsearch()" color=""></ion-icon>
+          </ion-buttons>
+          <ion-searchbar placeholder="Enter OrderID" *ngIf="search" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
+          <ion-title  color="" *ngIf="!search">Dashboard</ion-title>
+        </ion-toolbar>
 
-  <div >
-      <ion-row >
-        <ion-col size="4" class="main-nav" tappable (click)="stock()">
-        <ion-card class="card" padding>
-          <ion-card-title>
-            <ion-icon color="primary" name="pricetags"></ion-icon>
-          </ion-card-title>
-          <ion-card-content>
-            Stock
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4" class="main-nav" tappable (click)="sales()"> 
-        <ion-card class="card" padding>
-          <ion-card-title>
-            <ion-icon color="primary" name="pulse"></ion-icon>
-          </ion-card-title>
-          <ion-card-content>
-            Sales
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4" class="main-nav" tappable (click)="orders()">
-        <ion-card class="card" padding>
-          <ion-card-title>
-            <ion-icon color="primary" name="podium"></ion-icon>
-          </ion-card-title>
-          <ion-card-content>
-             Orders
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      </ion-row>
-  </div>
-
-  <div>
-      <ion-label style="padding-left:20px ;" color="primary">Open Oders</ion-label>
+      <div >
+          <ion-row >
+            <ion-col size="4" class="main-nav" tappable (click)="stock()">
+            <ion-card class="card" >
+              <ion-card-title>
+                <ion-icon color="primary" name="pricetags"></ion-icon>
+              </ion-card-title>
+              <label text-center>Stock</label>
+            </ion-card>
+          </ion-col>
+          <ion-col size="4" class="main-nav" tappable (click)="sales()"> 
+            <ion-card class="card" >
+              <ion-card-title>
+                <ion-icon color="primary" name="pulse"></ion-icon>
+              </ion-card-title>
+              <label text-center>Sales</label>
+            </ion-card>
+          </ion-col>
+          <ion-col size="4" class="main-nav" tappable (click)="orders()">
+            <ion-card class="card" >
+              <ion-card-title>
+                <ion-icon color="primary" name="podium"></ion-icon>
+              </ion-card-title>
+              <label text-center>Orders</label>
+            </ion-card>
+          </ion-col>
+          </ion-row>
+      </div>
+ </div>
+  <div class="body" >
+    <ion-item color="light">
+      <ion-label  color="primary">Orders Due Today</ion-label>&nbsp;&nbsp;
+      <ion-input style="padding-top: 10px;" clearInput type="text" placeholder="Enter OrderID" color="medium" *ngIf="inputSearch"[(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-input>
+      <ion-icon name="search" color="medium" *ngIf="inputSearch" ></ion-icon>
+    </ion-item>
     <div  *ngIf="loader" text-center> 
       <ion-spinner class="loader" name="lines" color="primary"></ion-spinner> 
     </div>
+    <div *ngIf="Myorders.length == 0" style="padding-top: 50px;text-align: center;">
+      <ion-label color="medium">No Order is due Today</ion-label>
+    </div>
       
-
       <div *ngIf="!loader" >
-          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item,Myorders.indexOf(item))"> 
-            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">{{item.status}}</ion-label><br><br>
+          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)" style="background-color:#ffff;"> 
+            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
             <div style="text-align:start;">
-              Order for {{item.products[0].product}}, {{item.products[1].product}}, {{item.products[2].product}}, {{item.products[3].product}} ...
+              Order for {{item.products[0].product}}, {{item.products[1].product}},  ...
             </div>
-            <span style="float: left;bottom: 0;margin-top: 10px;">
+            <span style="float: left;margin-top: 10px;">
               {{item.username}}
             </span>
             <span style="float: right;bottom:0;margin-top: 10px;">
-              {{item.Date.toDate() | date: 'mm'}} Mins Ago
+              <!-- <span class="pick">Pick up :</span> {{item.Date.toDate() | date: 'mm'}} mins -->
+              <span class="pick">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
             </span>
           </ion-card>
       </div>

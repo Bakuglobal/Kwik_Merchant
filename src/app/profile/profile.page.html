@@ -4,7 +4,7 @@
         <ion-menu-button autoHide="false"></ion-menu-button>
       </ion-buttons>
   <ion-title>
-    Profile
+    My Profile
   </ion-title>
   
 </ion-toolbar>
@@ -23,7 +23,7 @@
 <ion-card>
   <ion-item>
       <ion-label>Shop Name :</ion-label>
-      <ion-text>{{profile.Shopname}}</ion-text>
+      <ion-text>{{profile.shop}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label >Email :</ion-label>
@@ -39,7 +39,7 @@
   </ion-item>
   <ion-item>
       <ion-label >Open hours :</ion-label>
-      <ion-text>{{profile.OpenHours}}</ion-text>
+      <ion-text>{{profile.Open}} to {{profile.Close}}</ion-text>
   </ion-item>
   <ion-item>
       <ion-label>Website :</ion-label>

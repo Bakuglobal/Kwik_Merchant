@@ -1,88 +1,124 @@
+<ion-content color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" padding>
+      <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+    </ion-buttons>
+    <ion-title>Add to stock</ion-title>
+  </ion-toolbar>
+  <div class="body" *ngIf="type">
 
-<ion-content>
-
-      <!-- Show on loading the page -->
-
-    <div *ngIf="showProducts" >
-          <ion-item color="medium">
-            <ion-label >Select Category</ion-label>
-             <ion-select placeholder="All" required   slot="end" [(ngModel)]="selectedCategory" (ionChange)="setFilteredItems()">
-              <ion-select-option selected>All</ion-select-option>
-              <ion-select-option *ngFor="let cat of categories">{{cat.category}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item text-center color="light">
-            <ion-col>Product</ion-col>
-            <ion-col>Price</ion-col>
-            <ion-col>Status</ion-col>
-          </ion-item>
-          <ion-item *ngFor="let item of products" text-center>
-            <ion-col>{{item.name}}</ion-col>
-            <ion-col>{{item.unit_price}}</ion-col>
-            <ion-col>{{item.deleted}}</ion-col>
-          </ion-item>
+    <div class="buttons">
+      <ion-button expand="block" shape="round" (click)="addNewProduct()">New Product</ion-button><br><br><br>
+      <ion-button expand="block" shape="round" (click)="existingProduct()">Existing Product</ion-button><br><br><br>
+      <ion-button expand="block" shape="round" (click)="categoryModal()">New Category</ion-button>
     </div>
+  </div>
+  <div class="body" *ngIf="existing">
+    <ion-buttons slot="start" style="padding-top: 10px;">
+      <ion-button (click)="close()">
+        <ion-icon size="large" color="primary" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-row padding text-center>
+      <ion-col>
+        <ion-label class="title">Choose category to filter</ion-label>
+        <ion-select placeholder="category" [(ngModel)]="category" (ionChange)="setFilteredItems()">
+          <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="4">
+        <ion-icon name="pricetags" class="image" color="primary"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-item text-center *ngIf="category != null">
+      <ion-input type="text" clearInput placeholder="Enter product name"></ion-input>
+      <ion-icon name="search" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item text-center color="medium">
+      <ion-col>
+        Icon
+      </ion-col>
+      <ion-col>
+        Product
+      </ion-col>
+      <ion-col>
+        Quantity
+      </ion-col>
+      <ion-col>
+        Units
+      </ion-col>
+      <ion-col>
+        Price
+      </ion-col>
+    </ion-item>
+    <ion-item text-center (click)="viewProduct(item)" *ngFor="let item of products">
+      <ion-col text-center>
+        <ion-thumbnail>
+          <img [src]="item.image">
+        </ion-thumbnail>
+      </ion-col>
+      <ion-col>
+        {{item.product}}
+      </ion-col>
+      <ion-col>
+        {{item.currentprice}}
+      </ion-col>
+      <ion-col>
+        {{item.quantity}}
+      </ion-col>
+      <ion-col>
+        {{item.currentprice}}
+      </ion-col>
+    </ion-item>
 
-    <!-- show loading spinner when searching for the shops products -->
-
-    <div class="loader" *ngIf="showLoader"> 
-      <ion-spinner name="lines" color="primary"></ion-spinner>
-    </div>
-
- <!-- Show only when adding a new product -->
-
-<div *ngIf="!showProducts" >
-          <ion-buttons slot="start">
-            <ion-button (click)="back()">
-              <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-          <form  #productForm=ngForm (ngSubmit)="addProduct()">
-          <ion-list>
-            <ion-item>
-              <ion-input type="number" ([ngModel])="data.barcode" placeholder="scan barcode" required></ion-input>
-              <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
-            </ion-item>
-            <ion-item>
-              <ion-input type="text" ([ngModel])="data.name" placeholder="Enter Product name" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Select Category </ion-label>
-              <ion-select placeholder="Select Category" required  ([ngModel])="data.category" slot="end">
-                <ion-select-option *ngFor="let cat of categories">{{cat.category}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-item>
-              <ion-input type="number" ([ngModel])="data.wholesalePrice" placeholder="Enter Wholesale Price" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input type="number" ([ngModel])="data.retailPrice" placeholder="Enter Retail Price" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input type="number" ([ngModel])="data.quantity" placeholder="Enter quantity" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input type="text" required ([ngModel])="data.description" placeholder="Enter description" ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Image:</ion-label>
-              <ion-label>{{file}}</ion-label>
-              <ion-icon slot="end" name="camera" (click)="openCamera()"></ion-icon>
-            </ion-item>
-            <ion-button expand="full "  type="submit" shape="round" [disabled]="!productForm.valid">Save</ion-button>
-          </ion-list>
-        </form>
   </div>
 
-        <!-- Float button for adding a new product -->
-            <ion-fab vertical="bottom" horizontal="end"  slot="fixed" *ngIf="showProducts">
-              <ion-fab-button (click)="showProducts = false">
-                <ion-icon name="add"></ion-icon>
-              </ion-fab-button>
-            </ion-fab>
-
+  <div *ngIf="newProduct" class="body">
+    <ion-buttons slot="start" style="padding-top: 10px;">
+      <ion-button (click)="close()">
+        <ion-icon size="large" color="primary" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <form (ngSubmit)="addProduct()" [formGroup]="productForm">
+      <ion-list>
+        <ion-item>
+          <ion-input type="text" formControlName="productName" placeholder="Enter Product name" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" formControlName="barcode" placeholder="scan barcode"></ion-input>
+          <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
+        </ion-item>
+        <ion-item (click)="selectCategory()">
+          <ion-label>Select Category </ion-label>
+          <ion-input placeholder="Select Category" required slot="end" formControlName="category" value="{{value}}">
+            <ion-icon name="arrow-dropdown" color="medium"></ion-icon>
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" formControlName="quantity" placeholder="Enter Quantity available" required>
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" formControlName="unit" placeholder="Enter Product Unit" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" formControlName="price" placeholder="Enter Product Price" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" formControlName="description" placeholder="Enter Description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Set status as Available</ion-label>
+          <ion-toggle checked slot="end" formControlName="status"></ion-toggle>
+        </ion-item>
+        <!-- <ion-item (click)="selectImage()">
+          <ion-label>Image:</ion-label>
+          <ion-input formControlName="image" value="{{image}}" required></ion-input>
+          <ion-icon slot="end" name="camera"></ion-icon>
+        </ion-item> -->
+        <ion-button expand="full " type="submit" shape="round" [disabled]="!productForm.valid"
+          style="margin-top: 50px;">Save</ion-button>
+      </ion-list>
+    </form>
+  </div>
 </ion-content>
-
- 
-
-

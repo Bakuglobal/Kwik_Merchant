@@ -1,0 +1,33 @@
+ion-title {
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+}
+.body{
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+form{
+    margin-top: 50px;
+    text-align: center;
+}
+.category{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+ion-input {
+    text-align: center;
+    color: var(--ion-color-primary);
+}
+.submit{
+    margin-top: 50px;
+}
+.all{
+    text-align: center;
+    ion-item{
+        text-transform: capitalize;
+    }
+}

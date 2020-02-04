@@ -1,16 +1,7 @@
-<!-- <ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-button (click)="back()">
-      <ion-icon size="large" color="primary" name="arrow-round-back"></ion-icon>
-    </ion-button>
-    <ion-title text-center style="color: #3880ff;text-align: center;font-size: 14pt;">
-     <h5 class="title"> Login  to Continue</h5> 
-    </ion-title>
-</ion-buttons>
-</ion-toolbar> -->
+<!-- 
 
 <ion-content  [style.background-size]="'100% ' + shouldHeight">
-  <div class="">
+  <div style="background-color: var(--ion-color-primary);height: 100%;">
     <ion-grid>
       <ion-row>
         <ion-col size="1">
@@ -18,7 +9,7 @@
         </ion-col>
         <ion-col class="center">
 
-          <form #loginform=ngForm>
+          <form #loginform=ngForm style="margin-top: 30%;">
 
             <img src="/assets/images/icon.png" class="logo">
 
@@ -40,24 +31,14 @@
             </ion-list>
            
           
-            <div class="form-group">
-              <ion-button width="40%" shape="round" [disabled]="!loginform.valid" (click)="submit()" color="primary" >Login</ion-button>
+            <div class="form-group" style="margin-top: 20px;">
+              <ion-button expand="full" shape="round" [disabled]="!loginform.valid" (click)="submit()" color="primary" >Login</ion-button>
             </div>
 
-            <div class="form-group extra" style="color: #3880ff;">
-              Don't have an account<br/><a routerLink="/tabs/signup" class="link" style="color: #3880ff;">Sign up</a>
+            <div  style="background-color: var(--ion-color-primary);text-align: center;color: white;">
+              Don't have an account<br/><a routerLink="/tabs/signup" style="color: white;">Sign up</a>
             </div>
-            <h6 text-center (click)="reset()" style="padding-top: 10px;color: #3880ff">Forgot password?</h6>
-
-            <!-- <fieldset class="title">
-              <legend>Or</legend>
-            </fieldset>
-            <div class="" >
-              <ion-button extend="full" shape="round" (click)="login()">
-                <ion-icon slot="start" name="logo-googleplus"></ion-icon>
-                Sign in with Google
-              </ion-button>
-            </div> -->
+            <h6 text-center (click)="reset()" style="padding-top: 10px;color: white">Forgot password?</h6>
         
           </form>
 
@@ -66,4 +47,77 @@
       </ion-row>
     </ion-grid>
   </div>
+</ion-content> -->
+
+<ion-content>
+  
+  <div class="logo-background-color">
+      <img src="../../app/../assets/images/login-icon.png" class="logo">
+      <h2 class="top-sign-in">SIGN IN</h2>
+  </div>
+
+<div class="bg-text">
+      <!-- FORM -->
+      <form #loginform=ngForm>
+          <ion-list>
+              <ion-item color="medium">
+                  <ion-label color="primary">
+                      <ion-icon color="primary" name="mail" slot="start" size="small"></ion-icon>
+                  </ion-label>
+                  <ion-input clearInput name="email" [(ngModel)]="data.email" required type="email" style="color: black; height: 47px;" placeholder="Email"></ion-input>
+              </ion-item>
+          </ion-list>
+
+          <ion-list>
+              <ion-item color="medium">
+                  <ion-label color="primary">
+                      <ion-icon color="primary" name="lock" slot="start" size="small"></ion-icon>
+                  </ion-label>
+                  <ion-icon color="primary" slot="end" [name]="passwordIcon" (click)='hideShowPassword()' size="small"></ion-icon>
+                  <ion-input [type]="passwordType" clearOnEdit="false" type="password"  name="password" [(ngModel)]="data.password" style="color: black; height: 47px;" required placeholder="Password">
+                  </ion-input>
+              </ion-item>
+          </ion-list>
+
+          <ion-list>
+              <div class="form-group">
+                  <ion-buttons  class="button-sign-in" (click)="submit()">
+                      <ion-button class="button-sign-in" [disabled]="!loginform.valid"><b>SIGN IN</b>
+                      </ion-button>
+                  </ion-buttons>
+              </div>
+          </ion-list>
+          <hr>
+
+          <ion-list>
+              <div class="form-group">
+                  <ion-row>
+                      <ion-col size="5.5">
+                          <div class="ion-text-center" style="color: #00ade5; font-size: 13px; padding-top: 10px;">
+                              Don't have an account?<br>
+                              <a routerLink="/tabs/signup" style="color: #00ade5;">Sign up!</a>
+                          </div>
+                      </ion-col>
+                      <ion-col size="1">
+                          <div class="vertical-line"></div>
+                      </ion-col>
+                      <ion-col size="5.5">
+                          <div class="ion-text-center" style="color: #00ade5; font-size: 13px; padding-top: 20px;">
+                              <a (click)="reset()" style="text-decoration: none;">Forgot password?</a>
+                          </div>
+                      </ion-col>
+                  </ion-row>
+              </div>
+          </ion-list>
+
+      </form>
+</div>
 </ion-content>
+
+
+
+
+
+
+
+

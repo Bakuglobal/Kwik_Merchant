@@ -1,9 +1,98 @@
-
-<ion-content>
-  <ion-toolbar >
-    <ion-buttons slot="start">
-      <ion-menu-button color="primary"></ion-menu-button>
+<ion-content color="primary" style="background-color: var(--ion-color-primary);">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" padding>
+      <ion-icon name="home" (click)="home()"></ion-icon>
     </ion-buttons>
-    <ion-title  color="primary">Stock</ion-title>
+    <ion-title>Stock</ion-title>
+    <ion-buttons slot="end" padding>
+      <ion-icon name="settings" (click)="settings()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
+
+  <div class="card-main" style="background-color: white;">
+    <ion-card-title padding>
+      <ion-row>
+        <ion-col>
+          <ion-label class="title">Choose category</ion-label>
+          <ion-select placeholder="category" [(ngModel)]="category">
+            <!-- <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option> -->
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="pricetags" src="" class="image" color="primary"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-card-title>
+
+    <ion-card-content class="content">
+      <div>
+
+        <ion-label>Low on stock</ion-label>
+
+        <ion-card class="stock" padding disabled>
+          <ion-row>
+            <ion-col size="2">
+              <ion-icon size="large" color="danger" name="trending-down"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>
+                Banana <br> Last updated <span>4</span> days ago
+              </ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>20</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+        <ion-card class="stock" padding disabled>
+          <ion-row>
+            <ion-col size="2">
+              <ion-icon size="large" color="danger" name="trending-down"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>
+                Carrots <br> Last updated <span>5</span> days ago
+              </ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>40</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </div>
+
+      <div>
+        <div class="section-two">
+          <ion-label>Available products</ion-label>
+          <ion-icon name="git-compare" class="float" (click)="sortCategory()"></ion-icon>
+        </div>
+
+        <ion-card class="stock" padding *ngFor="let item of products" (click)="viewProduct(item)">
+          <ion-row>
+            <ion-col size="2">
+              <ion-icon size="large" color="success" name="trending-up"></ion-icon>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>
+                {{item.product}} <br> Last updated <span>4</span> days ago
+              </ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{item.stock}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+
+      </div>
+
+    </ion-card-content>
+    <div style="height: 100%;background-color: white;">
+    </div>
+  </div>
+ 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addProduct()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -1,5 +1,5 @@
-<div style="height: 10px;width: 100%;"></div>
-  <ion-card style="border-radius: 10px;" >
+<!-- <div style="height: 10px;width: 100%;"></div> -->
+  <ion-card  class="top-card" disabled>
     <ion-row>
       <ion-chip><ion-avatar><img src="../../assets/images/icon.png"></ion-avatar>
         <ion-label>You</ion-label>
@@ -19,9 +19,9 @@
     </ion-item>
   </ion-card>
 
-<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)" >
 
-  <ion-card >
+  <ion-card disabled>
     <ion-card-header>
         <ion-chip (click)="infoModal('shop')">
           <ion-avatar><img src="../../assets/images/icon.png"></ion-avatar>
@@ -64,7 +64,7 @@
         <a padding (click)="comments()">view all comments</a>
       </div>
   </ion-card>
-  <ion-card >
+  <ion-card disabled>
     <ion-card-header>
         <ion-chip (click)="infoModal('shop')">
           <ion-avatar><img src="../../assets/images/icon.png"></ion-avatar>

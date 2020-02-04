@@ -14,27 +14,27 @@
         <ion-card>
           <ion-item>
               <ion-label>Shop Name :</ion-label>
-              <ion-input type="text" placeholder="QuickMatt"></ion-input>
+              <ion-input type="text" placeholder="{{profile.shop}}" [(ngModel)]="profile.shop"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label position="Email">Email</ion-label>
-              <ion-input type="email" placeholder="quickmark@gmail.com"></ion-input>
+              <ion-input type="email" placeholder="{{profile.Email}}" [(ngModel)]="profile.Email"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label >Contact :</ion-label>
-              <ion-input type="text" placeholder="02205798212"></ion-input>
+              <ion-input type="text" placeholder="{{profile.Contacts}}" [(ngModel)]="profile.Contacts"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label >Location :</ion-label>
-              <ion-input type="text" placeholder="shop location"></ion-input>
+              <ion-input type="text" placeholder="{{profile.Location}}" [(ngModel)]="profile.Location"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label >Open hours :</ion-label>
-              <ion-input type="text" placeholder="9:00AM -  8:00PM Mon - Sat"></ion-input>
+              <ion-input type="text" placeholder="{{profile.Open}} -  {{profile.Close}}" ></ion-input>
           </ion-item>
           <ion-item>
               <ion-label>Website :</ion-label>
-              <ion-input type="text" placeholder="https://wesite.com"></ion-input>
+              <ion-input type="text" placeholder="{{profile.Website}}" [(ngModel)]="profile.Website"></ion-input>
           </ion-item>
         
         </ion-card>

@@ -1,7 +1,13 @@
-ion-card{
+.card{
     border-radius: 15px;
     text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
     
+}
+ion-card{
+    border-radius: 15px;
 }
 .main-nav{
     object-position: center;
@@ -10,4 +16,21 @@ ion-card{
 .loader {
     
     margin-top: 40%;
+}
+.pick{
+    color: var(--ion-color-success);
+}
+.name{
+    justify-content: center;
+    text-align: center;
+}
+.top{
+    background-color: var(--ion-color-primary);
+}
+.body{
+    border-radius: 20px 20px 0px 0px;
+    background-color: var(--ion-color-light); 
+    height: 10000px;
+    margin-bottom: 0px;
+    padding-top: 20px;
 }

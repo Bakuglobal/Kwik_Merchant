@@ -1,0 +1,19 @@
+<ion-content >
+  <div class="body">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" padding>
+      <ion-icon  name="arrow-back" (click)="back()"></ion-icon>
+    </ion-buttons>
+    <ion-title  text-center>Remove  Category</ion-title>
+  </ion-toolbar>
+<div class="container">
+  <ion-label padding class="label">Tap on a category to select</ion-label>
+  <ion-item text-center *ngFor="let item of categories.categories">
+    <!-- <ion-icon name="bulb"></ion-icon> -->
+    <ion-label>{{item.name}}</ion-label>
+  </ion-item>
+  
+</div>
+
+</div>
+</ion-content>

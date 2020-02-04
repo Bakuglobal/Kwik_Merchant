@@ -1,0 +1,42 @@
+.body{
+    width: 100%;
+    height: 10000px;
+    margin-bottom: 0px;
+    background-color: white;
+}
+.edit{
+    font-size: 1.5em;
+    float: right;
+}
+ion-card{
+    margin-top: 0px;
+}
+.banner{
+    background-color: white;
+    ion-text{
+        color: darken($color: #000000, $amount: 0);
+    }
+    ion-label{
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+}
+ion-avatar{
+    ion-icon{
+        object-fit: contain;
+        width: 50%;
+        height: 50%;
+    }
+}
+.chartlabel{
+    height: 50%;
+    font-weight: bold;
+    
+}
+.leads{
+    margin-top: 20px;
+}
+ion-select{
+    color: var(--ion-color-primary);
+}
