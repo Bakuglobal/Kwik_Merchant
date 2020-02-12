@@ -16,6 +16,7 @@ export class OrderPreviewPage implements OnInit {
   @Input('pickHour') pickHour ;
   @Input('products') products ;
   @Input('Date') Date ;
+  @Input('status') status ;
 
   constructor(
     private modal: ModalController

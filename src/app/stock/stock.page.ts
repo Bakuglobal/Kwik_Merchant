@@ -3,9 +3,12 @@ import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingsPage } from '../settings/settings.page';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { DatabaseService } from '../database.service';
 import { Category } from '../models/category';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock',
@@ -14,9 +17,9 @@ import { Category } from '../models/category';
 })
 export class StockPage implements OnInit {
 // variables
-products;
+products = [];
 unfilteredProducts;
-categories : Category;
+categories ;
 category: string ;
 shopname ;
   constructor(
@@ -29,22 +32,22 @@ shopname ;
   ) { 
     this.service.hiddenTabs = true ;
     this.shopname = localStorage.getItem('shop');
-    console.log(this.shopname)
+    console.log(this.shopname);
   }
   ionViewDidEnter(){
-    this.service.getallcategories(this.shopname).valueChanges().subscribe(res => {
-      console.log(res);
-    });
+   this.service.getallcategories(this.shopname).valueChanges().subscribe(res => {
+      this.categories = res ;
+      console.log(this.categories);
+    })
     this.getproducts();
   }
   ngOnInit() {
   }
-  async getproducts(){
-    await this.fs.collection(this.shopname).valueChanges().subscribe(res => {
-      console.log(res)
-      this.products =  res ;
-      this.unfilteredProducts = res ;
-   })
+  getproducts(){
+    this.service.getallProducts(this.shopname).subscribe(res => {
+      this.products = res ;
+    });
+     console.log(this.products);
   }
 
   home(){

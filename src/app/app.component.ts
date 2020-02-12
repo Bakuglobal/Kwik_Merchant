@@ -91,10 +91,6 @@ export class AppComponent {
             this.loggedIn = true ;
           });
         }
-
-
-
-
 // initialize
 
         initializeApp() {

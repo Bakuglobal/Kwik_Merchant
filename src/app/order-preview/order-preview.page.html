@@ -38,8 +38,11 @@
         No notes
       </p>
     </ion-row>
-    <ion-row padding>
+    <ion-row padding *ngIf="status != 'open'">
      Picked  &nbsp; &nbsp; <span class="pick">{{Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
     </ion-row>
+    <ion-row padding *ngIf="status == 'open'">
+      To be Picked  &nbsp; &nbsp; <span class="pick">{{pickHour}}</span> &nbsp;:&nbsp;<span class="pick">{{pickMins}}</span> &nbsp;&nbsp;<span class="pick">{{pickDay}}</span>
+     </ion-row>
   </div>
 </ion-content>

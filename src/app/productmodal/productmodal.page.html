@@ -3,8 +3,14 @@
     <ion-buttons slot="start" padding>
       <ion-icon name="arrow-back" (click)="back()"></ion-icon>
     </ion-buttons>
-    <ion-buttons slot="end"(click)="edit = true">
+    <ion-buttons slot="end" style="padding-right: 20px;padding-top: 10px;">
+      <ion-icon name="trash" class="create" (click)="confirmDelete(product.id)"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end"(click)="edit = true"*ngIf="edit == false"style="padding-right: 5px;padding-top: 10px;">
       <ion-icon name="create" class="create" ></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end"(click)="edit = false" *ngIf="edit == true" style="padding-right: 5px;padding-top: 10px;">
+      <ion-icon name="close" class="create" ></ion-icon>
     </ion-buttons>
     <ion-title *ngIf="view">{{product.product}}</ion-title>
   </ion-toolbar>
@@ -20,7 +26,7 @@
             <ion-icon name="arrow-dropright" color="medium" class="right"></ion-icon>
           </ion-col>
           <ion-col size="4">
-            <img class="image" alt="image" [src]="product.image">
+            <img class="image" alt="image" [src]="product.image" (click)="imageupdate()">
           </ion-col>
         </ion-row>
         <ion-row padding>
@@ -94,14 +100,14 @@
           </ion-col>
           <ion-col style="text-align:right">
             <ion-label class="edits" *ngIf="!edit">{{product.status}}</ion-label>
-            <ion-select formControlName="status" value="{{product.status}}" *ngIf="edit">
-              <ion-select-option>Available</ion-select-option>
+            <ion-select formControlName="status" *ngIf="edit" placeholder="{{product.status}}">
+              <ion-select-option checked>Available</ion-select-option>
               <ion-select-option>Unavailable</ion-select-option>
             </ion-select>
           </ion-col>
         </ion-row>
 
-        <ion-button disabled expand="block" shape="round" style="margin-top: 50px;" [disabled]="!edit" (click)="saveChanges()">
+        <ion-button disabled expand="block" shape="round" style="margin-top: 50px;" [disabled]="!edit" (click)="saveChanges(product.id)">
           Save Changes
         </ion-button>
       </form>

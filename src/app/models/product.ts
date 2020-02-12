@@ -9,6 +9,6 @@ export interface Product {
     initialprice?: any;
     description?: any;
     stock?: any;
-
+    barcode?: any ;
 
   }

@@ -17,6 +17,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { Product } from '../models/product';
 
 @Component({
   selector: 'app-products',
@@ -31,7 +32,7 @@ export class ProductsPage implements OnInit {
   category: string;
   productForm: FormGroup;
   value = '';
-  scannedcode = '';
+  scannedcode: number;
   image = ''
   images = [];
   categories;
@@ -67,47 +68,31 @@ export class ProductsPage implements OnInit {
     this.service.hiddenTabs = true;
 
     this.productForm = formBuilder.group({
-      productName: ['', Validators.required],
-      barcode: [this.scannedcode],
+      product: ['', Validators.required],
+      barcode: [this.scannedcode,Validators.compose([Validators.maxLength(12)])],
       category: [this.value, Validators.required],
+      stock: ['', Validators.required],
       quantity: ['', Validators.required],
-      unit: ['', Validators.required],
-      price: ['', Validators.required],
+      currentprice: ['', Validators.required],
       description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
       status: [''],
-      // image: [this.image, Validators.required]
+      image: [this.image]
     });
-
-    this.service.getallcategories(this.db.getshopname()).valueChanges().subscribe(res => {
+    this.shop = localStorage.getItem('shop');
+    this.service.getallcategories(this.shop).valueChanges().subscribe(res => {
       this.categories = res ;
     })
-    this.shop = this.db.getshopname() ;
+    
     this.getproducts();
   }
 
   async getproducts(){
-    await this.fs.collection(this.shop).valueChanges().subscribe(res => {
-      console.log(res)
-      this.products =  res ;
+    this.service.getallProducts(this.shop).subscribe(res => {
+      this.products = res ;
       this.unfilteredProducts = res ;
-
-    })
+    });
+     console.log(this.products);
  }
-// toObject(arr) {
-//   var rv = {};
-//   for (var i = 0; i < arr.length; ++i)
-//     rv[i] = arr[i];
-    
-//   return rv;
-// }
-//  updateprod(){
-//    this.products.forEach(item => {
-//      item.stock = 0 ;
-//      item.description = '' ;
-//     //  item =  this.toObject(this.products);
-//      this.fs.collection(this.shop).add(item);
-//    });
-// }
   
   // filter products
   setFilteredItems() {
@@ -125,6 +110,7 @@ export class ProductsPage implements OnInit {
 
   ngOnInit() {
   }
+
   back() {
     this.service.hiddenTabs = false;
     this.close();
@@ -151,18 +137,34 @@ export class ProductsPage implements OnInit {
     this.navCtrl.navigate(['tabs/productmodal']);
   }
   addProduct() {
-    console.log(this.productForm.value);
-    this.productForm.reset();
-    this.category = '';
     this.Toast('uploading...');
-    this.upload.presentToast('Product upload successful');
-
+    let data: Product = {
+      "shop": this.shop,
+      "currentprice": this.productForm.value.currentprice,
+      "quantity": this.productForm.value.quantity,
+      "product": this.productForm.value.product,
+      "image": this.productForm.value.image,
+      "status": this.productForm.value.status,
+      "stock": this.productForm.value.stock,
+      "category": this.productForm.value.category,
+      "description": this.productForm.value.description,
+      "barcode": this.productForm.value.barcode
+    }
+    console.log(data);
+    this.fs.collection(this.shop).add(data).then(res => {
+      this.productForm.reset();
+      this.category = '';
+      this.upload.presentToast('Product upload successful');
+    }).catch(err => {
+      console.log(err);
+    })
+    
 
   }
   scan() {
     this.scannner.scan().then(code => {
       if (code.cancelled) { return; }
-      this.scannedcode = code.toString();
+      this.scannedcode = Number(code);
     });
   }
   async selectCategory() {
@@ -260,7 +262,7 @@ export class ProductsPage implements OnInit {
       //uploads img to firebase storage
       this.upload.uploadImage(image)
       .then(photoURL => {
-
+        console.log(photoURL);
         this.upload.presentToast('Image was updated successfully');
         
         })

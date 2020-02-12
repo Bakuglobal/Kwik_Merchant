@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -26,7 +26,8 @@ export class ProductmodalPage implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private load: LoadingController,
-    private fs: AngularFirestore
+    private fs: AngularFirestore,
+    private alert: AlertController
 
   ) {
     this.service.hiddenTabs = true;
@@ -60,20 +61,35 @@ export class ProductmodalPage implements OnInit {
   }
 
   back() {
-    this.location.back();
+    if(this.edit == true){
+      this.alertShow('Would you like to save the changes you made');
+    }else {
+      this.location.back();
+    }
   }
-  saveChanges() {
+  saveChanges(id) {
     console.log(this.productForm.value);
     this.edit = false;
     this.presentloading('updating product ...');
-    const ref = this.fs.collection(this.shop).doc(this.product.OrderID) ;
+    const ref = this.fs.collection(this.shop).doc(id) ;
     let data = this.productForm.value ;
     ref.update(data).then(res => {
       this.loading.dismiss();
       console.log(res);
+      this.location.back();
     }).catch(error => {
       console.log(error);
     })
+  }
+ deleteProduct(id){
+  this.presentloading('deleting product ...');
+  this.fs.collection(this.shop).doc(id).delete().then(res => {
+    this.loading.dismiss();
+  }).catch(err => { 
+    console.log(err);
+    this.loading.dismiss();
+  });
+  
   }
 
   async presentloading(msg) {
@@ -82,5 +98,53 @@ export class ProductmodalPage implements OnInit {
     });
     await this.loading.present();
   }
+async alertShow(msg){
+  const alt = await this.alert.create({
+    message: msg,
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Yes',
+        handler: () => {
+          this.saveChanges(this.product.id) ;
+        }
+      }
+    ]
+  });
+  await alt.present();
+}
+async imageupdate(){
+  const alt = await this.alert.create({
+    message: 'Image Update is disabled for now',
+    buttons: [
+      {
+        text: 'Close',
+        role: 'cancel'
+      }
+    ]
+  });
+  await alt.present();
+}
+async confirmDelete(id){
+  const alt = await this.alert.create({
+    message: 'Do you want to remove this product from Inventory ?',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Yes',
+        handler: ()=>{
+          this.deleteProduct(id);
+        }
+      }
+    ]
+  });
+  await alt.present();
+}
 
 }

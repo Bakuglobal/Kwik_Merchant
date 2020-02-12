@@ -14,8 +14,8 @@
       <ion-row>
         <ion-col>
           <ion-label class="title">Choose category</ion-label>
-          <ion-select placeholder="category" [(ngModel)]="category">
-            <!-- <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option> -->
+          <ion-select placeholder="category" [(ngModel)]="category" *ngIf="category != undefined">
+            <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option>
           </ion-select>
         </ion-col>
         <ion-col>
@@ -62,11 +62,12 @@
       </div>
 
       <div>
+        
         <div class="section-two">
           <ion-label>Available products</ion-label>
           <ion-icon name="git-compare" class="float" (click)="sortCategory()"></ion-icon>
         </div>
-
+        <ion-spinner name="circles" color="primary" *ngIf="products.length  == 0" class="spinner"></ion-spinner>
         <ion-card class="stock" padding *ngFor="let item of products" (click)="viewProduct(item)">
           <ion-row>
             <ion-col size="2">
@@ -86,8 +87,7 @@
       </div>
 
     </ion-card-content>
-    <div style="height: 100%;background-color: white;">
-    </div>
+   
   </div>
  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addProduct()">

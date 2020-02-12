@@ -8,6 +8,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Order } from '../models/order';
 import { Product} from '../models/product';
 import { Category } from '../models/category';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -24,10 +25,12 @@ export class FirestoreService {
   user;
   extract ;
   product : Observable<Product>;
+  cat: Observable<Category>;
 
   OderCollection: AngularFirestoreCollection<Order>;
   Shopdetails: AngularFirestoreCollection<Shop>;
   categories: AngularFirestoreCollection<Category>
+  allproducts: AngularFirestoreCollection<Product>
 
   constructor(
     private fauth: AngularFireAuth,
@@ -114,15 +117,23 @@ export class FirestoreService {
     return this.fs.collection('users').doc(id);
   }
   //get all categories from firestore
-   getallcategories(shop) {
-   return  this.fs.collection('Categories').doc(shop);
+    getallcategories(shop) {
+   return  this.fs.collection<Category>('Categories').doc(shop);
   }
-  // get all products
-  async getproducts(shop){
-     await this.fs.collection(shop).valueChanges().subscribe(res => {
-       console.log(res)
-       return res ;
 
-     })
+  // get all products
+  getallProducts(shop){
+    this.allproducts = this.fs.collection<Product>(shop, ref => {
+      return ref.orderBy('currentprice','asc')
+    })
+    return this.allproducts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id ;
+          return { id, ... data};
+        })
+      })
+    )
   }
 }
