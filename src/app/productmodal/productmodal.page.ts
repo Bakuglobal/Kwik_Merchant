@@ -85,6 +85,7 @@ export class ProductmodalPage implements OnInit {
   this.presentloading('deleting product ...');
   this.fs.collection(this.shop).doc(id).delete().then(res => {
     this.loading.dismiss();
+    this.location.back();
   }).catch(err => { 
     console.log(err);
     this.loading.dismiss();
@@ -104,7 +105,9 @@ async alertShow(msg){
     buttons: [
       {
         text: 'No',
-        role: 'cancel'
+        handler: () => {
+          this.location.back();
+        }
       },
       {
         text: 'Yes',

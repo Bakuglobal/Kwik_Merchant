@@ -18,6 +18,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { Product } from '../models/product';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-products',
@@ -32,14 +33,15 @@ export class ProductsPage implements OnInit {
   category: string;
   productForm: FormGroup;
   value = '';
-  scannedcode: number;
-  image = ''
+  scannedcode = '';
+  image = '';
   images = [];
   categories;
   products ;
   unfilteredProducts ;
   shop ;
   loading ;
+  date ;
 
   constructor(
     private navCtrl: Router,
@@ -62,21 +64,23 @@ export class ProductsPage implements OnInit {
     private imagePicker: ImagePicker,
     private cropService: Crop,
     private fileChooser: FileChooser,
+    private st: AngularFireStorage,
+
 
   ) {
 
     this.service.hiddenTabs = true;
-
+    this.date = new Date() ;
     this.productForm = formBuilder.group({
       product: ['', Validators.required],
-      barcode: [this.scannedcode,Validators.compose([Validators.maxLength(12)])],
+      barcode: [this.scannedcode],
       category: [this.value, Validators.required],
       stock: ['', Validators.required],
       quantity: ['', Validators.required],
       currentprice: ['', Validators.required],
       description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
       status: [''],
-      image: [this.image]
+      image: [this.image,Validators.required]
     });
     this.shop = localStorage.getItem('shop');
     this.service.getallcategories(this.shop).valueChanges().subscribe(res => {
@@ -138,6 +142,7 @@ export class ProductsPage implements OnInit {
   }
   addProduct() {
     this.Toast('uploading...');
+    this.uploadTostorage(this.image);
     let data: Product = {
       "shop": this.shop,
       "currentprice": this.productForm.value.currentprice,
@@ -164,7 +169,7 @@ export class ProductsPage implements OnInit {
   scan() {
     this.scannner.scan().then(code => {
       if (code.cancelled) { return; }
-      this.scannedcode = Number(code);
+      this.scannedcode = code.text;
     });
   }
   async selectCategory() {
@@ -273,6 +278,34 @@ export class ProductsPage implements OnInit {
         duration: 2000,
       });
       await this.loading.present();
+    }
+   async openCamera(){
+      try {
+        // camera options
+        const options: CameraOptions = {
+          quality: 50,
+          targetHeight: 600,
+          targetWidth: 600,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE,
+          correctOrientation: true
+        }
+        const results  =  await this.camera.getPicture(options) ;
+        const image = `data:image/jpeg;base64,${results}`;
+    
+        this.image = image ;
+
+        }
+        catch (e){
+          console.log(e);
+        }
+    }
+    uploadTostorage(image){
+      const pictures = this.st.storage.ref(this.shop+'/'+this.date); 
+        pictures.putString(image, 'data_url').then(url => {
+          this.image = url.downloadURL ;
+        });
     }
  
 }

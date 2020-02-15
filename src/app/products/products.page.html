@@ -85,7 +85,7 @@
           <ion-input type="text" formControlName="product" placeholder="Enter Product name" required></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input max="25" min="12" type="number" formControlName="barcode" placeholder="Scan or Enter barcode" ></ion-input>
+          <ion-input type="number" formControlName="barcode" placeholder="Scan or Enter barcode" value="{{scannedcode}}" ></ion-input>
           <ion-icon slot="end" name="qr-scanner" (click)="scan()"></ion-icon>
         </ion-item>
         <ion-item (click)="selectCategory()">
@@ -115,9 +115,9 @@
           </ion-select>
           <!-- <ion-toggle checked slot="end" formControlName="status"></ion-toggle> -->
         </ion-item>
-        <ion-item (click)="selectImage()">
+        <ion-item (click)="openCamera()">
           <ion-label>Image:</ion-label>
-          <ion-input formControlName="image" value="{{image}}" ></ion-input>
+          <ion-input formControlName="image" value="{{image}}" readonly required></ion-input>
           <ion-icon slot="end" name="camera"></ion-icon>
         </ion-item>
         <ion-button expand="full " type="submit" shape="round" [disabled]="!productForm.valid"

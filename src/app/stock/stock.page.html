@@ -14,7 +14,7 @@
       <ion-row>
         <ion-col>
           <ion-label class="title">Choose category</ion-label>
-          <ion-select placeholder="category" [(ngModel)]="category" *ngIf="category != undefined">
+          <ion-select placeholder="category" [(ngModel)]="category" *ngIf="show" (ionChange)="filterProducts()">
             <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option>
           </ion-select>
         </ion-col>

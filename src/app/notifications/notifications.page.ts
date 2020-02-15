@@ -3,6 +3,7 @@ import { ActionSheetController, PopoverController, ModalController } from '@ioni
 import { DatabaseService } from '../database.service';
 import { OneSignalService } from '../one-signal.service';
 import { ViewNotificationPage } from '../view-notification/view-notification.page';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-notifications',
@@ -13,12 +14,15 @@ export class NotificationsPage implements OnInit {
   newNotice;
   notices : any;
   none = false ;
+  area: string ;
+  zone: string ;
 
   constructor(
     private asC: ActionSheetController,
     private db: DatabaseService,
     private mod: ModalController,
-    private signal: OneSignalService
+    private signal: OneSignalService,
+    private fs: AngularFirestore
   )
    { 
     this.newNotice = this.signal.getNoticeData() ;
@@ -29,7 +33,7 @@ export class NotificationsPage implements OnInit {
     this.signal.getmyNotification().valueChanges().subscribe(res => {
       this.notices = res ;
       this.none = true ;
-    })
+    });
    }
 
   ngOnInit() {
@@ -64,4 +68,17 @@ export class NotificationsPage implements OnInit {
     await asc.present();
     
   }
+
+  // update(){
+  //   let data  = {
+  //     "Area":this.area,
+  //     "Zone": this.zone
+  //   }
+  //   console.log(data);
+  //   this.fs.collection('Areas').add(data).then(
+  //     res => {
+  //       console.log('added');
+  //     }
+  //   ).catch(err => { console.log(err)});
+  // }
 }

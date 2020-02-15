@@ -28,11 +28,20 @@
   </ion-col>
 </ion-item>
 <div text-center style="margin-top: 10px;">
-    <ion-label>Order notes</ion-label>
-    <p>
+    <ion-label color="primary">Order notes</ion-label>
+    <p style="color: var(--ion-color-medium);">
       {{prod.notes}}
     </p>
     <p *ngIf="prod.notes == ''" style="color: var(--ion-color-medium);">No notes for this order</p>
+</div>
+<div text-center style="margin-top: 10px;">
+  <ion-label color="primary">Delivery Options</ion-label>
+  <p style="color: var(--ion-color-medium);">
+    {{prod.Delivery}}
+  </p>
+  <ion-row>
+    <!-- <ion-label>Delivery charges</ion-label><ion-label>{{}}</ion-label> -->
+  </ion-row>
 </div>
 <div style="margin-top: 40px;margin-bottom: 10px;" padding>
   <ion-label color="primary" style="font-size: large;font-weight: bold;float: left;">Total</ion-label>
@@ -50,7 +59,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="isready">
+          <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">
             <ion-card-content style="font-weight:bold ;">Ready</ion-card-content>
           </ion-card>
         </ion-col>

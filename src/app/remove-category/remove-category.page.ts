@@ -11,6 +11,7 @@ import { DatabaseService } from '../database.service';
 export class RemoveCategoryPage implements OnInit {
   // variables
   categories ;
+  show = false ;
 
   constructor(
     private location: Location,
@@ -19,6 +20,7 @@ export class RemoveCategoryPage implements OnInit {
   ) { 
     this.service.getallcategories(localStorage.getItem('shop')).valueChanges().subscribe(res => {
       this.categories = res ;
+      this.show = true ;
     })
   }
 

@@ -18,6 +18,7 @@ export class DashboardPage implements OnInit {
 // variables
 
       Myorders = [];
+      readyOrders = [];
       filterOrder ;
       searchTerm;
       date: Date ;
@@ -28,13 +29,14 @@ export class DashboardPage implements OnInit {
       search = false ;
       inputSearch = false ;
 
-  constructor(
+  constructor (
         private fs: AngularFirestore,
         private navCtrl: Router,
         private service: FirestoreService,
         private modal: ModalController,
         private db: DatabaseService
-  ) {
+  )
+   {
         this.service.hiddenTabs = false ;
         this.date = new Date() ;
   }
@@ -105,6 +107,7 @@ ionViewWillEnter() {
          this.shopname = localStorage.getItem('shop');
          console.log(this.shopname);
          this.getOrders();
+         this.getReadyOrders();
         }
 // get orders from firestore
         getOrders() {
@@ -115,6 +118,14 @@ ionViewWillEnter() {
               this.loader = false ;
             });
           }
+//  get todays ready orders
+getReadyOrders(){
+  this.service.getReadyOrders(this.shopname).valueChanges().subscribe( res => {
+    this.readyOrders =  res ;
+    this.filterOrder = res ;
+    console.log(this.readyOrders);
+  })
+}
 // view order
        openOrder(item) {
         console.log(item);

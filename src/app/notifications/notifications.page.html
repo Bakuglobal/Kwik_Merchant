@@ -6,9 +6,15 @@
     <ion-title>Notifications</ion-title>
 
   </ion-toolbar>
+ 
+
 
   <ion-card class="card-main">
-
+    <!-- <form style="background-color: white;text-align: center;">
+      <ion-input type="text" name="area" [(ngModel)]="area" placeholder="area"></ion-input>
+      <ion-input type="text" name="zone" [(ngModel)]="zone" placeholder="zone"></ion-input>
+      <ion-button (click)="update()">add area</ion-button>
+    </form> -->
     <div class="ion-text-center" style="margin-top: 200px;" *ngIf="!none">
       <ion-label padding>You have no Notifications</ion-label>
     </div>

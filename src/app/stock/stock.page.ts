@@ -22,6 +22,7 @@ unfilteredProducts;
 categories ;
 category: string ;
 shopname ;
+show = false ;
   constructor(
     private navCtrl: Router,
     private service: FirestoreService,
@@ -37,6 +38,7 @@ shopname ;
   ionViewDidEnter(){
    this.service.getallcategories(this.shopname).valueChanges().subscribe(res => {
       this.categories = res ;
+      this.show = true ;
       console.log(this.categories);
     })
     this.getproducts();
@@ -46,9 +48,25 @@ shopname ;
   getproducts(){
     this.service.getallProducts(this.shopname).subscribe(res => {
       this.products = res ;
+      this.unfilteredProducts = res ;
     });
      console.log(this.products);
   }
+   // filter products
+   filterProducts() {
+    if (this.category !== null || this.category !== undefined) {
+      console.log(this.category)
+      this.products = this.filterItems();
+      console.log(this.products);
+    }
+  }
+  filterItems() {
+    return this.unfilteredProducts.filter(item => {
+      console.log(item.category);
+      return item.category.toLowerCase().indexOf(this.category.toLowerCase()) > -1;
+    });
+  }
+
 
   home(){
     this.service.hiddenTabs = false ;

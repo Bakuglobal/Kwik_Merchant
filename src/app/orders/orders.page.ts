@@ -80,8 +80,8 @@ export class OrdersPage implements OnInit {
     )
     this.toast('Notification send to'+ ''+ user).then(
       res => {
-        this.isready  = true ;
-        // this.navCtrl.navigate(['tabs/dashboard'])
+        // this.isready  = true ;
+        this.navCtrl.navigate(['tabs/dashboard'])
       }
     )
   }

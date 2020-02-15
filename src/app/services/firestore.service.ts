@@ -97,6 +97,11 @@ export class FirestoreService {
       return ref.where('status', '==', 'open').where('shop', '==', shop).orderBy('Date', 'asc').where('pickDay', '==', 'Today');
     });
   }
+  getTodaysReadyOrders(shop) {
+    return this.OderCollection = this.fs.collection('Orders', ref => {
+      return ref.where('status', '==', 'Ready').where('shop', '==', shop).orderBy('Date', 'asc').where('pickDay', '==', 'Today');
+    });
+  }
   // get past orders
   getReadyOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
