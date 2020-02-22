@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, PopoverController, ModalController } from '@ionic/angular';
+import { ActionSheetController, PopoverController, ModalController, LoadingController } from '@ionic/angular';
 import { DatabaseService } from '../database.service';
 import { OneSignalService } from '../one-signal.service';
 import { ViewNotificationPage } from '../view-notification/view-notification.page';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Order } from '../models/order';
+import { OrderPreviewPage } from '../order-preview/order-preview.page';
 
 @Component({
   selector: 'app-notifications',
@@ -11,46 +13,43 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./notifications.page.scss'],
 })
 export class NotificationsPage implements OnInit {
-  newNotice;
-  notices : any;
-  none = false ;
-  area: string ;
-  zone: string ;
+
+  notices: any;
+  shop ;
+  Order : Order ;
 
   constructor(
     private asC: ActionSheetController,
     private db: DatabaseService,
     private mod: ModalController,
     private signal: OneSignalService,
-    private fs: AngularFirestore
-  )
-   { 
-    this.newNotice = this.signal.getNoticeData() ;
-    console.log(this.newNotice)
-    if(this.newNotice !== undefined){
-      this.viewNotice(this.newNotice);
-    }
-    this.signal.getmyNotification().valueChanges().subscribe(res => {
-      this.notices = res ;
-      this.none = true ;
-    });
-   }
-
+    private fs: AngularFirestore,
+    private load: LoadingController
+  ) 
+  {
+    this.shop = localStorage.getItem('shop');
+  }
+ionViewWillEnter(){
+  this.signal.getmyNotification().subscribe(res => {
+    this.notices = res;
+    console.log(res);
+  });
+}
   ngOnInit() {
   }
- async  viewNotice(data) {
-   const mod = await this.mod.create({
-     component: ViewNotificationPage,
-     componentProps: data
-   });
-   console.log(data);
-   await mod.present();
- }
+  async  viewNotice(data) {
+    const mod = await this.mod.create({
+      component: ViewNotificationPage,
+      componentProps: data
+    });
+    console.log(data);
+    await mod.present();
+  }
 
-  async logout(){
+  async logout() {
     const asc = await this.asC.create({
-      animated: true ,
-      backdropDismiss: true ,
+      animated: true,
+      backdropDismiss: true,
       cssClass: './home.page.scss',
       buttons: [{
         text: 'Logout',
@@ -63,10 +62,47 @@ export class NotificationsPage implements OnInit {
         text: 'Cancel',
         role: 'cancel'
       }
-    ]
+      ]
     });
     await asc.present();
-    
+
+  }
+  viewOrder(title) {
+    let id = title.substring(0, 8);
+    console.log(id);
+    this.getOder(id);
+    if (this.Order == undefined) {
+      this.loader();
+      setTimeout( () => {
+        this.gotoModal(this.Order);
+      },2500)
+    } else {
+      this.gotoModal(this.Order);
+    }
+
+  }
+  async getOder(id) {
+    await this.fs.collection('Orders').doc(id).valueChanges().subscribe(res => {
+      this.Order = res;
+      console.log(this.Order);
+    },
+      err => { console.log(err) }
+    )
+  }
+  async gotoModal(order) {
+    const mod = await this.mod.create({
+      component: OrderPreviewPage,
+      componentProps: order
+    });
+    console.log(order);
+    await mod.present();
+  }
+  async loader() {
+    const ld = await this.load.create({
+      message: 'Getting order ...',
+      duration: 2500,
+    });
+    await ld.present();
   }
 
   // update(){

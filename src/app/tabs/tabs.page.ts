@@ -11,19 +11,23 @@ import { OneSignalService } from '../one-signal.service';
 export class TabsPage {
   // variables
   animate = false;
-  count = ''
+  count ;
   constructor(
     private menuCtrl: MenuController,
     public service: FirestoreService,
     public signal: OneSignalService,
   ) {
+    
+  }
+  ionViewWillEnter(){
     this.menuCtrl.enable(true);
-    this.signal.noticeCount.subscribe(res => {
-      this.count = res;
-      if(this.count != '0'){
+    if(this.signal.noticeNew.toString() == 'Unread'){
       this.setAnimationTimeout();
-      }
-    })
+    };
+    this.signal.notice.subscribe(res => {
+      this.count = res ;
+    });
+    console.log(this.count);
   }
 
 

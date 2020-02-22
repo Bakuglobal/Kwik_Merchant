@@ -15,7 +15,7 @@
     </ion-tab-button>
     <ion-tab-button tab="notifications" [ngClass]="{'animate': animate == true}" >
       <ion-icon name="notifications" >
-      </ion-icon> <ion-badge id="notifications-badge" >{{count}}</ion-badge>
+      </ion-icon> <ion-badge id="notifications-badge" *ngIf="count !== 0">{{count}}</ion-badge>
     </ion-tab-button>
     <ion-tab-button tab="profile" >
       <ion-icon name="person"></ion-icon>

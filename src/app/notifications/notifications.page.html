@@ -6,33 +6,30 @@
     <ion-title>Notifications</ion-title>
 
   </ion-toolbar>
- 
 
-
-  <ion-card class="card-main">
-    <!-- <form style="background-color: white;text-align: center;">
-      <ion-input type="text" name="area" [(ngModel)]="area" placeholder="area"></ion-input>
-      <ion-input type="text" name="zone" [(ngModel)]="zone" placeholder="zone"></ion-input>
-      <ion-button (click)="update()">add area</ion-button>
-    </form> -->
-    <div class="ion-text-center" style="margin-top: 200px;" *ngIf="!none">
-      <ion-label padding>You have no Notifications</ion-label>
+    <div class="card-main">
+      <ion-card *ngFor="let item of notices" (click)="viewOrder(item.title)">
+        <ion-row padding>
+          <ion-col size="3" >
+            <ion-avatar>
+              <img src="../../assets/images/icon.png">
+            </ion-avatar>
+          </ion-col>
+          <ion-col style="text-align: left;padding-top: 20px;">
+            <ion-label>{{item.title}}</ion-label><br>
+            <ion-label>{{ item.Date.toDate() | date}}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-card-content>
+          <p>
+            Hello {{shop}} your order is Ready for pick up. <br>
+            You ordered for : 
+          </p>
+          <blockquote>
+            {{item.message}}
+          </blockquote>
+          
+        </ion-card-content>
+      </ion-card>
     </div>
-    <!-- Unread notices -->
-    <!-- <ion-label padding color="primary">Unread Notifications</ion-label> -->
-    <!-- <ion-card class="notice-unread" padding (click)="viewNotice(item)">
-      <ion-card-title>9DOB4K Order canceled</ion-card-title>
-      <ion-card-content>Mangoes, sugar,maize...</ion-card-content>
-      <ion-label style="float: left;">James</ion-label>
-      <ion-label style="float: right;">4:30Pm</ion-label>
-    </ion-card> -->
-  <!-- read notices -->
-  <!-- <ion-label padding color="primary">Read Notifications </ion-label> -->
-  <ion-card class="notice-unread" padding (click)="viewNotice(item)" *ngFor="let item of notices">
-    <ion-card-title>{{item.Title}}</ion-card-title>
-    <ion-card-content>{{item.message}}</ion-card-content>
-    <ion-label style="float: left;"></ion-label>
-    <ion-label style="float: right;">4:30Pm</ion-label>
-  </ion-card>
-  </ion-card>
 </ion-content>

@@ -74,7 +74,8 @@ ionViewWillEnter() {
   // filter searchbar
         setFilteredItems() {
           if (this.searchTerm !== null || this.searchTerm !== '') {
-            this.Myorders = this.filterItems();
+            // this.Myorders = this.filterItems();
+            this.readyOrders = this.filterItems();
             console.log(this.Myorders);
           }
         }
@@ -113,7 +114,7 @@ ionViewWillEnter() {
         getOrders() {
           this.service.getTodaysOrders(this.shopname).valueChanges().subscribe(res => {
               this.Myorders = res ;
-              this.filterOrder = res ;
+              // this.filterOrder = res ;
               console.log(this.Myorders);
               this.loader = false ;
             });

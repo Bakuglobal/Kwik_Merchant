@@ -27,6 +27,7 @@ export class AppComponent {
         shop: User;
         email ;
         userID;
+        unreadNotice = [];
 
   constructor(
         public platform: Platform,
@@ -111,13 +112,19 @@ export class AppComponent {
               console.log(data);
               if (data.wasTapped) {
                 console.log('Received in background');
-                this.serve.takeToNotifications(data);
+                this.serve.sendNotificationTodb(data);
                 this.navCtrl.navigate(['tabs/notifications']);
                 // this.navCtrl.navigate([data.landing_page, data.price]);
               } else {
                 console.log('Received in foreground');
-                this.serve.animateNoticeIcon(data);
-                // this.navCtrl.navigate([data.landing_page, data.price]);
+                this.serve.sendNotificationTodb(data);
+                this.serve.showNew('Unread');
+                this.serve.getUnreadNotices().subscribe(res => {
+                  this.unreadNotice = res ;
+                });
+                setTimeout(() => {
+                  this.serve.showCount(this.unreadNotice.length);
+                },2500);
               }
             });
 
