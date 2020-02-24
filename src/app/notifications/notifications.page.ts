@@ -6,6 +6,7 @@ import { ViewNotificationPage } from '../view-notification/view-notification.pag
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Order } from '../models/order';
 import { OrderPreviewPage } from '../order-preview/order-preview.page';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-notifications',
@@ -24,7 +25,8 @@ export class NotificationsPage implements OnInit {
     private mod: ModalController,
     private signal: OneSignalService,
     private fs: AngularFirestore,
-    private load: LoadingController
+    private load: LoadingController,
+    private location: Location
   ) 
   {
     this.shop = localStorage.getItem('shop');
@@ -34,6 +36,9 @@ ionViewWillEnter(){
     this.notices = res;
     console.log(res);
   });
+}
+back(){
+  this.location.back();
 }
   ngOnInit() {
   }

@@ -9,6 +9,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Shop } from './models/shops';
 import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
+import { Post } from './models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,34 @@ setShopname(name){
 }
 getshopname(){
   return this.shopname ;
+}
+getPosts(){
+  let posts = this.firestore.collection<Post>('posts',ref => {
+    return ref.orderBy('time','desc')
+  })
+  return posts.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const id = a.payload.doc.id ;
+        const data = a.payload.doc.data();
+        return {id, ... data}
+      });
+    })
+  )
+}
+getPostsComments(postid){
+  let posts = this.firestore.collection<Comment>('comments',ref => {
+    return ref.where('postID','==',postid).orderBy('time','desc')
+  })
+  return posts.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const id = a.payload.doc.id ;
+        const data = a.payload.doc.data();
+        return {id, ... data}
+      });
+    })
+  )
 }
 
  

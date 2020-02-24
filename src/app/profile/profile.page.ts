@@ -7,6 +7,7 @@ import { DatabaseService } from '../database.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-profile',
@@ -15,9 +16,9 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
   image_profile;
-  profile;
+  profile : User;
   docID;
-  constructor( 
+  constructor(
     private modalCtrl: ModalController,
     private fileChooser: FileChooser,
     private filePath: FilePath,
@@ -26,37 +27,36 @@ export class ProfilePage implements OnInit {
     private fs: AngularFirestore,
     private service: FirestoreService,
     private navCtrl: Router
-    
-    ) 
-    {
-      let id = localStorage.getItem('userID');
-      console.log(id)
-      this.getUser();
-     }
 
-  ngOnInit() {
-    
+  ) {
+    let id = localStorage.getItem('userID');
+    console.log(id)
+    this.getUser();
   }
 
-   update(){
-    this.service.hiddenTabs = true ;
+  ngOnInit() {
+
+  }
+
+  update() {
+    this.service.hiddenTabs = true;
     // this.service.setuser(user);
     this.navCtrl.navigate(['tabs/profilemodal']);
   }
 
-  pickFile(){
+  pickFile() {
     this.fileChooser.open().then(uri => {
       this.filePath.resolveNativePath(uri).then(resolvedURI => {
-        this.image_profile = resolvedURI ;
-      }).catch( err => {console.log(err)})
-    }).catch(err => {console.log(err)})
+        this.image_profile = resolvedURI;
+      }).catch(err => { console.log(err) })
+    }).catch(err => { console.log(err) })
   }
-  
-//get userdetails
-getUser(){
-  this.profile = this.service.getuser();
-}
 
-  
-  
+  //get userdetails
+  getUser() {
+    this.profile = this.service.getuser();
+  }
+
+
+
 }

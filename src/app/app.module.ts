@@ -35,7 +35,6 @@ import {Media} from '@ionic-native/media/ngx';
 import { IonicStorageModule} from '@ionic/storage';
 import { Contacts } from '@ionic-native/contacts';
 import { ProfilemodalPageModule } from './profilemodal/profilemodal.module';
-import { FileSizeFormatPipe } from './tab3/file-size-format.pipe';
 import { Camera} from '@ionic-native/camera/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { OrdersPageModule } from './orders/orders.module';
@@ -52,9 +51,10 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { OrderPreviewPageModule } from './order-preview/order-preview.module';
 import { ViewNotificationPageModule } from './view-notification/view-notification.module';
+import { ImageDisplayPageModule } from './image-display/image-display.module';
 
 @NgModule({
-  declarations: [AppComponent, FileSizeFormatPipe],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -77,7 +77,8 @@ import { ViewNotificationPageModule } from './view-notification/view-notificatio
     SettingsPageModule,
     CategoryPageModule,
     OrderPreviewPageModule,
-    ViewNotificationPageModule
+    ViewNotificationPageModule,
+    ImageDisplayPageModule
 
   ],
   providers: [

@@ -30,7 +30,8 @@
           </ion-item>
           <ion-item>
               <ion-label >Open hours :</ion-label>
-              <ion-input type="text" placeholder="{{profile.Open}} -  {{profile.Close}}" ></ion-input>
+              <ion-input type="text" placeholder="{{profile.Open}}" [(ngModel)]="profile.Open"></ion-input> To
+              <ion-input type="text" placeholder="{{profile.Close}}" [(ngModel)]="profile.Close"></ion-input>
           </ion-item>
           <ion-item>
               <ion-label>Website :</ion-label>
@@ -38,6 +39,6 @@
           </ion-item>
         
         </ion-card>
-        <ion-button expand="block" shape="round">Save</ion-button>
+        <ion-button expand="block" shape="round" (click)="save()">Save</ion-button>
         </div>
 </ion-content>

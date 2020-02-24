@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SokomodalPage } from '../sokomodal/sokomodal.page';
 import { CommentsPage } from '../comments/comments.page';
@@ -10,7 +10,7 @@ import { CommentsPage } from '../comments/comments.page';
 })
 export class InfomodalPage implements OnInit {
 
-
+@Input('url') shopname ;
   likes = {"count": 0} ;
   liked = false ;
   h = false ;

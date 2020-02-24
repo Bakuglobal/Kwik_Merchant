@@ -2,15 +2,20 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { PostmodalPage } from '../postmodal/postmodal.page';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
+// import { FilePath } from '@ionic-native/file-path/ngx';
+// import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { InfomodalPage } from '../infomodal/infomodal.page';
 import { CommentsPage } from '../comments/comments.page';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 import { FirestoreService } from '../services/firestore.service';
-
+// import { SocialSharing } from '@ionic-native/social-sharing/ngx'
+import { ImageDisplayPage } from '../image-display/image-display.page';
+import { User } from '../models/user';
+import { DatabaseService } from '../database.service';
+import { Post } from '../models/post';
 
 
 
@@ -20,53 +25,90 @@ import { FirestoreService } from '../services/firestore.service';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  videos = [];
-  images = [];
-  likes = {count: 0} ;
+  videoPath = [];
+  imagePath = [];
+  likes = {"count": 0} ;
   liked = false ;
   h = false ;
   Addcomment = false ;
-  post: string ;
+  text: string ;
+  hiddenHeader = false ;
 
+ 
+  //Status check 
+  isUploading:boolean;
+  isUploaded:boolean;
+ 
+  // SHOW SEARCHBAR
+  showSearch = false;
+  user : User;
+  Posts = [] ;
+  comment = [] ;
 
 
   constructor(
     private navCtrl: Router,
     private modalCtrl: ModalController,
-    private fileChooser: FileChooser,
-    private filePath: FilePath,
+    // private fileChooser: FileChooser,
+    // private filePath: FilePath,
     private asC: ActionSheetController,
-    private storage: AngularFireStorage,
-    private database: AngularFirestore,
-    private camera: Camera,
-    private service: FirestoreService
+    private storage: AngularFireStorage, 
+    private db: DatabaseService,
+    private service: FirestoreService,
+    // private socialSharing: SocialSharing
 
 
   ) {
-
-  this.service.hiddenTabs = false ;
+    this.isUploading = false;
+    this.isUploaded = false;
+    
   }
 
-  // tslint:disable-next-line: use-lifecycle-interface
-  ngOnInit(): void {
-
-  }
-  onScroll(event) {
-    if (event.detail.scrollTop === 148) {
+  onScroll(event){
+    if(event.detail.scrollTop == 0){
       this.service.hiddenTabs = false ;
-      console.log('00000000');
-    } else {
+      this.hiddenHeader = false ;
+      console.log("00000000")
+    }else{
     if (event.detail.scrollTop > 30) {
-      console.log('>>>> 30');
+      console.log(">>>> 30");
       this.service.hiddenTabs = true ;
+      this.hiddenHeader = true ;
     } else {
       this.service.hiddenTabs = false ;
     }
   }
   }
+  
+  ngOnInit() {
+    this.user = this.service.getuser() ;
+    console.log(this.user);
+    this.db.getPosts().subscribe(res => {
+      this.Posts = res ;
+      console.log('POSTS :',res)
+    });
+  }
+  AddComment(){
+    if(this.Addcomment == true){
+      this.Addcomment = false;
+    }else {
+    this.Addcomment = true;
+  }
+  }
+  async whatsappshare(){
 
 
-  async share() {
+    //share via whatsapp
+    let msg = "Kwik Shopping List ";
+    let img = '../assets/images/icon.png' ;
+    let url = 'https://weza-prosoft.com';
+    // this.socialSharing.shareViaWhatsApp(msg, null, url).then(()=>{
+    //   console.log("whatsapp share successful")
+    // }).catch(err => {console.log(err)});
+}
+  
+
+  async share(){
     const asc = await this.asC.create({
       animated: true ,
       backdropDismiss: true ,
@@ -74,12 +116,12 @@ export class Tab3Page {
       buttons: [{
         icon: 'logo-whatsapp',
         text: 'Whatsapp',
-
+        
         handler: () => {
-
+          this.whatsappshare()
         }
       },
-
+      
       {
         text: 'Cancel',
         role: 'cancel'
@@ -87,91 +129,80 @@ export class Tab3Page {
     ]
     });
     await asc.present();
-
+    
   }
-  async comments() {
+  async comments(){
     const com = await this.modalCtrl.create({
       component: CommentsPage,
       componentProps: {}
 
-    });
+    })
     await com.present();
   }
-  like() {
-    if (this.liked === false) {
+  like(){
+    if(this.liked == false){
       this.likes.count++ ;
       this.liked = true ;
-    } else {
+    }else {
       this.likes.count--;
       this.liked = false ;
     }
-    if (this.h === false) {
+   if(this.h == false){
      this.h = true ;
-   } else {
+   }else{
     this.h = false ;
    }
-
+    
   }
-  async infoModal(url) {
+  async infoModal(url){
     const modal = await this.modalCtrl.create({
       component: InfomodalPage,
       componentProps: {
         shopname: url
       }
-    });
+    })
     await modal.present();
    }
-  async openPostModal() {
+  async openPostModal(){
     const modal = await this.modalCtrl.create({
       component: PostmodalPage,
-      componentProps: {}
-    });
+      componentProps: this.user
+    })
     await modal.present();
    }
-   async postFile(url) {
+   async postFile(url){
     const modal = await this.modalCtrl.create({
       component: PostmodalPage,
       componentProps: {url}
-    });
+    })
     await modal.present();
    }
-  pickFile(value) {
-    if (value === 'image') {
-        // pick images
-        const options: CameraOptions = {
-          quality: 100,
-          destinationType: this.camera.DestinationType.FILE_URI,
-          sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-          encodingType: this.camera.EncodingType.JPEG,
-          mediaType: this.camera.MediaType.PICTURE,
-          targetHeight: 100,
-        };
-        this.camera.getPicture(options).then((image) => {
-          this.images.push(image);
-          // send image to create post modal
-          this.postFile(this.images);
-        }, (err) => {
-          // handle err
-        });
-
-    } else {
-     // pick videos
-     const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-      // encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.VIDEO,
-      targetHeight: 100,
-    };
-     this.camera.getPicture(options).then((video) => {
-      this.videos.push(video);
-    }, (err) => {
-      // handel err
-    });
-
-    }
-
+   notifications(){
+    this.navCtrl.navigate(['tabs/notifications']);
+  }
+ 
+  Post(){
+    this.text = null ;
   }
 
+
+
+  show(){
+    if(this.showSearch == false){
+      this.showSearch = true;
+    }else{
+      this.showSearch = false ;
+    }
+  }
+
+// DISPLAY IMAGE IN A MODEL
+  showImage(){
+    this.modalCtrl.create({
+        component: ImageDisplayPage,
+        componentProps: {
+            img: "maxwell"
+        }
+    }).then(modal => modal.present());
+
+   }
 }

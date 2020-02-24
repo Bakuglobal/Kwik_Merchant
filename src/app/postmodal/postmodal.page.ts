@@ -21,7 +21,8 @@ const MEDIA_FILE_KEY = 'mediaFiles';
 export class PostmodalPage implements OnInit {
   images = [];
   videos = [] ;
-  @Input() url: any;
+  @Input('logo') logo: any;
+  @Input('shop') shop ;
   @ViewChild('myPosts',{static:false}) myPosts: any;
   PostedImages = [];
   PostedVideos = [];
@@ -99,16 +100,20 @@ export class PostmodalPage implements OnInit {
             }
       //Now create the post
       this.firestore.collection('posts').add({
-        PostID: 'postid',
         Text: this.postText,
         Images: this.PostedImages,
         Videos: this.PostedVideos,
         likes: 0,
+        comments: 0,
+        shop: this.shop,
+        logo: this.logo,
         time: this.time,
-        comments: {
-          userID: '',
-          comment: '',
-          time: ''
+        lastComment: {
+          Text: '',
+          image: '',
+          postID: '',
+          time: '',
+          user: 'Maxime Lee'
         }
       }).then(() => {
                       //if everything went well --display success toast and close postmodal
@@ -119,7 +124,6 @@ export class PostmodalPage implements OnInit {
             this.postText = ''
             this.presentToast('Your post was created successfully')
             this.modalCtrl.dismiss();
-
       }).catch(err => {alert(JSON.stringify(err))})
 
     }
@@ -177,15 +181,15 @@ export class PostmodalPage implements OnInit {
       backdropDismiss: true ,
       cssClass: './postmodal.page.scss',
       buttons: [{
-        text: 'Image',
+        text: 'Select Image',
         icon: 'image',
         handler: () => {
          this.pickFile('image');
         }
       },
       {
-        text: 'Video',
-        icon: 'videocam',
+        text: 'Select Video',
+        icon: 'play',
         handler: () => {
           this.pickFile('video');
       }

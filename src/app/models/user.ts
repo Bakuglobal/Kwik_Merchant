@@ -1,4 +1,4 @@
-export interface User {
+export class User {
     Email?: any;
     password?: any;
     contact?: any ;
@@ -7,4 +7,5 @@ export interface User {
     openStop?: any;
     website?: any;
     location?: any;
+    logo?: any ;
 }

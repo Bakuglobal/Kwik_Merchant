@@ -23,17 +23,17 @@
     <br>
   </div> 
 <div padding>
-<ion-label><b>Quickmatt mega</b></ion-label><br><br>
-<ion-label><a (click)="maps()"> Moi Avenue Haruko house&nbsp;<ion-icon name="pin"></ion-icon></a></ion-label><br><br>
+<ion-label><b>{{shopname}}</b></ion-label><br><br>
+<ion-label><a (click)="maps()">53 Park Arcade Ring Road Kilimani&nbsp;<ion-icon name="pin"></ion-icon></a></ion-label><br><br>
 <ion-label>Open from 9:00AM - 9:00PM Mon - Sat</ion-label><br><br>
-<ion-label>Website : <a (click)="inbrowser()">https://www.quickmatt.co.ke</a></ion-label><br><br>
+<ion-label>Website : <a (click)="inbrowser()">https://www.{{shopname}}.co.ke</a></ion-label><br><br>
 </div>
 <div class="ion-text-center" style="margin-top: 20px;font-weight: bold;"><ion-label >Recent posts</ion-label></div>
 <ion-card>
     <ion-card-header>
         <ion-chip (click)="infoModal('shop')">
           <ion-avatar><img src=""></ion-avatar>
-          <ion-label>Quickmatt</ion-label>
+          <ion-label>{{shopname}}</ion-label>
         </ion-chip>
         1 hr . <ion-icon name="globe"></ion-icon>
     </ion-card-header>

@@ -13,6 +13,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { OneSignalService } from './one-signal.service';
 import * as $ from "jquery";
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -81,7 +82,7 @@ export class AppComponent {
         }
 // get user details from database
         async getUserDet(id) {
-          await this.service.getUserDetails(id).valueChanges().subscribe(res => {
+           this.service.getUserDetails(id).valueChanges().subscribe(res => {
             this.shop = res ;
             console.log(this.shop);
             this.service.setuser(this.shop);
