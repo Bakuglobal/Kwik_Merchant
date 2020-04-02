@@ -297,6 +297,9 @@ Apache-2.0
 @firebase/webchannel-wrapper
 Apache-2.0
 
+@ionic-native/badge
+MIT
+
 @ionic-native/barcode-scanner
 MIT
 

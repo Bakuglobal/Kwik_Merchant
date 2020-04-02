@@ -102,6 +102,7 @@ apply from: "../cordova-plugin-fcm-with-dependecy-updated/merchant-FCMPlugin.gra
 apply from: "../cordova-plugin-telerik-imagepicker/merchant-ignorelinterrors.gradle"
 apply from: "../cordova-plugin-telerik-imagepicker/merchant-androidtarget.gradle"
 apply from: "../phonegap-plugin-barcodescanner/merchant-barcodescanner.gradle"
+apply from: "../cordova-plugin-badge/merchant-badge.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()

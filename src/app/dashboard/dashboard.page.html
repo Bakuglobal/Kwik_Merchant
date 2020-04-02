@@ -42,47 +42,37 @@
  </div>
   <div class="body" >
     <ion-item color="light">
-      <ion-label  color="primary">Orders Due Today</ion-label>&nbsp;&nbsp;
+      <ion-label  color="primary">Orders Due Today</ion-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <ion-label >{{getCount()}} Pending </ion-label>
       <ion-input style="padding-top: 10px;" clearInput type="text" placeholder="Enter OrderID" color="medium" *ngIf="inputSearch"[(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-input>
       <ion-icon name="search" color="medium" *ngIf="inputSearch" ></ion-icon>
     </ion-item>
     <div  *ngIf="loader" text-center> 
       <ion-spinner class="loader" name="lines" color="primary"></ion-spinner> 
     </div>
-    <div *ngIf="Myorders.length == 0" style="padding-top: 200px;text-align: center;">
-      <ion-label color="medium">No Order is due Today</ion-label>
+    <div *ngIf="Myorders.length == 0" style="padding-top: 50px;text-align: center;">
+      <ion-label color="medium">No Pending Orders</ion-label>
     </div>
       
       <div *ngIf="!loader" >
-          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)" style="background-color:white;"> 
-            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
+          <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready'}"> 
+            <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
+            <ion-label color="success" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
+            <ion-label color="success" *ngIf="item.status == 'open'">Open</ion-label>
+            <ion-label color="success" *ngIf="item.paid == 'True'">Complete</ion-label>
+            <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
             <div style="text-align:start;">
-              Order for {{item.products[0].product}}, {{item.products[1].product}},  ...
+              Order for <ion-label *ngFor="let item of item.products">{{item.product}}</ion-label> ...
             </div>
             <span style="float: left;margin-top: 10px;">
               {{item.username}}
             </span>
             <span style="float: right;bottom:0;margin-top: 10px;">
-              <!-- <span class="pick">Pick up :</span> {{item.Date.toDate() | date: 'mm'}} mins -->
-              <span class="pick">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
+              <span class="pick" *ngIf="item.Delivery == 'Deliver it to me'">Delivery To : {{item.Location}} </span>
+              <span class="pick" *ngIf="item.Delivery == 'I will pick it'">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
             </span>
           </ion-card>
-          <div *ngIf="readyOrders.length > 0">
-            <ion-card padding *ngFor="let item of readyOrders "  (click)="openOrder(item)" style="background-color: #06b7f13d;"> 
-              <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;<ion-label color="success">Ready</ion-label>
-              <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
-              <div style="text-align:start;">
-                Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label>
-              </div>
-              <span style="float: left;margin-top: 10px;">
-                {{item.username}}
-              </span>
-              <span style="float: right;bottom:0;margin-top: 10px;">
-                <!-- <span class="pick">Pick up :</span> {{item.Date.toDate() | date: 'mm'}} mins -->
-                <span class="pick">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
-              </span>
-            </ion-card>
-          </div>
+          
       </div>
   </div>
   <div style="background-color: var(--ion-color-light);height: 100%;" *ngIf="Myorders.length == 0">

@@ -10,5 +10,6 @@ export interface Product {
     description?: any;
     stock?: any;
     barcode?: any ;
+    date?:any;
 
   }

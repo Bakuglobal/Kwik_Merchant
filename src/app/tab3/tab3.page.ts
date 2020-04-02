@@ -154,11 +154,12 @@ export class Tab3Page {
    }
     
   }
-  async infoModal(url){
+  async infoModal(item){
     const modal = await this.modalCtrl.create({
       component: InfomodalPage,
       componentProps: {
-        shopname: url
+        "shopname": item.shop,
+        "logo": item.logo
       }
     })
     await modal.present();
@@ -196,11 +197,11 @@ export class Tab3Page {
   }
 
 // DISPLAY IMAGE IN A MODEL
-  showImage(){
+  showImage(url){
     this.modalCtrl.create({
         component: ImageDisplayPage,
         componentProps: {
-            img: "maxwell"
+            img: url
         }
     }).then(modal => modal.present());
 

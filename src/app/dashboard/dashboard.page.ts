@@ -28,6 +28,7 @@ export class DashboardPage implements OnInit {
       loader = true ;
       search = false ;
       inputSearch = false ;
+      count = 0 ;
 
   constructor (
         private fs: AngularFirestore,
@@ -51,6 +52,10 @@ export class DashboardPage implements OnInit {
 // ionviewwill enter function
 ionViewWillEnter() {
   this.getShop();
+  
+}
+getCount(){
+  return this.count ;
 }
   // oninit method
 
@@ -102,31 +107,35 @@ ionViewWillEnter() {
           this.navCtrl.navigate(['tabs/order-stats']);
         }
 
+// count unprepared orders of the day
 
 // get the shop name
        async  getShop() {
          this.shopname = localStorage.getItem('shop');
          console.log(this.shopname);
          this.getOrders();
-         this.getReadyOrders();
+        //  this.getDeliveryOrders();
         }
 // get orders from firestore
         getOrders() {
           this.service.getTodaysOrders(this.shopname).valueChanges().subscribe(res => {
               this.Myorders = res ;
-              // this.filterOrder = res ;
+              this.filterOrder = res ;
               console.log(this.Myorders);
               this.loader = false ;
+              if(this.Myorders.length > 0){
+                 this.count = 0 ;
+                 let count = 0 ;
+                this.Myorders.forEach(item => {
+                  if(item.status == 'open'){
+                    count++;
+                  }
+                });
+                this.count = count ;
+              }
             });
           }
-//  get todays ready orders
-getReadyOrders(){
-  this.service.getReadyOrders(this.shopname).valueChanges().subscribe( res => {
-    this.readyOrders =  res ;
-    this.filterOrder = res ;
-    console.log(this.readyOrders);
-  })
-}
+
 // view order
        openOrder(item) {
         console.log(item);

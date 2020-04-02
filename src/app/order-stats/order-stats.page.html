@@ -71,7 +71,7 @@
           {{item.username}}
         </span>
         <span style="float: right;bottom:0;margin-top: 10px;">
-          <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+          <!-- <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span> -->
         </span>
       </div>
       <div *ngIf="item.show">
@@ -166,7 +166,7 @@
     </div>
     <ion-card padding style="background-color: white;" *ngFor="let item of myOpenOrders">
       <div *ngIf="!item.show">
-        <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+        <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;<ion-label color="success" *ngIf="item.status == 'Ready'">Ready</ion-label>
         <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
         <div style="text-align:start;">
           Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
@@ -175,7 +175,8 @@
           {{item.username}}
         </span>
         <span style="float: right;bottom:0;margin-top: 10px;">
-          <span class="pick">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span>
+          <span class="pick" *ngIf="item.Delivery == 'Deliver it to me'">Delivery To : {{item.Location}} </span>
+          <span class="pick" *ngIf="item.Delivery == 'I will pick it'">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
         </span>
       </div>
       <div *ngIf="item.show">

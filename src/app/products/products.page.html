@@ -23,7 +23,7 @@
       <ion-col>
         <ion-label class="title">Choose category to filter</ion-label>
         <ion-select placeholder="category" [(ngModel)]="category" (ionChange)="setFilteredItems()">
-          <ion-select-option *ngFor="let item of categories.categories">{{item.name}}</ion-select-option>
+          <ion-select-option *ngFor="let item of categories.categories">{{item}}</ion-select-option>
         </ion-select>
       </ion-col>
       <ion-col size="4">
@@ -107,14 +107,14 @@
         <ion-item>
           <ion-input type="text" formControlName="description" placeholder="Enter Description"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label>Set product status </ion-label>
           <ion-select formControlName="status" slot="end" placeholder="Select">
             <ion-select-option selected>Available</ion-select-option>
             <ion-select-option>Unavailable</ion-select-option>
           </ion-select>
-          <!-- <ion-toggle checked slot="end" formControlName="status"></ion-toggle> -->
-        </ion-item>
+          <ion-toggle checked slot="end" formControlName="status"></ion-toggle>
+        </ion-item> -->
         <ion-item (click)="openCamera()">
           <ion-label>Image:</ion-label>
           <ion-input formControlName="image" value="{{image}}" readonly required></ion-input>

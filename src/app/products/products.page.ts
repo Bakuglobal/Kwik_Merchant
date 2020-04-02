@@ -79,7 +79,7 @@ export class ProductsPage implements OnInit {
       quantity: ['', Validators.required],
       currentprice: ['', Validators.required],
       description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
-      status: [''],
+      status: ['Available'],
       image: [this.image,Validators.required]
     });
     this.shop = localStorage.getItem('shop');
@@ -186,11 +186,11 @@ export class ProductsPage implements OnInit {
     // tslint:disable-next-line: forin
     for (let index in this.categories.categories) {
       const button = {
-        text: this.categories.categories[index].name,
+        text: this.categories.categories[index],
         // icon: this.Allcategories[index].icon,
         handler: () => {
-          console.log('button text ' + this.categories.categories[index].name);
-          this.value = this.categories.categories[index].name;
+          console.log('button text ' + this.categories.categories[index]);
+          this.value = this.categories.categories[index];
           return true;
         }
       };

@@ -19,10 +19,12 @@ ion-card{
 }
 .pick{
     color: var(--ion-color-success);
+    text-transform: capitalize;
 }
 .name{
     justify-content: center;
     text-align: center;
+    
 }
 .top{
     background-color: var(--ion-color-primary);
@@ -34,4 +36,7 @@ ion-card{
     padding-top: 20px;
     padding-bottom: 50px;
     
+}
+.ready{
+    background-color: #06b7f13d;
 }

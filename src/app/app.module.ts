@@ -52,6 +52,8 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { OrderPreviewPageModule } from './order-preview/order-preview.module';
 import { ViewNotificationPageModule } from './view-notification/view-notification.module';
 import { ImageDisplayPageModule } from './image-display/image-display.module';
+import { Badge } from '@ionic-native/badge/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -93,6 +95,7 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
     AngularFirestore,
     AngularFireStorage,
     FileChooser,
+    Badge,
     Geolocation,
     NativeGeocoder,
     FilePath,

@@ -21,4 +21,8 @@ ion-card{
 }
 .pick{
     color: var(--ion-color-success);
+    text-transform: capitalize;
+}
+.ready{ 
+    background-color: #06b7f13d;
 }

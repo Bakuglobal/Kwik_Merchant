@@ -36,8 +36,11 @@
 </div>
 <div text-center style="margin-top: 10px;">
   <ion-label color="primary">Delivery Options</ion-label>
-  <p style="color: var(--ion-color-medium);">
+  <p style="color: var(--ion-color-medium);" *ngIf="prod.Delivery == 'I will pick it'">
     {{prod.Delivery}}
+  </p>
+  <p style="color: var(--ion-color-medium);" *ngIf="prod.Delivery == 'Deliver it to me'">
+   Deliver it to {{prod.Location}}
   </p>
   <ion-row>
     <!-- <ion-label>Delivery charges</ion-label><ion-label>{{}}</ion-label> -->
@@ -64,7 +67,7 @@
           </ion-card>
         </ion-col>
         <ion-col>
-          <ion-card  color="success" text-center (click)="paid(prod.OrderID)">
+          <ion-card  color="success" text-center (click)="paid(prod.OrderID)" [disabled]="prod.paid == 'True'">
             <ion-card-content style="font-weight:bold ;">Paid</ion-card-content>
           </ion-card>
         </ion-col>

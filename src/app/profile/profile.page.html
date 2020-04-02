@@ -1,52 +1,154 @@
 <ion-header style="background-color: #00ade5;">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-        <ion-menu-button autoHide="false"></ion-menu-button>
-      </ion-buttons>
-  <ion-title>
-    My Profile
-  </ion-title>
-  
-</ion-toolbar>
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      My Profile
+    </ion-title>
+
+  </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  
+  <div *ngIf="shop === undefined">
+    <div>
+      <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 170px;"></ion-skeleton-text>
+    </div>
+    <div>
+      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+        <ion-skeleton-text animated style="object-fit: fill;"></ion-skeleton-text>
+      </ion-avatar>
+    </div>
+    <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
+      <div style="font-size: 15px; font-weight: bold;">
+        <ion-skeleton-text></ion-skeleton-text>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
 
-<div class="profile_pic" no-padding>
-  <ion-avatar style="margin-top:15px;"><img src="{{profile.logo}}"></ion-avatar>
-  <ion-icon (click)="pickFile()" float-right color="primary" name="camera" slot="end"></ion-icon>
-</div>
-<div class="profile">
-    
-</div>
-<div>
-<ion-card>
-  <ion-item>
-      <ion-label>Shop Name :</ion-label>
-      <ion-text>{{profile.shop}}</ion-text>
-  </ion-item>
-  <ion-item>
-      <ion-label >Email :</ion-label>
-      <ion-text>{{profile.Email}}</ion-text>
-  </ion-item>
-  <ion-item>
-      <ion-label >Contact :</ion-label>
-      <ion-text>{{profile.Contacts}}</ion-text>
-  </ion-item>
-  <ion-item>
-      <ion-label >Location :</ion-label>
-      <ion-text>{{profile.Location}}</ion-text>
-  </ion-item>
-  <ion-item>
-      <ion-label >Open hours :</ion-label>
-      <ion-text>{{profile.Open}} to {{profile.Close}}</ion-text>
-  </ion-item>
-  <ion-item>
-      <ion-label>Website :</ion-label>
-      <ion-text>{{profile.Website}}</ion-text>
-  </ion-item>
+  <div style="padding-bottom: 15px;" *ngIf="shop !== undefined">
+    <div>
+      <img src="{{shop.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 170px;">
+    </div>
+    <div>
+      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+        <img src="{{shop.logo}}" style="object-fit: fill;">
+      </ion-avatar>
+    </div>
+    <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
+      <div style="font-size: 15px; font-weight: bold;">{{shopname}}</div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+        <a >{{shop.Location}} <ion-icon name="pin"></ion-icon></a>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from {{shop.Open}} - {{shop.Close}} Mon - Sat
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;">Website:
+        <a >{{shop.Website}}</a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 15px;">
+    <!-- <ion-label class="ion-padding">Your Posts</ion-label><br> -->
+    <div class="ion-padding" *ngIf="!loaded">
+      <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
+      <br><br>
+      <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
+    </div>
+    <!-- <div class="ion-text-center ion-padding" *ngIf="Posts.length == 0">
+      <ion-label>  You have no recents posts </ion-label>
+    </div> -->
+  </div>
 
-</ion-card>
-<ion-button expand="block" shape="round" (click)="update()">Update</ion-button>
-</div>
+  <div class="page-content"><br>
+
+    <ion-card class="card" *ngFor="let item of Posts">
+      <div class="header">
+        <div class="image" (click)="infoModal(item.shop,item.logo)">
+          <ion-avatar>
+            <img src="{{item.logo}}">
+          </ion-avatar>
+        </div>
+        <div class="name" (click)="infoModal(item.shop,item.logo)">
+          {{item.shop}}
+        </div>
+        <div class="date">
+          10 mins ago
+        </div>
+      </div>
+      <!-- DESCRIPTION -->
+      <p class="description">
+        {{item.Text}}
+      </p>
+
+      <!-- MAIN IMAGE -->
+      <div class="main-image">
+        <ion-slides>
+          <ion-slide *ngFor="let n of item.Images">
+            <img src="{{n}}" (click)="showImage()">
+          </ion-slide>
+        </ion-slides>
+
+      </div>
+
+      <!-- LIKE, COMMENT AND SHARE -->
+      <div class="like-comment-share">
+        <ion-row>
+          <ion-col size="4">
+            <ion-button fill="light" (click)="like()">
+              <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
+              &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.likes}}</span>
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button fill="light" (click)="comments()">
+              <ion-icon size="large" src="../../assets/images/comment.svg"></ion-icon>
+              &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.comments}}</span>
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button fill="light" (click)="share()">
+              <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg">
+              </ion-icon>
+              &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div class="line"></div>
+
+      <!-- LAST USER COMMENT -->
+      <div class="user-comment">
+        <div class="user-avatar">
+          <ion-avatar>
+            <img src="{{item.lastComment.image}}">
+          </ion-avatar>
+        </div>
+        <div class="user-name-and-date">
+          <div class="name">{{item.lastComment.user}}</div>
+          <div class="date">10 mins ago</div>
+        </div>
+
+        <div class="comment-container">
+          <p class="comment">
+            {{item.lastComment.Text}}
+          </p>
+          <div class="view-all-comments" (click)="comments()">View all comments</div>
+        </div>
+
+      </div>
+    </ion-card><br>
+
+  </div>
 </ion-content>

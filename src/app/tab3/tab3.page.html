@@ -28,10 +28,10 @@
           <div class="header">
               <div class="image" (click)="infoModal('Kakila Organic')">
                   <ion-avatar>
-                      <img src="{{user.logo}}">
+                      <img src="{{item.logo}}">
                   </ion-avatar>
               </div>
-              <div class="name" (click)="infoModal('Kakila Organic')">
+              <div class="name" (click)="infoModal(item)">
                   {{item.shop}}
               </div>
               <div class="date">
@@ -46,7 +46,12 @@
 
           <!-- MAIN IMAGE -->
           <div class="main-image">
-              <img src="../../assets/images/Kakilaposter.jpg" (click)="showImage()">
+            <ion-slides>
+              <ion-slide *ngFor="let n of item.Images">
+                <img src="{{n}}" (click)="showImage(n)">
+              </ion-slide>
+            </ion-slides>
+              
           </div>
 
           <!-- LIKE, COMMENT AND SHARE -->

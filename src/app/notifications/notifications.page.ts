@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Order } from '../models/order';
 import { OrderPreviewPage } from '../order-preview/order-preview.page';
 import { Location } from '@angular/common';
+import { Notice } from '../models/notice';
 
 @Component({
   selector: 'app-notifications',
@@ -15,9 +16,10 @@ import { Location } from '@angular/common';
 })
 export class NotificationsPage implements OnInit {
 
-  notices: any;
+  notices: Notice[];
   shop ;
   Order : Order ;
+  none = false ;
 
   constructor(
     private asC: ActionSheetController,
@@ -34,6 +36,9 @@ export class NotificationsPage implements OnInit {
 ionViewWillEnter(){
   this.signal.getmyNotification().subscribe(res => {
     this.notices = res;
+    if(this.notices.length == 0 ){
+      this.none = true ;
+    }
     console.log(res);
   });
 }
@@ -72,20 +77,20 @@ back(){
     await asc.present();
 
   }
-  viewOrder(title) {
-    let id = title.substring(0, 8);
-    console.log(id);
-    this.getOder(id);
-    if (this.Order == undefined) {
-      this.loader();
-      setTimeout( () => {
-        this.gotoModal(this.Order);
-      },2500)
-    } else {
-      this.gotoModal(this.Order);
-    }
+  // viewOrder(title) {
+  //   let id = title.substring(0, 8);
+  //   console.log(id);
+  //   this.getOder(id);
+  //   if (this.Order == undefined) {
+  //     this.loader();
+  //     setTimeout( () => {
+  //       this.gotoModal(this.Order);
+  //     },2500)
+  //   } else {
+  //     this.gotoModal(this.Order);
+  //   }
 
-  }
+  // }
   async getOder(id) {
     await this.fs.collection('Orders').doc(id).valueChanges().subscribe(res => {
       this.Order = res;

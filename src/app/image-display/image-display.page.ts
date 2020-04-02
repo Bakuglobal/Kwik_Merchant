@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,7 +7,7 @@ import { NavParams, ModalController } from '@ionic/angular';
   styleUrls: ['./image-display.page.scss'],
 })
 export class ImageDisplayPage implements OnInit {
-    img: any;
+   @Input('img')img: any;
     liked = false ;
 
     // @ViewChild('slider', { read: ElementRef })slider: ElementRef;
