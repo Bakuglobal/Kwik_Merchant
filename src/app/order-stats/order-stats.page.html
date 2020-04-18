@@ -75,7 +75,6 @@
         </span>
       </div>
       <div *ngIf="item.show">
-
         <ion-card-title text-center (click)="showLess(item)">
           <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
           {{item.OrderID}}<br>{{item.username}}
@@ -166,7 +165,7 @@
     </div>
     <ion-card padding style="background-color: white;" *ngFor="let item of myOpenOrders">
       <div *ngIf="!item.show">
-        <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;<ion-label color="success" *ngIf="item.status == 'Ready'">Ready</ion-label>
+        <ion-icon name="funnel" style="float: left;" color="primary"(click)="showMore(item)" ></ion-icon>&nbsp;<ion-label color="success" *ngIf="item.status == 'Ready'">Ready</ion-label>
         <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
         <div style="text-align:start;">
           Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...

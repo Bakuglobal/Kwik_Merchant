@@ -58,7 +58,7 @@
           <ion-card padding *ngFor="let item of Myorders "  (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready'}"> 
             <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
             <ion-label color="success" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
-            <ion-label color="success" *ngIf="item.status == 'open'">Open</ion-label>
+            <ion-label color="warning" *ngIf="item.status == 'open'">Open</ion-label>
             <ion-label color="success" *ngIf="item.paid == 'True'">Complete</ion-label>
             <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
             <div style="text-align:start;">

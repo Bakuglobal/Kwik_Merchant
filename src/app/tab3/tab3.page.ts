@@ -33,6 +33,8 @@ export class Tab3Page {
   Addcomment = false ;
   text: string ;
   hiddenHeader = false ;
+  searchTerm : string ;
+  unfilteredPosts = [] ;
 
  
   //Status check 
@@ -85,6 +87,7 @@ export class Tab3Page {
     console.log(this.user);
     this.db.getPosts().subscribe(res => {
       this.Posts = res ;
+      this.unfilteredPosts = res ;
       console.log('POSTS :',res)
     });
   }
@@ -107,6 +110,17 @@ export class Tab3Page {
     // }).catch(err => {console.log(err)});
 }
   
+searchShop(){
+  if(this.searchTerm !== '' || this.searchTerm !== null){
+    this.Posts = this.filterItems();
+    console.log(this.Posts);
+  }
+}
+filterItems() {
+  return this.unfilteredPosts.filter(item => {
+    return item.shop.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+  });
+}
 
   async share(){
     const asc = await this.asC.create({

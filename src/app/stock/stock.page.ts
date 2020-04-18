@@ -51,6 +51,7 @@ show = false ;
       this.unfilteredProducts = res ;
     });
      console.log(this.products);
+     
   }
    // filter products
    filterProducts() {

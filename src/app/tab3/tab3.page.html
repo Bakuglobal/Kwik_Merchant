@@ -21,7 +21,7 @@
 
   <div class="page-content"><br>
     <div>
-      <ion-searchbar placeholder="Search for a shop "animated type="text"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search for a shop " (ionChange)="searchShop()"></ion-searchbar>
     </div>
 
       <ion-card class="card" *ngFor="let item of Posts">
