@@ -53,161 +53,166 @@
       <ion-label>Completed Orders</ion-label>
     </ion-segment-button>
   </ion-segment>
-  <div *ngIf="ready;open">
-    <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
-      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
-    </div>
-    <div *ngIf="ReadyOrders.length == 0" style="padding-top: 50px;text-align: center;">
-      <ion-label color="medium">No Order is due Today</ion-label>
-    </div>
-    <ion-card padding style="background-color: white;" *ngFor="let item of ReadyOrders">
-      <div *ngIf="!item.show">
-        <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
-        <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
-        <div style="text-align:start;">
-          Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+  <div style="position: fixed;bottom: 0px;overflow-y: scroll;width: 100%;top: 25%;">
+    <div *ngIf="ready;open">
+      <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
+        <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
+      </div>
+      <div *ngIf="ReadyOrders.length == 0" style="padding-top: 50px;text-align: center;">
+        <ion-label color="medium">No Order is due Today</ion-label>
+      </div>
+      <ion-card padding style="background-color: white;" *ngFor="let item of ReadyOrders">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+          </div>
+          <span style="float: left;margin-top: 10px;">
+            {{item.username}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;">
+            <!-- <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span> -->
+          </span>
         </div>
-        <span style="float: left;margin-top: 10px;">
-          {{item.username}}
-        </span>
-        <span style="float: right;bottom:0;margin-top: 10px;">
-          <!-- <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span> -->
-        </span>
-      </div>
-      <div *ngIf="item.show">
-        <ion-card-title text-center (click)="showLess(item)">
-          <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
-          {{item.OrderID}}<br>{{item.username}}
-        </ion-card-title>
-        <ion-card-content>
-          <ion-row *ngFor="let item of item.products">
-            <ion-col>
-              {{item.product}}
-            </ion-col>
-            <ion-col>
-              {{item.currentprice}}
-            </ion-col>
-            <ion-col>{{item.quantity}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
-                (click)="viewOrder(item)">
-                <ion-label>View more ...</ion-label>
-              </span>
-              <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
-                <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
-              </span>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </div>
-    </ion-card>
-  </div>
-  <div *ngIf="canceled;open">
-    <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
-      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
-    </div>
-    <div *ngIf="CanceledOrders.length == 0" style="padding-top: 50px;text-align: center;">
-      <ion-label color="medium">No Order is due Today</ion-label>
-    </div>
-    <ion-card padding style="background-color: white;" *ngFor="let item of CanceledOrders">
-      <div *ngIf="!item.show">
-        <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
-        <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
-        <div style="text-align:start;">
-          Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+        <div *ngIf="item.show">
+          <ion-card-title text-center (click)="showLess(item)">
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+            {{item.OrderID}}<br>{{item.username}}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>View more ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
         </div>
-        <span style="float: left;margin-top: 10px;">
-          {{item.username}}
-        </span>
-        <span style="float: right;bottom:0;margin-top: 10px;">
-          <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
-        </span>
+      </ion-card>
+    </div>
+    <div *ngIf="canceled;open">
+      <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
+        <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
       </div>
-      <div *ngIf="item.show">
+      <div *ngIf="CanceledOrders.length == 0" style="padding-top: 50px;text-align: center;">
+        <ion-label color="medium">No Order is due Today</ion-label>
+      </div>
+      <ion-card padding style="background-color: white;" *ngFor="let item of CanceledOrders">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+          </div>
+          <span style="float: left;margin-top: 10px;">
+            {{item.username}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;">
+            <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+          </span>
+        </div>
+        <div *ngIf="item.show">
 
-        <ion-card-title text-center (click)="showLess(item)">
-          <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
-          {{item.OrderID}}<br>{{item.username}}
-        </ion-card-title>
-        <ion-card-content>
-          <ion-row *ngFor="let item of item.products">
-            <ion-col>
-              {{item.product}}
-            </ion-col>
-            <ion-col>
-              {{item.currentprice}}
-            </ion-col>
-            <ion-col>{{item.quantity}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
-                (click)="viewOrder(item)">
-                <ion-label>View more ...</ion-label>
-              </span>
-              <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
-                <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
-              </span>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </div>
-    </ion-card>
-  </div>
-  <div *ngIf="open">
-    <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
-      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
-    </div>
-    <div *ngIf="myOpenOrders.length == 0" style="padding-top: 50px;text-align: center;">
-      <ion-label color="medium">No Order is due Today</ion-label>
-    </div>
-    <ion-card padding style="background-color: white;" *ngFor="let item of myOpenOrders">
-      <div *ngIf="!item.show">
-        <ion-icon name="funnel" style="float: left;" color="primary"(click)="showMore(item)" ></ion-icon>&nbsp;<ion-label color="success" *ngIf="item.status == 'Ready'">Ready</ion-label>
-        <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
-        <div style="text-align:start;">
-          Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+          <ion-card-title text-center (click)="showLess(item)">
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+            {{item.OrderID}}<br>{{item.username}}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>View more ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
         </div>
-        <span style="float: left;margin-top: 10px;">
-          {{item.username}}
-        </span>
-        <span style="float: right;bottom:0;margin-top: 10px;">
-          <span class="pick" *ngIf="item.Delivery == 'Deliver it to me'">Delivery To : {{item.Location}} </span>
-          <span class="pick" *ngIf="item.Delivery == 'I will pick it'">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span> 
-        </span>
+      </ion-card>
+    </div>
+    <div *ngIf="open">
+      <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
+        <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
       </div>
-      <div *ngIf="item.show">
+      <div *ngIf="myOpenOrders.length == 0" style="padding-top: 50px;text-align: center;">
+        <ion-label color="medium">No Order is due Today</ion-label>
+      </div>
+      <ion-card padding style="background-color: white;" *ngFor="let item of myOpenOrders">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" style="float: left;" color="primary" (click)="showMore(item)"></ion-icon>&nbsp;
+          <ion-label color="success" *ngIf="item.status == 'Ready'">Ready</ion-label>
+          <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+          </div>
+          <span style="float: left;margin-top: 10px;">
+            {{item.username}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;">
+            <span class="pick" *ngIf="item.Delivery == 'Deliver it to me'">Delivery To : {{item.Location}} </span>
+            <span class="pick" *ngIf="item.Delivery == 'I will pick it'">Pick up : {{item.pickHour}}:{{item.pickMins}}
+              {{item.pickDay}}</span>
+          </span>
+        </div>
+        <div *ngIf="item.show">
 
-        <ion-card-title text-center (click)="showLess(item)">
-          <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
-          {{item.OrderID}}<br>{{item.username}}
-        </ion-card-title>
-        <ion-card-content>
-          <ion-row *ngFor="let item of item.products">
-            <ion-col>
-              {{item.product}}
-            </ion-col>
-            <ion-col>
-              {{item.currentprice}}
-            </ion-col>
-            <ion-col>{{item.quantity}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
-                (click)="viewOrder(item)">
-                <ion-label>View more ...</ion-label>
-              </span>
-              <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
-                <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
-              </span>
-             
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </div>
-    </ion-card>
+          <ion-card-title text-center>
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;" (click)="showLess(item)"></ion-icon>
+            {{item.OrderID}}<br>{{item.username}}
+            <ion-icon name="call" color="success" style="float: right;" (click)="callCustomer()"></ion-icon>
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>View more ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  <span class="pick">{{item.Date.toDate()  | date: 'dd/MM/yyyy' }}</span>
+                </span>
+
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </div>
+      </ion-card>
+    </div>
   </div>
 </ion-content>

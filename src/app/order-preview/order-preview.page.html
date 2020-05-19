@@ -6,7 +6,8 @@
     </ion-buttons>
   </ion-toolbar>
   <div class="body">
-    <h4>Ordered from {{username}}</h4>
+    <ion-label style="color: var(--ion-color-primary);font-size: 1.5rem;padding-top:10px;padding-bottom: 10px;">Ordered by {{username}}</ion-label>
+    <ion-icon name="call" (click)="callCustomer()" style="float: right;font-size: 1.5em;" color="success"></ion-icon>
     <ion-row  class="top" padding>
       <ion-col>
         Product

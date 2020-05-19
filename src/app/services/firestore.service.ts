@@ -9,6 +9,7 @@ import { Order } from '../models/order';
 import { Product} from '../models/product';
 import { Category } from '../models/category';
 import { map } from 'rxjs/operators';
+import { Customer } from '../models/customer';
 
 
 @Injectable({
@@ -140,5 +141,10 @@ export class FirestoreService {
         })
       })
     )
+  }
+
+  // get customer contact
+  getNumber(id){
+    return this.fs.collection('users').doc<Customer>(id).valueChanges();
   }
 }

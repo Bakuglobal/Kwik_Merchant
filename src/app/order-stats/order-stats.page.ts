@@ -5,6 +5,7 @@ import { DatabaseService } from '../database.service';
 import { element } from 'protractor';
 import { ModalController } from '@ionic/angular';
 import { OrderPreviewPage } from '../order-preview/order-preview.page';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 @Component({
   selector: 'app-order-stats',
@@ -28,13 +29,15 @@ export class OrderStatsPage implements OnInit {
   TotalPastOrders = 0 ;
   TotalOpenOrders = 0 ;
   loader = true ;
+  CustomerNumber: any ;
 
 
   constructor(
     private service: FirestoreService,
     private navCtrl: Router,
     private db: DatabaseService,
-    private modal: ModalController
+    private modal: ModalController,
+    private call: CallNumber
   ) {
     this.service.hiddenTabs = true ;
   }
@@ -177,17 +180,28 @@ export class OrderStatsPage implements OnInit {
   }
   showMore(item) {
     item.show = true ;
+    this.service.getNumber(item.userID).subscribe(res => {
+      this.CustomerNumber = res.phone ;
+      console.log("number",this.CustomerNumber);
+    });
   }
   showLess(item) {
     item.show = false ;
     console.log('less');
   }
   async viewOrder(item) {
+    item.phone = this.CustomerNumber ;
     const mod = await this.modal.create({
       component: OrderPreviewPage,
       componentProps: item
     });
     console.log(item);
     await mod.present();
+  }
+  callCustomer(){
+    let num = this.CustomerNumber.toString();
+    this.call.callNumber(num, true)
+    .then(res => console.log('Launched dialer!', res))
+    .catch(err => console.log('Error launching dialer', err));
   }
 }
