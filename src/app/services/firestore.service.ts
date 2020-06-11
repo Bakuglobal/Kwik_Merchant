@@ -147,4 +147,21 @@ export class FirestoreService {
   getNumber(id){
     return this.fs.collection('users').doc<Customer>(id).valueChanges();
   }
+
+  shopFirst(){
+    // this.restaurantThird();
+   }
+  
+   restaurantThird(){
+     let rest = [];
+     this.fs.collection('restaurants').valueChanges().subscribe(res => {
+       rest = res;
+       rest.forEach(item => {
+         item.type = "Restaurant";
+         this.fs.collection('shops').add(item);
+         console.log('done');
+       });
+ 
+     });
+   }
 }

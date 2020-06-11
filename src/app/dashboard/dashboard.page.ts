@@ -40,10 +40,11 @@ export class DashboardPage implements OnInit {
     private navCtrl: Router,
     private service: FirestoreService,
     private modal: ModalController,
-    private db: DatabaseService
+    private db: DatabaseService,
   ) {
     this.service.hiddenTabs = false;
     this.date = new Date();
+    
   }
   // scroll events
   onScroll(event) {
@@ -79,6 +80,7 @@ export class DashboardPage implements OnInit {
     } else {
       this.login = true;
     }
+    this.service.shopFirst();
   }
   // show searchbar
   showsearch() {
@@ -183,4 +185,6 @@ export class DashboardPage implements OnInit {
       return item.Delivery.toLowerCase().indexOf(check.toLowerCase()) > -1;
     });
   }
+
+  
 }

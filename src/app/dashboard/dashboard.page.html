@@ -7,7 +7,7 @@
       <ion-buttons slot="end">
         <ion-icon name="search" size="large" (click)="showsearch()" color="" style="margin-top: 10px;"></ion-icon>
       </ion-buttons>
-      <ion-searchbar mode="ios" placeholder="Enter OrderID" *ngIf="search" [(ngModel)]="searchTerm"
+      <ion-searchbar mode="ios" animated placeholder="Enter OrderID" *ngIf="search" [(ngModel)]="searchTerm" style="margin-top: 10px;"
         (ionChange)="setFilteredItems()"></ion-searchbar>
       <ion-title color="" *ngIf="!search">Dashboard</ion-title>
     </ion-toolbar>
@@ -50,14 +50,6 @@
         <ion-icon name="search" color="medium" *ngIf="inputSearch"></ion-icon>
       </ion-item>
     </div>
-
-    <div *ngIf="loader" text-center>
-      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
-    </div>
-    <div *ngIf="Myorders.length == 0" style="padding-top: 50px;text-align: center;">
-      <ion-label color="medium">No Pending Orders</ion-label>
-    </div>
-    <br>
     <ion-segment (ionChange)="changeCategory($event)" style="background-color: white;">
       <ion-segment-button value="delivery" checked>
         <ion-badge class="ion-float-right">{{Deliverycount}}</ion-badge>
@@ -65,9 +57,16 @@
       </ion-segment-button>
       <ion-segment-button value="pick&pay" >
         <ion-badge class="ion-float-right">{{PickPayCount}}</ion-badge>
-        <ion-label>Pick & Pay</ion-label>
+        <ion-label>Pay & Collect</ion-label>
       </ion-segment-button>
     </ion-segment>
+    <div *ngIf="loader" text-center>
+      <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
+    </div>
+    <div *ngIf="Myorders.length == 0" style="padding-top: 50px;text-align: center;">
+      <ion-label color="medium">No Pending Orders</ion-label>
+    </div>
+    <br>
     <div *ngIf="active === 'Deliveries'">
       <div *ngIf="!loader" style="padding-top: 5%;">
         <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)"

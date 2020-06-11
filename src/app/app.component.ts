@@ -223,11 +223,11 @@ async toasted(msg) {
               url   : 'tabs',
               icon  : 'home'
             },
-            {
-              title : 'Scan',
-              url   : 'tabs/tab1',
-              icon  : 'qr-scanner'
-            },
+            // {
+            //   title : 'Scan',
+            //   url   : 'tabs/tab1',
+            //   icon  : 'qr-scanner'
+            // },
             {
               title : 'Soko',
               url   : '/tabs/tab3',

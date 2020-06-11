@@ -1,9 +1,7 @@
 ion-card{
     border-radius: 15px;
     text-align: center;
-  
     padding: 10px 20px 10px
-    
 }
 .top{
     text-align: center;
@@ -26,3 +24,13 @@ ion-card{
 .ready{ 
     background-color: #06b7f13d;
 }
+.openOrder{
+    position: fixed;bottom: 0px;overflow-y: scroll;width: 100%;top: 30%;
+}
+
+
+@media only screen and (max-width: 320px) {
+   .openOrder{
+    top: 35%;
+   }
+  }
