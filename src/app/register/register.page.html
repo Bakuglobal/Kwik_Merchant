@@ -1,0 +1,113 @@
+    <!-- FIRST CONTENT -->
+<ion-content>
+    <ion-toolbar color="primary">
+        <!-- <ion-buttons slot="start"> 
+            <p>
+                <ion-icon size="small" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
+            </p>
+        </ion-buttons> -->
+        <ion-title text-center>Create Shop</ion-title>
+    </ion-toolbar>
+
+
+    <!-- SECOND CONTENT upload-image.png-->
+    <div class="second-content">
+        <div class="upload-image">
+            <ion-icon name="image"></ion-icon>
+        </div>
+        <ion-title text-center>Select Shop Image </ion-title>
+    </div>
+
+    
+    <!-- THIRD CONTENT -->
+    <div class="third-content">
+        <form action="" >
+            <ion-row no-padding>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="shop_name" required type="text" placeholder="Shop Name"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="email" required type="email" placeholder="Email"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            
+            <ion-row no-padding>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="phone_number" required type="text" placeholder="Phone Number"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="location" required type="text" placeholder="Location"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="opens_at" required type="text" placeholder="Opens At"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+                <ion-col size="6" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="closes_at" required type="text" placeholder="Closes At"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="12" no-padding>
+                    <ion-list no-padding>
+                        <ion-item no-padding>
+                            <ion-input clearInput name="shop_link" required type="text" placeholder="Your Shop's web link on Kwik:__.kwikliving.com"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+            <ion-list class="i-agree">
+                <ion-item text-center>
+                    <input type="checkbox" required/>
+                    <ion-label>I agree to the <b (click)="privacy()">Privacy policy</b></ion-label>
+                </ion-item>
+            </ion-list>
+
+            <ion-list class="submit-button">
+                <div class="form-group">
+                    <ion-buttons class="button-create-account" >
+                        <ion-button class="ion-text-center"  (click)="register()"><b>CREATE SHOP</b> 
+                        </ion-button>
+                    </ion-buttons>
+                </div>
+            </ion-list>
+
+            <ion-list>
+                <div class="form-group">
+                    <div class="ion-text-center have-account">
+                        Have an account?<br>
+                        <b (click)="back()">Login</b>
+                    </div>  
+                </div>  
+            </ion-list>
+            
+        </form>
+    </div>
+</ion-content>
