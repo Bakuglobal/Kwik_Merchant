@@ -1,11 +1,11 @@
     <!-- FIRST CONTENT -->
 <ion-content>
     <ion-toolbar color="primary">
-        <!-- <ion-buttons slot="start"> 
+        <ion-buttons slot="start"> 
             <p>
                 <ion-icon size="small" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
             </p>
-        </ion-buttons> -->
+        </ion-buttons>
         <ion-title text-center>Create Shop</ion-title>
     </ion-toolbar>
 
@@ -86,6 +86,7 @@
             <ion-list class="i-agree">
                 <ion-item text-center>
                     <input type="checkbox" required/>
+                    <!-- <ion-checkbox></ion-checkbox> -->
                     <ion-label>I agree to the <b (click)="privacy()">Privacy policy</b></ion-label>
                 </ion-item>
             </ion-list>
@@ -99,14 +100,14 @@
                 </div>
             </ion-list>
 
-            <ion-list>
+            <!-- <ion-list>
                 <div class="form-group">
                     <div class="ion-text-center have-account">
                         Have an account?<br>
-                        <b (click)="back()">Login</b>
+                        <b (click)="back()" style="text-align: center; color: #00ade5;">Login</b>
                     </div>  
                 </div>  
-            </ion-list>
+            </ion-list> -->
             
         </form>
     </div>

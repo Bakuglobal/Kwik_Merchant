@@ -1,48 +1,58 @@
-<ion-header style="background-color: #00ade5;">
-  <ion-toolbar color="primary" >
-    <ion-buttons (click)="close()" slot="start">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
-    </ion-buttons>
-    <ion-title>Create Post</ion-title>
-   <ion-buttons slot="end">
-    <ion-button (click)="post()">POST</ion-button>
-   </ion-buttons>
-  
-</ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary" >
+        <ion-buttons (click)="close()" slot="start" style="margin-left: 10px;">
+            <ion-icon name="arrow-back" size="small"  style="width: 20px; height: 20px;"></ion-icon>
+        </ion-buttons>
+        <ion-title text-center>Create Post</ion-title>
+        <ion-buttons slot="end" style="margin-right: 0px;">
+            <ion-button style="font-size: 13px;" (click)="post()">Post</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
+
+
+
 <ion-content>
     
-  <ion-buttons>
-    <ion-chip>
-      <ion-avatar ><img src="{{logo}}"></ion-avatar>
-      <ion-label>{{shop}}</ion-label>
-      </ion-chip><br>
-      <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label>
-    
-  </ion-buttons>
+    <ion-buttons style="margin-left: 5px;">
+        <ion-chip style="background-color: #f7f7f7;"> 
+            <ion-avatar><img src="{{logo}}"></ion-avatar>
+            <ion-label>{{shop}}</ion-label>
+        </ion-chip><br>
+        <ion-label style="color: #737373;"><b style="color: green; font-size: 2em;">.</b>online</ion-label>
+    </ion-buttons>
 
-  <ion-textarea [(ngModel)]="postText" placeholder="What is happening at your shop ?" style="min-height: 200px;margin-top: 10px;">
 
-  </ion-textarea>
-  <div *ngIf="images.length != 0">
-    <ion-grid no-padding>
-      <ion-col *ngFor="let img of images">
-        <img [src]="img">
-      </ion-col>
-    </ion-grid>
-  </div>
-  <div  *ngIf="videos.length != 0">
-    <ion-grid no-padding>
-      <ion-col *ngFor="let vid of videos">
-        <video  controls [src]="vid"></video>
-      </ion-col>
-    </ion-grid>
-  </div>
+    <!-- TEXT AREA -->
+    <div style="background-color: #f7f7f7; margin-right: 10px; margin-left: 10px; margin-top: 10px; color: #737373; font-size: 13px;">
+        <ion-textarea [(ngModel)]="postText" placeholder="What is happening at your shop ?" rows="6">
+
+        </ion-textarea>
+    </div>
+
+    <!-- DISPLAYING IMAGES -->
+    <div *ngIf="images.length != 0">
+        <ion-grid no-padding>
+        <ion-col *ngFor="let img of images">
+            <img [src]="img">
+        </ion-col>
+        </ion-grid>
+    </div>
+    <div  *ngIf="videos.length != 0">
+        <ion-grid no-padding>
+        <ion-col *ngFor="let vid of videos">
+            <video  controls [src]="vid"></video>
+        </ion-col>
+        </ion-grid>
+    </div>
 </ion-content>
+
+
+<!-- FOOTER -->
 <ion-footer>
-  <ion-item>
-    <ion-label (click)="actionSheet()">Add media to your post</ion-label>
-    <ion-icon (click)="pickFile('image')" name="image" slot="end" color="primary"></ion-icon>&nbsp;
-    <ion-icon (click)="pickFile('video')" name="videocam" slot="end" color="primary"></ion-icon>
-  </ion-item>
+    <ion-item>
+        <ion-label style="font-size: 14px; color: #737373;" (click)="actionSheet()">Add media to your post</ion-label>
+        <ion-icon style="width: 20px; height: 20px;" (click)="pickFile('image')" name="image" slot="end" color="primary"></ion-icon>&nbsp;
+        <ion-icon style="width: 20px; height: 20px;" (click)="pickFile('video')" name="videocam" slot="end" color="primary"></ion-icon>
+    </ion-item>
 </ion-footer>

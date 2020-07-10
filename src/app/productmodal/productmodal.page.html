@@ -1,116 +1,136 @@
-<ion-content color="primary">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start" padding>
-      <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="end" style="padding-right: 20px;padding-top: 10px;">
-      <ion-icon name="trash" class="create" (click)="confirmDelete(product.id)"></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="end"(click)="edit = true"*ngIf="edit == false"style="padding-right: 5px;padding-top: 10px;">
-      <ion-icon name="create" class="create" ></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="end"(click)="edit = false" *ngIf="edit == true" style="padding-right: 5px;padding-top: 10px;">
-      <ion-icon name="close" class="create" ></ion-icon>
-    </ion-buttons>
-    <ion-title *ngIf="view">{{product.product}}</ion-title>
-  </ion-toolbar>
-  <div class="body">
-    <div style="margin-top: 40%;text-align: center;" *ngIf="!view">
-      <ion-spinner name="circles" color="primary"></ion-spinner>
-    </div>
-    <div *ngIf="view">
-      <form [formGroup]="productForm">
-        <ion-row padding text-center>
-          <ion-col>
-            <ion-label class="title">Click on image to change</ion-label><br><br>
-            <ion-icon name="arrow-dropright" color="medium" class="right"></ion-icon>
-          </ion-col>
-          <ion-col size="4">
-            <img class="image" alt="image" [src]="product.image" (click)="imageupdate()">
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Name :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.product}}</ion-label>
-            <ion-input type="text" formControlName="product" value="{{product.product}}" *ngIf="edit"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Barcode :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.barcode}}</ion-label>
-            <ion-input type="text" formControlName="barcode" value="{{product.barcode}}" *ngIf="edit"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Category :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.category}}</ion-label>
-            <ion-select formControlName="category" *ngIf="edit" placeholder="{{product.category}}">
-              <ion-select-option *ngFor="let item of category.categories">{{item.name}}</ion-select-option>
-            </ion-select>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Available Stock :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits"*ngIf="!edit">{{product.stock}}</ion-label>
-            <ion-input type="text" formControlName="stock" value="{{product.stock}}"*ngIf="edit"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Unit :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.quantity}}</ion-label>
-            <ion-input type="text" formControlName="quantity" value="{{product.quantity}}"*ngIf="edit"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Price :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.currentprice}}</ion-label>
-            <ion-input type="text" formControlName="currentprice" value="{{product.currentprice}}"*ngIf="edit"></ion-input>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product Description :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.description}}</ion-label>
-            <textarea type="text" formControlName="description" value="{{product.description}}"*ngIf="edit"></textarea>
-          </ion-col>
-        </ion-row>
-        <ion-row padding>
-          <ion-col>
-            <ion-label>Product status :</ion-label>
-          </ion-col>
-          <ion-col style="text-align:right">
-            <ion-label class="edits" *ngIf="!edit">{{product.status}}</ion-label>
-            <ion-select formControlName="status" *ngIf="edit" placeholder="{{product.status}}">
-              <ion-select-option checked>Available</ion-select-option>
-              <ion-select-option>Unavailable</ion-select-option>
-            </ion-select>
-          </ion-col>
-        </ion-row>
+<ion-content color="primary" style="background-color: var(--ion-color-primary);">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-icon style="width: 20px; height: 20px; margin-left: 5px;" name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
 
-        <ion-button disabled expand="block" shape="round" style="margin-top: 50px;" [disabled]="!edit" (click)="saveChanges(product.id)">
-          Save Changes
-        </ion-button>
-      </form>
+        <ion-buttons slot="end">
+            <ion-icon style="width: 20px; height: 20px; padding-right: 5px;" name="trash" (click)="confirmDelete(product.id)"></ion-icon>
+        </ion-buttons>
+
+        <ion-buttons slot="end" (click)="edit = true" *ngIf="edit == false">
+            <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="create"></ion-icon>
+        </ion-buttons>
+
+        <ion-buttons slot="end"(click)="edit = false" *ngIf="edit == true" >
+            <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="close"></ion-icon>
+        </ion-buttons>
+
+        <ion-title text-center *ngIf="view">{{product.product}}</ion-title>
+    </ion-toolbar>
+
+
+
+
+
+    <div class="body">
+        <div style="margin-top: 40%;text-align: center;" *ngIf="!view">
+            <ion-spinner name="circles" color="primary"></ion-spinner>
+        </div>
+
+        <div *ngIf="view">
+            <form [formGroup]="productForm">
+                <ion-row style="margin-left: 10px; margin-top: 20px;">
+                    <div style="font-size: 17px; color: var(--ion-color-primary);">
+                        Click on image to change
+                    </div>
+
+                    <div style="position: absolute; float: right; right: 0px; margin-right: 15px; font-size: 13px;">
+                        <img class="image" style="width: 35px; height: 35px; margin-top: -5px;" alt="image" [src]="product.image" (click)="imageupdate()">
+                    </div>
+                </ion-row>
+
+                <ion-row style="margin-top: 20px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Name :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.product}}</ion-label>
+                        <ion-input style="font-size: 14px; color: #737373;" type="text" formControlName="product" value="{{product.product}}" *ngIf="edit"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Barcode :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.barcode}}</ion-label>
+                        <ion-input style="font-size: 14px; color: #737373;" type="text" formControlName="barcode" value="{{product.barcode}}" *ngIf="edit"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 1px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Category :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.category}}</ion-label>
+                        <ion-select style="font-size: 14px; color: #737373;" formControlName="category" *ngIf="edit" placeholder="{{product.category}}">
+                        <ion-select-option style="font-size: 14px; color: #737373;" *ngFor="let item of category.categories">{{item.name}}</ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Available Stock :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.stock}}</ion-label>
+                        <ion-input style="font-size: 14px; color: #737373;" type="text" formControlName="stock" value="{{product.stock}}"*ngIf="edit"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Unit :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.quantity}}</ion-label>
+                        <ion-input style="font-size: 14px; color: #737373;" type="text" formControlName="quantity" value="{{product.quantity}}"*ngIf="edit"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Price :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.currentprice}}</ion-label>
+                        <ion-input style="font-size: 14px; color: #737373;" type="text" formControlName="currentprice" value="{{product.currentprice}}"*ngIf="edit"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product Description :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.description}}</ion-label>
+                        <textarea style="font-size: 14px; color: #737373;" type="text" formControlName="description" value="{{product.description}}"*ngIf="edit"></textarea>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
+                    <ion-col>
+                        <ion-label style="font-size: 14px; color: #737373;">Product status :</ion-label>
+                    </ion-col>
+                    <ion-col style="text-align:right">
+                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.status}}</ion-label>
+                        <ion-select style="font-size: 14px; color: #737373;" formControlName="status" *ngIf="edit" placeholder="{{product.status}}">
+                        <ion-select-option checked style="font-size: 14px; color: #737373;">Available</ion-select-option>
+                        <ion-select-option style="font-size: 14px; color: #737373;">Unavailable</ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <div style="margin-left: 8px; margin-right: 10px;">
+                    <ion-button style="font-size: 13px; margin-bottom: 10px;" disabled expand="full" style="margin-top: 50px;" [disabled]="!edit" (click)="saveChanges(product.id)">
+                        Save Changes
+                    </ion-button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </ion-content>

@@ -1,17 +1,17 @@
-<ion-header color="primary" [hidden]="hiddenHeader" > 
-  <ion-toolbar color="primary" >
-      <ion-buttons slot="start">
-          <ion-menu-button autoHide="false" ></ion-menu-button>
-      </ion-buttons>
-      <ion-title >Soko</ion-title>
-      <ion-searchbar placeholder="Search for a shop "animated type="text" *ngIf="showSearch"></ion-searchbar>
-      <!-- SEARCH BAR -->
-      <ion-buttons slot="end"  style="padding-right: 5px;">
-          <ion-button (click)="openPostModal()">
-            <ion-icon name="add-circle-outline" size="large"></ion-icon>
-          </ion-button> 
-      </ion-buttons>
-  </ion-toolbar>
+<ion-header [hidden]="hiddenHeader" > 
+    <ion-toolbar color="primary" >
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false" ></ion-menu-button>
+        </ion-buttons>
+        <ion-title text-center>Soko</ion-title>
+        <ion-searchbar placeholder="Search for a shop "animated type="text" *ngIf="showSearch"></ion-searchbar>
+        <!-- SEARCH BAR -->
+        <ion-buttons slot="end">
+            <ion-button (click)="openPostModal()">
+                <ion-icon style="width: 23px; height: 23px;" name="add-circle-outline" size="small"></ion-icon>
+            </ion-button> 
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 
@@ -19,12 +19,12 @@
 <ion-content  [scrollEvents]="true" (ionScroll)="onScroll($event)">
 
 
-  <div class="page-content"><br>
-    <div>
+  <div class="page-content">
+    <div style="margin-left: 5px; margin-right: 5px;">
       <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search for a shop " (ionChange)="searchShop()"></ion-searchbar>
     </div>
 
-      <ion-card class="card" *ngFor="let item of Posts">
+    <ion-card class="card" *ngFor="let item of Posts">
           <div class="header">
               <div class="image" (click)="infoModal('Kakila Organic')">
                   <ion-avatar>
@@ -102,7 +102,7 @@
               </div>
 
           </div>
-      </ion-card><br>
+    </ion-card><br>
       <!-- END OF FIRST SOKO POST -->
 
 <!-- 

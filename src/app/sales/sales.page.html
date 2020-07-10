@@ -1,74 +1,88 @@
 
-<ion-content color="primary">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start" padding>
-      <ion-icon color="" name="home" (click)="home()"></ion-icon>
-    </ion-buttons>
-    <ion-title  color="">Sales</ion-title>
-  </ion-toolbar>
-  <ion-segment style="background-color: white;margin-top: 30px;" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="Week" checked>
-      <ion-label>weekly</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Month">
-      <ion-label>monthly</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Year">
-      <ion-label>yearly</ion-label>
-    </ion-segment-button>
+<ion-content color="primary" style="background-color: var(--ion-color-primary);">
 
-  </ion-segment>
-<div class="body">
-    <ion-card padding style="background-color: white;">
-      <ion-row>
-        <ion-col size="3">
-          <ion-icon color="primary" name="calendar" size="large"></ion-icon>
-        </ion-col>
-        <ion-col size="7">
-          <ion-label>Selected {{text}}</ion-label><br>
-          <ion-text>{{date}}</ion-text>
-        </ion-col>
-        <ion-col size="2">
-          <ion-icon name="create" color="primary" class="edit" (click)="edit()"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <div class="banner" padding text-center>
-      <ion-row>
-        <ion-col>
-          <ion-label color="success">0</ion-label><br><br>
-          <ion-text>Total Sales(Ksh)</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-label color="danger">0</ion-label><br><br>
-          <ion-text>Total Leads</ion-text>
-        </ion-col>
-      </ion-row>
-    </div>
-    <div >
-      <canvas #lineChart class="chartlabel"></canvas>
-    </div>
-    <div class="leads">
-      <ion-item>
-        <ion-label color="primary" padding>Top Sales</ion-label>
-        <ion-select slot="end" placeholder="Pick Category" [(ngModel)]="category" >
-          <ion-select-option>Groceries</ion-select-option>
-          <ion-select-option>Beverages</ion-select-option>
-          <ion-select-option>Fruits</ion-select-option>
-        </ion-select>
-      </ion-item>
-     
-    </div>
-    <div class="leads">
-      <ion-item>
-        <ion-label color="primary" padding>Top Leads</ion-label>
-        <ion-select slot="end" placeholder="Pick Category" [(ngModel)]="category" >
-          <ion-select-option>Groceries</ion-select-option>
-          <ion-select-option>Beverages</ion-select-option>
-          <ion-select-option>Fruits</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </div>
-</div>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-icon style="width: 20px; height: 20px; margin-left: 5px;" name="arrow-back" (click)="home()"></ion-icon>
+        </ion-buttons>
+        <ion-title text-center style="margin-right: 10px;">Sales</ion-title>
+    </ion-toolbar>
 
+
+
+    <div class="card-main">
+
+        <ion-segment style="background-color: white;" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="Week" checked>
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">weekly</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Month">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">monthly</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Year">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">yearly</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+
+
+        <div class="body">
+            <ion-card padding style="background-color: white;">
+                <ion-row>
+                    <ion-col size="3">
+                        <ion-icon color="primary" name="calendar" size="large"></ion-icon>
+                    </ion-col>
+                    <ion-col size="7" style="margin-top: 3px;">
+                        <ion-label>Selected {{text}}</ion-label><br>
+                        <ion-text>{{date}}</ion-text>
+                    </ion-col>
+                    <ion-col size="2">
+                        <ion-icon name="create" color="primary" class="edit" (click)="edit()"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-card>
+
+
+            <div class="banner" padding text-center>
+                <ion-row style="margin-top: -10px;">
+                    <ion-col>
+                        <div style="font-size: 17px; color: var(--ion-color-success);">0</div>
+                        <div style="color: #737373; font-size: 14px; padding-top: 10px;">Total Sales(Ksh)</div>
+                    </ion-col>
+                    <ion-col>
+                        <div style="font-size: 17px; color: var(--ion-color-danger);">0</div>
+                        <div style="color: #737373; font-size: 14px; margin-top: 10px;">Total Leads</div>
+                    </ion-col>
+                </ion-row>
+            </div>
+
+
+            <div style="margin-left: 10px; margin-right: 10px;">
+                <canvas #lineChart class="chartlabel"></canvas>
+            </div>
+
+
+            <div class="leads">
+                <ion-item>
+                    <ion-label color="primary" style="font-size: 15px;">Top Sales</ion-label>
+                    <ion-select style="font-size: 15px;" slot="end" placeholder="Pick Category" [(ngModel)]="category" >
+                        <ion-select-option>Groceries</ion-select-option>
+                        <ion-select-option>Beverages</ion-select-option>
+                        <ion-select-option>Fruits</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+
+
+            <div class="leads" style="margin-bottom: 15px;">
+                <ion-item>
+                    <ion-label style="font-size: 15px;" color="primary">Top Leads</ion-label>
+                    <ion-select style="font-size: 15px;" slot="end" placeholder="Pick Category" [(ngModel)]="category" >
+                        <ion-select-option>Groceries</ion-select-option>
+                        <ion-select-option>Beverages</ion-select-option>
+                        <ion-select-option>Fruits</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+        </div>
+    </div>
 </ion-content>
