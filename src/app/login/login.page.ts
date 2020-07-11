@@ -98,7 +98,8 @@ submit() {
 
 next(resp) {
   
-  const id = resp.user.uid;console.log('user id is----:'+id)
+  const id = resp.user.uid;
+  console.log('user id is----:'+id)
   localStorage.setItem('userID', id);
   this.loading.dismiss();
   this.ref.getUserDet(id);
