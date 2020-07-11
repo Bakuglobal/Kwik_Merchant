@@ -3,9 +3,21 @@
     position: fixed;
     overflow-y: scroll;
     bottom: 0px;
-    top: 16%;
+    top: 150px;
     margin-bottom: 0px;
     background-color: white;
+}
+
+.card-main {
+    background-color: white;     
+    color: var(--ion-color-medium);
+    background-color: white; 
+    border-radius: 20px 20px 0px 0px;
+    width: 100%; 
+    position: fixed; 
+    bottom: 0px; 
+    top: 100px; 
+    overflow-y:scroll;
 }
 .edit{
     font-size: 1.5em;

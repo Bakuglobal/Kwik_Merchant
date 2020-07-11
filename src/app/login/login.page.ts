@@ -76,6 +76,13 @@ export class LoginPage implements OnInit {
     this.menuCtrl.enable(true);
     this.location.back();
   }
+
+
+  // go to register page
+  async register(){
+    this.navCtrl.navigate(['/register']);
+    
+  }
   
   hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';

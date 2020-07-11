@@ -3,6 +3,17 @@ ion-card{
     text-align: center;
     padding: 10px 20px 10px
 }
+.card-main {
+    background-color: white;     
+    color: var(--ion-color-medium);
+    background-color: white; 
+    border-radius: 20px 20px 0px 0px;
+    width: 100%; 
+    position: fixed; 
+    bottom: 0px; 
+    top: 100px; 
+    overflow-y:scroll;
+}
 .top{
     text-align: center;
     ion-label{

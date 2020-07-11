@@ -1,41 +1,55 @@
-<ion-content color="primary">
-  <ion-toolbar color="primary">
-    <ion-buttons padding>
-      <ion-icon name="arrow-back"  (click)="close()"></ion-icon>
-      <ion-title>Stock Settings</ion-title>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons style="margin-left: 15px; margin-right: 15px;">
+            <ion-icon style="width: 20px; height: 20px;" name="arrow-back"  (click)="close()"></ion-icon>
+            <ion-title text-center>Stock Settings</ion-title>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content>
+
   <div class="body">
-      <ion-list no-lines>
-      <ion-item>
-        <ion-label>Set Stock alert limit</ion-label>
-        <ion-toggle color="primary" slot="end" checked [(ngModel)]="setAlertLimit"></ion-toggle>
-      </ion-item>
+    <ion-list no-lines>
+        <ion-item style="font-size: 15px; color: #737373;">
+            <ion-label>Set Stock alert limit</ion-label>
+            <ion-toggle color="primary" slot="end" checked [(ngModel)]="setAlertLimit"></ion-toggle>
+        </ion-item>
       </ion-list>
-      <div padding *ngIf="setAlertLimit">
-        <ion-row>
-            <ion-col size="8">
-                <ion-label color="dark">Category</ion-label><br>
+
+
+
+      <div *ngIf="setAlertLimit">
+        <ion-row style="margin-right: 10px; margin-left: 10px;">
+            <ion-col size="8" style="font-size: 15px; color: #737373;">
+                <ion-label>Category</ion-label><br>
                 <ion-select placeholder="category"  [(ngModel)]="category" *ngIf="categories !== undefined">
-                  <ion-select-option *ngFor="let item of categories.categories">{{item}}</ion-select-option>
+                    <ion-select-option *ngFor="let item of categories.categories">{{item}}</ion-select-option>
                 </ion-select>
             </ion-col>
-            <ion-col size="3" padding disabled="category != null">
-              <ion-input type="number" color="primary" style="float:right;font-size:1.5em" [(ngModel)]="limit"></ion-input>
+
+            <ion-col  size="3" padding disabled="category != null">
+                <ion-input type="number" color="primary" style="float:right; font-size: 15px; margin-top: -20px;" [(ngModel)]="limit"></ion-input>
             </ion-col>
-            <ion-col size="1" style="font-size: 1.7em;float: right;" disabled="category != null">
-              <ion-badge><ion-icon style="color: white;" name="add" (click)="addLimit()"></ion-icon></ion-badge><br>
-              <ion-badge><ion-icon style="color: white;" name="remove" (click)="reduceLimit()"></ion-icon></ion-badge>
+
+            <ion-col size="1" style="font-size: 15px; float: right; margin-top: -10px;" disabled="category != null">
+                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="add" (click)="addLimit()"></ion-icon></ion-badge><br>
+                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="remove" (click)="reduceLimit()"></ion-icon></ion-badge>
             </ion-col>
         </ion-row>
+        <div style="height: 1px; margin-left: 15px; margin-right: 0px; margin-top: -12px; background-color: #DEDEDE;"></div>
+
         <ion-row *ngIf="category != null" >
           <ion-button (click)="setLimit()" shape="round" text-center>SET</ion-button>
         </ion-row>
       </div>
-      <ion-item>
-        <ion-label>Remove a Category</ion-label>
-        <ion-icon name="arrow-round-forward" color="primary" slot="end" (click)="removeCategory()"></ion-icon>
-      </ion-item>
+        <ion-item style="font-size: 15px; color: #737373; margin-left: -3px; margin-right: -5px;">
+            <ion-label>Remove a Category</ion-label>
+            <ion-icon style="width: 20px; height: 20px;" name="arrow-round-forward" color="primary" slot="end" (click)="removeCategory()"></ion-icon>
+        </ion-item>
   </div>
 
 

@@ -30,18 +30,14 @@ ion-card{
     background-color: var(--ion-color-primary);
 }
 .body{
-    border-radius: 20px 20px 0px 0px;
+    border-radius: 20px 20px 0px 0px; 
     background-color: var(--ion-color-light); 
-    margin-bottom: 0px;
-    padding-top: 20px;
-    padding-bottom: 50px;
-    top: 23%;
-    width: 100%;
-    bottom: 0px;
     position: fixed;
-    overflow-y:scroll;
+    overflow-y:scroll; 
+    width: 100%; 
+    bottom: 0px; top: 165px;
     
 }
 .ready{
-    background-color: #06b7f13d;
+    background-color: #f3f3f3;
 }

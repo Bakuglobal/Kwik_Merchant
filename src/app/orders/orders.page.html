@@ -1,78 +1,87 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-icon style="width: 20px; height: 20px; margin-left: 5px;" (click)="close()" name="arrow-back" size="large"></ion-icon>
+        </ion-buttons>
+        <ion-title text-center *ngIf="view"> {{prod.username}}'s Order <br></ion-title>
+        <ion-buttons slot="end" style="margin-right: 5px;">
+            <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" color="success" (click)="callUserNumber(userDetail.phone)" name="call" size="large"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
 
 <ion-content>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-icon color="primary" (click)="close()" name="arrow-back" size="large"></ion-icon>
-    </ion-buttons>
-    <ion-title text-center color="primary" *ngIf="view"> {{prod.username}}'s Order <br></ion-title>
-    <ion-buttons slot="end" style="margin-right: 50px;">
-      <ion-icon color="success" (click)="callUserNumber(userDetail.phone)" name="call" size="large"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
-  <div *ngIf="!view" style="margin-top: 30%;text-align: center;">
-    <ion-spinner name="circles" color="primary"></ion-spinner>
-  </div>
-<div *ngIf="view">
-<!-- Display order details -->
-<ion-item *ngFor="let item of prod.products" >
-  <ion-col size="3">
-    <img class="img" src="{{item.image}}">
-  </ion-col>
-  <ion-col  class="details" size="5">
-    <ion-label >{{item.product}} </ion-label><br>
-    <ion-label >Kshs. <b>{{item.currentprice}}</b></ion-label>
+    <div *ngIf="!view" style="margin-top: 30%;text-align: center;">
+        <ion-spinner name="circles" color="primary"></ion-spinner>
+    </div>
+    <div *ngIf="view">
+        <!-- Display order details -->
+        <ion-item *ngFor="let item of prod.products" style="margin-right: 15px; margin-left: -5px;">
+            <div style="width: 20%;">
+                <img class="img" src="{{item.image}}" style="float: left; left: 0px; height: 70px;">
+            </div>
+            <div style="margin-left: 10px;">
+                <div style="font-size: 14px; color: #737373; font-weight: bold; margin-bottom: 10px;">{{item.product}} </div>
+                <div style="font-size: 13px; color: #737373;">Kshs. <b>{{item.currentprice}}</b></div>
+            </div>
+            <div style="float: right; right: 0px; position: absolute;">
+                <div style="font-size: 13px; color: #737373;"><b>{{item.count}} x {{item.quantity}}</b></div>
+            </div>
+            <!-- <ion-col size="3">
+                <img class="img" src="{{item.image}}">
+            </ion-col>
+            <ion-col  class="details" size="5">
+                <div style="font-size: 14px; color: #737373; font-weight: bold; margin-bottom: 10px;">{{item.product}} </div>
+                <div style="font-size: 13px; color: #737373;">Kshs. <b>{{item.currentprice}}</b></div>
+            </ion-col>
+            <ion-col class="qty" style="float: right; right: 0px; position: absolute;">
+                <div style="font-size: 13px; color: #737373;"><b>{{item.count}} x {{item.quantity}}</b></div>
+            </ion-col> -->
+        </ion-item>
 
-  </ion-col >
-  <ion-col class="qty">
-  <ion-label><b>{{item.count}} x {{item.quantity}}</b></ion-label>
-  </ion-col>
-</ion-item>
-<div text-center style="margin-top: 10px;">
-    <ion-label color="primary">Order notes</ion-label>
-    <p style="color: var(--ion-color-medium);">
-      {{prod.notes}}
-    </p>
-    <p *ngIf="prod.notes == ''" style="color: var(--ion-color-medium);">No notes for this order</p>
-</div>
-<div text-center style="margin-top: 10px;">
-  <ion-label color="primary">Delivery Options</ion-label>
-  <p style="color: var(--ion-color-medium);" *ngIf="prod.Delivery == 'I will pick it'">
-    {{prod.Delivery}}
-  </p>
-  <p style="color: var(--ion-color-medium);" *ngIf="prod.Delivery == 'Deliver it to me'">
-   Deliver it to {{prod.Location}}
-  </p>
-  <ion-row>
-    <!-- <ion-label>Delivery charges</ion-label><ion-label>{{}}</ion-label> -->
-  </ion-row>
-</div>
-<div style="margin-top: 40px;margin-bottom: 10px;" padding>
-  <ion-label color="primary" style="font-size: large;font-weight: bold;float: left;">Total</ion-label>
-  <ion-label color="primary" style="font-size: larger;font-weight: bold;float: right;">Kshs. {{getTotalCart() | number:'1.1-5'}}</ion-label>
-</div>
+        <div text-center style="margin-top: 10px;">
+            <ion-label style="font-size: 15px;" color="primary">Order notes</ion-label>
+            <p style="color: #737373; font-size: 13px;">
+            {{prod.notes}}
+            </p>
+            <p *ngIf="prod.notes == ''" style="color: #737373; font-size: 13px;">No notes for this order</p>
+        </div>
 
- 
+        <div text-center style="margin-top: 10px;">
+            <ion-label style="font-size: 15px;" color="primary">Delivery Options</ion-label>
+            <p style="color: #737373; font-size: 13px;" *ngIf="prod.Delivery == 'I will pick it'">
+                {{prod.Delivery}}
+            </p>
+            <p style="color: #737373; font-size: 13px;" *ngIf="prod.Delivery == 'Deliver it to me'">
+            Deliver it to {{prod.Location}}
+            </p>
+        </div>
 
-</div>
+        <div style="margin-top: 40px; margin-bottom: 65px; margin-left: 10px; margin-right: 10px;">
+            <ion-label color="primary" style="font-weight: bold; float: left; font-size: 15px;">Total</ion-label>
+            <ion-label color="primary" style="font-weight: bold; float: right; font-size: 15px;">Kshs. {{getTotalCart() | number:'1.1-5'}}</ion-label>
+        </div>
+
+    </div>
 </ion-content>
-<ion-footer *ngIf="view">
-<!-- Bottom buttons for decline or accept -->
 
-  <div class="bottom">
-    <ion-grid>
-      <ion-row>
+
+
+<ion-footer *ngIf="view" style="background-color: #f3f3f3;">
+    <ion-row>
         <ion-col>
-          <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">
-            <ion-card-content style="font-weight:bold ;">Ready</ion-card-content>
-          </ion-card>
+            <ion-button style="font-size: 13px;" expand="full" color="success" (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">Ready</ion-button>
+            <!-- <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'"> -->
+            <!-- <ion-card-content style="font-weight:bold ;">Ready</ion-card-content> -->
+            <!-- </ion-card> -->
         </ion-col>
         <ion-col>
-          <ion-card  color="success" text-center (click)="paid(prod.OrderID)" [disabled]="prod.paid == 'True'">
+            <ion-button style="font-size: 13px;" expand="full" color="success" (click)="paid(prod.OrderID)" [disabled]="prod.paid == 'True'">Ready</ion-button>
+            <!-- <ion-card  color="success" text-center (click)="paid(prod.OrderID)" [disabled]="prod.paid == 'True'">
             <ion-card-content style="font-weight:bold ;">Paid</ion-card-content>
-          </ion-card>
+            </ion-card> -->
         </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  
+    </ion-row>
 </ion-footer>

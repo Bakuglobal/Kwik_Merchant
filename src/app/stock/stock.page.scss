@@ -5,18 +5,22 @@
     width: 100%;
     position: fixed;
     bottom: 0px;
-    top: 10%;
+    top: 100px;
     overflow-y:scroll;
 }
 .image{
     object-fit: contain;
-    width: 50%;
-    height: 50%;
+    width: 20px;
+    height: 20px;
     float: right;
+    right: 0px;
+    margin-right: 5px;
 }
 .title{
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 15px;
+    color: var(--ion-color-primary);
+    margin-left: 5px;
 }
 ion-select{
     color: var(--ion-color-primary);
@@ -42,7 +46,7 @@ ion-select{
     margin-bottom: 20px;
 }
 .stock{
-    border-radius: 20px;
+    border-radius: 10px;
     ion-text{
         font-weight: bold;
         padding-top: 20px;
