@@ -79,7 +79,7 @@
         <ion-card padding style="background-color: white;" *ngFor="let item of ReadyOrders">
             <div *ngIf="!item.show">
             <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
-            <ion-label style="float: right;" color="primary">{{item.OrderID}}</ion-label><br><br>
+            <ion-label style="float: right; font-size: 13px;" color="primary">{{item.OrderID}}</ion-label><br><br>
             <div style="text-align:start;">
                 Order for <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
             </div>
@@ -91,7 +91,7 @@
             </span>
             </div>
             <div *ngIf="item.show">
-            <ion-card-title text-center (click)="showLess(item)">
+            <ion-card-title text-center (click)="showLess(item)" style=" font-size: 15px; color: var(--ion-color-primary);">
                 <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
                 {{item.OrderID}}<br>{{item.username}}
             </ion-card-title>
@@ -172,7 +172,7 @@
             </div>
         </ion-card>
         </div>
-        <div *ngIf="open">
+        <div *ngIf="open" style="margin-top: 60px;">
         <div *ngIf="loader" text-center style="padding-top: 50px;text-align: center;">
             <ion-spinner class="loader" name="lines" color="primary"></ion-spinner>
         </div>
@@ -198,7 +198,7 @@
             </div>
             <div *ngIf="item.show">
 
-            <ion-card-title text-center>
+            <ion-card-title text-center style="font-size: 15px; color: var(--ion-color-primary);">
                 <ion-icon name="arrow-dropup" color="primary" style="float: left;" (click)="showLess(item)"></ion-icon>
                 {{item.OrderID}}<br>{{item.username}}
                 <ion-icon name="call" color="success" style="float: right;" (click)="callCustomer()"></ion-icon>

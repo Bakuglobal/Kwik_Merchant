@@ -103,12 +103,14 @@
                 </ion-row>
 
                 <ion-row style="margin-top: 5px; margin-left: 5px; margin-right: 10px;">
-                    <ion-col>
+                    <ion-col size="12">
                         <ion-label style="font-size: 14px; color: #737373;">Product Description :</ion-label>
                     </ion-col>
-                    <ion-col style="text-align:right">
-                        <ion-label style="font-size: 14px; color: #737373;" *ngIf="!edit">{{product.description}}</ion-label>
-                        <textarea style="font-size: 14px; color: #737373;" type="text" formControlName="description" value="{{product.description}}"*ngIf="edit"></textarea>
+                    <ion-col size="12" style="margin-left: 10px; margin-right: 10px; font-size: 12px; color: #737373;">
+                        <ion-label *ngIf="!edit">{{product.description}}</ion-label>
+                        <div style="margin-right: 20px;">
+                            <textarea type="text" style="margin-right: 40px;" rows="6" formControlName="description" value="{{product.description}}"*ngIf="edit"></textarea>
+                        </div>
                     </ion-col>
                 </ion-row>
 

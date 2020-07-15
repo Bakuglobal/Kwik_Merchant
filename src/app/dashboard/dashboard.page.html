@@ -76,7 +76,7 @@
             <ion-label style="font-size: 13px; color: #737373;">No Pending Orders</ion-label>
         </div> <br>
 
-        <div *ngIf="active === 'Deliveries'" style="padding-top: -10px; margin-bottom: 35px;">
+        <div *ngIf="active === 'Deliveries'" style="padding-top: -10px; margin-bottom: 35px;margin-bottom: 60px;">
             <div *ngIf="!loader">
                 <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready'}">
                     <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
@@ -98,7 +98,7 @@
         </div> 
 
 
-        <div *ngIf="active === 'PickPay'" style="padding-top: -10px; margin-bottom: 35px;">
+        <div *ngIf="active === 'PickPay'" style="padding-top: -10px; margin-bottom: 60px;">
             <div *ngIf="!loader">
                 <ion-card padding *ngFor="let item of PickPayOrders " (click)="openOrder(item)"
                 [ngClass]="{'ready': item.status == 'Ready'}">
