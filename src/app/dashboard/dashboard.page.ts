@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
-import { Shop } from '../models/shops';
 import { ModalController } from '@ionic/angular';
-import { OrdersPage } from '../orders/orders.page';
-import { User } from '../models/user';
 import { DatabaseService } from '../database.service';
 
 @Component({

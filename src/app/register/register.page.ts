@@ -11,5 +11,13 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
   }
+back(){
 
+}
+privacy(){
+
+}
+register(){
+  
+}
 }

@@ -86,10 +86,10 @@ export class OrdersPage implements OnInit {
     )
   }
   // order is paid 
-  paid(id) {
+  complete(id) {
     let ref = this.fs.collection('Orders').doc(id);
     ref.update(
-      { paid: 'True' }
+      { status: 'complete' }
     )
     this.toast('Order completed ').then(
       res => {

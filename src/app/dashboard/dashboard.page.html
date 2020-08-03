@@ -50,10 +50,10 @@
             <ion-item color="light">
                 <ion-label color="primary" style="font-size: 15px;">Orders Due Today</ion-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- <ion-label>{{getCount()}} Pending </ion-label> -->
-                <ion-input style="padding-top: 10px; font-size: 15px;" clearInput type="text" placeholder="Enter OrderID" color="medium"
+                <!-- <ion-input style="padding-top: 10px; font-size: 15px;" clearInput type="text" placeholder="Enter OrderID" color="medium"
                 *ngIf="inputSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()">
                 </ion-input>
-                <ion-icon style="width: 20px; height: 20px;" name="search" color="medium" *ngIf="inputSearch"></ion-icon>
+                <ion-icon style="width: 20px; height: 20px;" name="search" color="medium" *ngIf="inputSearch"></ion-icon> -->
             </ion-item>
         </div>
 
@@ -78,11 +78,11 @@
 
         <div *ngIf="active === 'Deliveries'" style="padding-top: -10px; margin-bottom: 35px;margin-bottom: 60px;">
             <div *ngIf="!loader">
-                <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready'}">
+                <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready','complete': item.status == 'complete'}">
                     <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
                     <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
                     <ion-label color="warning" style="font-size: 13px;" *ngIf="item.status == 'open'">Open</ion-label>
-                    <ion-label color="success" style="font-size: 13px;" *ngIf="item.paid == 'True'">Complete</ion-label>
+                    <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'complete'">Complete</ion-label>
                     <ion-label style="float: right; font-size: 13px;" color="primary">{{item.OrderID}}</ion-label><br><br>
                     <div style="text-align:start; font-size: 13px;">
                         Order for: <ion-label style="font-size: 13px;" *ngFor="let item of item.products"><b>{{item.product}}</b></ion-label> ...
@@ -103,9 +103,9 @@
                 <ion-card padding *ngFor="let item of PickPayOrders " (click)="openOrder(item)"
                 [ngClass]="{'ready': item.status == 'Ready'}">
                 <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
-                <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
+                <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready'">Ready</ion-label>
                 <ion-label color="warning" style="font-size: 13px;" *ngIf="item.status == 'open'">Open</ion-label>
-                <ion-label color="success" style="font-size: 13px;" *ngIf="item.paid == 'True'">Complete</ion-label>
+                <ion-label color="success" style="font-size: 13px;" *ngIf="item.Complete == 'True'">Complete</ion-label>
                 <ion-label style="float: right; font-size: 13px;" color="primary">{{item.OrderID}}</ion-label><br><br>
                 <div style="text-align:start; font-size: 13px;">
                     Order for: <ion-label style="font-size: 13px;" *ngFor="let item of item.products"><b>{{item.product}}</b></ion-label> ...
@@ -113,9 +113,9 @@
                 <span style="float: left;margin-top: 20px; font-size: 13px;">
                     <b>{{item.username}}</b>
                 </span>
-                <span style="float: right;bottom:0;margin-top: 20px; font-size: 13px;">
+                <!-- <span style="float: right;bottom:0;margin-top: 20px; font-size: 13px;">
                     <span style="font-size: 13px;" class="pick">Pick up : {{item.pickHour}}:{{item.pickMins}} {{item.pickDay}}</span>
-                </span>
+                </span> -->
                 </ion-card>
 
             </div>
