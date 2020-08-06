@@ -124,6 +124,7 @@ export class FirestoreService {
   }
   //get all categories from firestore
     getallcategories(shop) {
+      console.log(shop);
    return  this.fs.collection<Category>('Categories').doc(shop);
   }
 

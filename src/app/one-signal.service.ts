@@ -61,7 +61,7 @@ sendNotificationTodb(data){
 // get notification from db
 getmyNotification(){
   this.Notice = this.fs.collection<Notice>(this.shop+'_Notifications',ref => {
-   return ref.orderBy('Date','asc');
+   return ref.orderBy('Date','desc');
  });
 
  return this.Notice.snapshotChanges().pipe(

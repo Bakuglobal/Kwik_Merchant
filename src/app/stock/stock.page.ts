@@ -32,10 +32,11 @@ show = false ;
     private db: DatabaseService
   ) { 
     this.service.hiddenTabs = true ;
-    this.shopname = localStorage.getItem('shop');
-    console.log(this.shopname);
+    
   }
   ionViewDidEnter(){
+    this.shopname = localStorage.getItem('shop');
+    console.log(this.shopname);
    this.service.getallcategories(this.shopname).valueChanges().subscribe(res => {
       this.categories = res ;
       this.show = true ;
@@ -49,8 +50,8 @@ show = false ;
     this.service.getallProducts(this.shopname).subscribe(res => {
       this.products = res ;
       this.unfilteredProducts = res ;
+      console.log('products',this.products);
     });
-     console.log(this.products);
      
   }
    // filter products
