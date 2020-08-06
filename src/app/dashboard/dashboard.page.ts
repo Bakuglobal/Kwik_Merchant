@@ -166,7 +166,6 @@ export class DashboardPage implements OnInit {
         this.Deliverycount++;
       }
     });
-
   }
   filterPickPay() {
     this.PickPayOrders = this.filter('I will pick it');
