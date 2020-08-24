@@ -45,12 +45,12 @@ export class SignupPage implements OnInit {
   provider;
   userID;
 
-// variables holders for base64 Image URL selected
+  // variables holders for base64 Image URL selected
   imgURLBack = null;
   imgURLFront = null;
 
-//  Boolean variables for form validation
-  submitSeller = false ;
+  //  Boolean variables for form validation
+  submitSeller = false;
 
   constructor(
     public db: DatabaseService,
@@ -134,11 +134,11 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {
     this.menuCtrl.enable(false);
-    
+
   }
- get  GetsellerAccountForm(){
-   return this.sellerAccountForm.controls ;
- }
+  get GetsellerAccountForm() {
+    return this.sellerAccountForm.controls;
+  }
   newAddrGroup() {
     return this.formBuilder.group({
       Primary: [false, Validators.compose([Validators.maxLength(100), Validators.required])],
@@ -191,7 +191,7 @@ export class SignupPage implements OnInit {
     if (this.sellerAccountForm.value.password !== this.sellerAccountForm.value.confirmPassword) {
       this.presentAlert("Passwords do not match");
     } else {
-      this.submitSeller = true ;
+      this.submitSeller = true;
       this.seller_account_form = false;
       this.business_information_form = true;
       this.payment_details_form = false;
@@ -321,20 +321,33 @@ export class SignupPage implements OnInit {
     });
   }
 
+
   submit() {
     this.presentLoading();
-    console.table('back',this.knowYourCustomerForm.value.backImage.__zone_symbol__value);
-    let user = {
-      sellerInfo: this.sellerAccountForm.value,
-      businessInfo: this.businessInformationForm.value,
-      paymentInfo: this.paymentDetailsForm.value,
-      kyc: {
-        backImage:this.knowYourCustomerForm.value.backImage.__zone_symbol__value,
-        frontImage: this.knowYourCustomerForm.value.frontImage.__zone_symbol__value,
-        nationalIdOrPassportNumber: this.knowYourCustomerForm.value.nationalIdOrPassportNumber
+    let user = {};
+    if (this.imgURLFront === null || this.imgURLBack === null) {
+      user = {
+        sellerInfo: this.sellerAccountForm.value,
+        businessInfo: this.businessInformationForm.value,
+        paymentInfo: this.paymentDetailsForm.value,
+        kyc: this.knowYourCustomerForm.value
       }
+    } else {
+      console.table('back', this.knowYourCustomerForm.value.backImage.__zone_symbol__value);
+      user = {
+        sellerInfo: this.sellerAccountForm.value,
+        businessInfo: this.businessInformationForm.value,
+        paymentInfo: this.paymentDetailsForm.value,
+        kyc: {
+          backImage: this.knowYourCustomerForm.value.backImage.__zone_symbol__value,
+          frontImage: this.knowYourCustomerForm.value.frontImage.__zone_symbol__value,
+          nationalIdOrPassportNumber: this.knowYourCustomerForm.value.nationalIdOrPassportNumber
+        }
+      }
+      console.table(user);
     }
-    console.table(user);
+
+
 
     // CREATE USER BY EMAIL & PASSWORD THEN CREATE PROFILE USER
     this.service.register(this.sellerAccountForm.value.Email, this.sellerAccountForm.value.password).then(res => {
@@ -347,10 +360,10 @@ export class SignupPage implements OnInit {
         this.navigation.navigate(['tabs/dashboard']);
       }).catch(error => {
         console.log(error);
-        this.service.deleteUser().then(function() {
+        this.service.deleteUser().then(function () {
           // User deleted.
           console.log("a/c deleted");
-        }).catch(function(error) {
+        }).catch(function (error) {
           // An error happened.
           console.log(error)
         });
@@ -365,17 +378,17 @@ export class SignupPage implements OnInit {
   }
 
   uploadTostorage(image) {
-    console.log('shop -->',this.sellerAccountForm.value.shop);
+    console.log('shop -->', this.sellerAccountForm.value.shop);
     let date = new Date().getTime();
     const pictures = this.st.storage.ref(this.sellerAccountForm.value.shop + '/' + date);
-   return pictures.putString(image, 'data_url').then(res => {
+    return pictures.putString(image, 'data_url').then(res => {
       return pictures.getDownloadURL()
     }).catch(error => {
-      console.log('error',error);
+      console.log('error', error);
     })
-    
+
   }
 
 
-  
+
 }
