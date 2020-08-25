@@ -68,7 +68,7 @@ export class DatabaseService {
     return this.af.auth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((authData: any) => {
-        localStorage.setItem('userID', authData.user.uid);
+        localStorage.setItem('user', authData.user.uid);
         this.userid = authData.user.uid ;
         let userData = {
           "shop": data.name,

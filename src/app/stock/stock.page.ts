@@ -29,9 +29,10 @@ show = false ;
     private Asc: ActionSheetController,
     private modal: ModalController,
     private fs : AngularFirestore,
-    private db: DatabaseService
+    private db: DatabaseService,
   ) { 
     this.service.hiddenTabs = true ;
+    
     
   }
   ionViewDidEnter(){
@@ -76,23 +77,31 @@ show = false ;
   }
   async  sortCategory(){
     const asc = await this.Asc.create({
-      header: "Sort category in",
+      header: "Sort category by Price in",
       buttons: [
         {
-          text: 'ASC',
+          text: 'Ascending Order',
           handler: () => {
             console.log('asc');
+           this.products = this.products.sort(function(a, b){return a.currentprice - b.currentprice});
           }
         },
         {
-          text: 'DSC',
+          text: 'Descending Order',
           handler: () => {
             console.log('asc');
+            this.products = this.products.sort(function(a, b){return b.currentprice - a.currentprice});
           }
         }
       ]
     });
     asc.present() ;
+  }
+  sortByPriceAsc(a,b){
+    return a.currentprice - b.currentprice ;
+  }
+  sortByPriceDsc(a,b){
+    return b.currentprice - a.currentprice ;
   }
   async settings() {
     const mod = await this.modal.create({

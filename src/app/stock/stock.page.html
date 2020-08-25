@@ -15,24 +15,37 @@
             <ion-row  style="margin-top: 10px;">
                 <ion-col>
                     <ion-label class="title">Choose category</ion-label>
-                    <ion-select style="font-size: 15px; margin-left: -10px;" placeholder="category" [(ngModel)]="category" *ngIf="show" (ionChange)="filterProducts()">
-                        <ion-select-option *ngFor="let item of categories.categories">{{item}}</ion-select-option>
-                    </ion-select>
                 </ion-col>
                 <ion-col>
                     <ion-icon name="pricetags" class="image" color="primary"></ion-icon>
                 </ion-col>
             </ion-row>
+            <ion-row>
+                <ion-segment scrollable  [(ngModel)]="category" *ngIf="show" (ionChange)="filterProducts()">
+                    <ion-segment-button selected value="">
+                        <ion-label>All</ion-label>
+                      </ion-segment-button>
+                    <ion-segment-button value="{{item}}" *ngFor="let item of categories.categories">
+                        <ion-label>{{item}}</ion-label>
+                    </ion-segment-button>
+                  </ion-segment>
+                <!-- <ion-col>
+                    <ion-select style="font-size: 15px; margin-left: -10px;" placeholder="category" [(ngModel)]="category" *ngIf="show" (ionChange)="filterProducts()">
+                        <ion-select-option *ngFor="let item of categories.categories">{{item}}</ion-select-option>
+                    </ion-select>
+
+                </ion-col> -->
+            </ion-row>
         </ion-card-title>
 
         <ion-card-content class="content">
-            <div>
+            <!-- <div>
                 <ion-label>Low on stock</ion-label>
                 <div style="color: #737373; font-size: 13px; margin-top: 10px;">
                     <div>You haven't set any Stock alerts on your products.</div>
                     <div style="margin-top: 10px;">Go to <ion-icon name="settings"></ion-icon> and get started</div>
                 </div>
-            </div>
+            </div> -->
 
             <div>
                 <div class="section-two">
@@ -41,7 +54,7 @@
                 </div>
 
                 <ion-spinner name="circles" color="primary" *ngIf="products.length  == 0" class="spinner"></ion-spinner>
-                <ion-card no-padding class="stock" style="margin-left: -5px; margin-right: -5px;" *ngFor="let item of products" (click)="viewProduct(item)">
+                <!-- <ion-card no-padding class="stock" style="margin-left: -5px; margin-right: -5px;" *ngFor="let item of products" (click)="viewProduct(item)">
                     <ion-row style="margin-top: 10px; margin-bottom: 10px;">
                         <div style="margin-left: 10px;">
                             <ion-icon size="large" color="success" name="trending-up"></ion-icon>
@@ -58,7 +71,22 @@
                             {{item.stock}}
                         </div>
                     </ion-row>
-                </ion-card>
+                </ion-card> -->
+                <ion-row>
+                    <ion-col size="6" *ngFor="let item of products">
+                      <ion-card  style="height: 200px;" >
+                        <img *ngIf="item.image !== undefined" style="height: 150px;" src="{{item.image}}" (click)="viewProduct(item)" alt="product image">
+                        <ion-card-content>
+                          <ion-label class="pr-name">{{item.Meal}}</ion-label><br>
+                          <ion-label class="pr-price">Ksh {{item.currentprice}}</ion-label><br>
+                        </ion-card-content>
+                        <div class="prTag" >
+                          <ion-label id="lb" (click)="viewProduct(item)" >View
+                          </ion-label>
+                        </div>
+                      </ion-card>
+                    </ion-col>
+                  </ion-row>
             </div>
         </ion-card-content>
 

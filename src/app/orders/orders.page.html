@@ -70,20 +70,10 @@
 
 
 <ion-footer *ngIf="view" style="background-color: #f3f3f3;text-align: center;">
-    <ion-label color="danger" *ngIf="prod.payment === 'paid'">This Order is already Paid for.</ion-label>
-    <ion-label color="danger" *ngIf="prod.payment === 'pending'">To be Paid on Delivery.</ion-label>
+    <ion-label color="danger">This Order is already Paid for.</ion-label>
     <ion-row *ngIf="prod.status">
         <ion-col>
             <ion-button style="font-size: 13px;" expand="full" color="success" (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">Ready</ion-button>
-            <!-- <ion-card  color="success" text-center (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'"> -->
-            <!-- <ion-card-content style="font-weight:bold ;">Ready</ion-card-content> -->
-            <!-- </ion-card> -->
         </ion-col>
-        <!-- <ion-col > -->
-            <!-- <ion-button style="font-size: 13px;" expand="full" color="success" (click)="complete(prod.OrderID)" >Complete</ion-button> -->
-            <!-- <ion-card  color="success" text-center (click)="paid(prod.OrderID)" [disabled]="prod.paid == 'True'">
-            <ion-card-content style="font-weight:bold ;">Paid</ion-card-content>
-            </ion-card> -->
-        <!-- </ion-col> -->
     </ion-row>
 </ion-footer>

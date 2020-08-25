@@ -1,87 +1,595 @@
-<!-- <ion-toolbar>
+<ion-toolbar color="primary">
   <ion-buttons slot="start">
-    <ion-button (click)="back()">
-      <ion-icon size="large" color="primary" name="close"></ion-icon>
+    <ion-button *ngIf="seller_account_form" (click)="goBackToLogin()">
+      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
     </ion-button>
-</ion-buttons>
-<ion-title text-center>
-  
-</ion-title>
-</ion-toolbar> -->
-<ion-content >
-    
-  <div style="background-color: var(--ion-color-primary);height: 100%;">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="1"></ion-col>
-        <ion-col class="center">
-            <h4 class="title" >
-                SIGN UP
-              </h4>
-          <form style="margin-top: 10%;" [formGroup]="registerForm">
-         
-          <ion-list class="" >
-            <ion-item text-wrap>
-                <ion-icon name="person" slot="start" size="small"></ion-icon>
-                <ion-input clearInput  type="text"  name="name" formControlName="name" required placeholder="Shop name" >
-                </ion-input>
+
+    <ion-button *ngIf="business_information_form" (click)="goBackToSellerAccount()">
+      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="payment_details_form" (click)="goBackToBusinessInformation()">
+      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="know_your_customer_form" (click)="goBackToPaymentDetails()">
+      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+    </ion-button>
+
+  </ion-buttons>
+  <ion-title text-center style="margin-right: 15px;">SIGN UP</ion-title>
+</ion-toolbar>
+
+
+
+
+
+<ion-content>
+  <div class="third-content">
+
+    <div style="margin-right: 17px; margin-top: -10px;">
+      <div style="font-size: 20px; color: #696868; padding-bottom: 15px;">Register and start selling.</div>
+      <ion-progress-bar *ngIf="seller_account_form" color="primary" value="0.0"></ion-progress-bar>
+      <ion-progress-bar *ngIf="business_information_form" color="primary" value="0.33"></ion-progress-bar>
+      <ion-progress-bar *ngIf="payment_details_form" color="primary" value="0.66"></ion-progress-bar>
+      <ion-progress-bar *ngIf="know_your_customer_form" color="primary" value="1"></ion-progress-bar>
+    </div>
+
+
+
+
+
+    <!-- Seller Account -->
+    <form [formGroup]="sellerAccountForm" *ngIf="seller_account_form">
+      <ion-row class="ion-no-padding">
+        <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 20px; margin-bottom: 15px;">Seller
+          Account</div>
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="owner" formControlName="owner" type="text" placeholder="Full Name*"></ion-input>
             </ion-item>
           </ion-list>
-          <ion-list class="" >
-              <ion-item text-wrap>
-                  <ion-icon name="call" slot="start" size="small"></ion-icon>
-                  <ion-input clearInput  type="tel"  name="contact" formControlName="contact" required placeholder="Contact" >
-                  </ion-input>
-              </ion-item>
-            </ion-list>
-            <ion-list class="" no-lines>
-                <ion-item text-wrap>
-                    <ion-icon name="mail" slot="start" size="small"></ion-icon>
-                    <ion-input   type="email"  name="email" formControlName="email" required placeholder="Email Address" >
-                    </ion-input>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="Contacts" formControlName="Contacts" type="text" placeholder="Phone Number*"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="shop" formControlName="shop" type="text" placeholder="Shop Name *"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="Email" formControlName="Email" type="email" placeholder="Email Address *"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-icon slot="end" [name]="passwordIcon" (click)='hideShowPassword()' size="small"
+                style="float: right; right: 17px;"></ion-icon>
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;"
+                [type]="passwordType" clearOnEdit="false" name="password" formControlName="password"
+                placeholder="Password *">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-icon slot="end" [name]="confirmPasswordIcon" (click)='hideShowConfirmPassword()' size="small"
+                style="float: right; right: 17px;"></ion-icon>
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;"
+                [type]="confirmPasswordType" clearOnEdit="false" name="confirmPassword"
+                formControlName="confirmPassword" placeholder="Confirm Password *">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <div style="margin-right: 17px; width: 100%;">
+          <ion-list class="i-agree" class="ion-no-padding">
+            <ion-item text-center class="ion-no-padding">
+              <input type="checkbox" name="termsAndConditions" formControlName="termsAndConditions" />
+              <div style="margin-left: 10px; font-size: 13px; color: #696868;">I have read and accepted <b
+                  (click)="viewTermsAndConditions()" style="color: #00ade5;">Terms and conditions</b></div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-row>
+
+      <ion-list class="submit-button">
+        <div class="form-group">
+          <ion-buttons class="button-create-account">
+            <ion-button [disabled]="!sellerAccountForm.valid" style="font-size: 13px;" class="ion-text-center"
+              (click)="seller_account()">Continue
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-list>
+    </form>
+    <!-- End Of Seller Account -->
+
+
+
+
+    <!-- Business Information -->
+    <form [formGroup]="businessInformationForm" *ngIf="business_information_form">
+      <ion-row class="ion-no-padding">
+        <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 20px; margin-bottom: 15px;">Business
+          Information <br>
+          <span style="font-size: .5em;">Enter atleast one address</span>
+        </div>
+
+        <div style="margin-top: 65px; margin-bottom: 25px;">
+          <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Address(es)</div>
+          <div
+            style="font-size: 15px; float: right; right: 17px; position: absolute; background-color: var(--ion-color-primary); color: white; padding-top: 5px; padding-bottom: 5px; padding-right: 15px; padding-left: 15px; border-radius: 15px;" (click)="addNewAddr()">
+            Add
+          </div>
+        </div>
+
+        <div style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;"
+          formArrayName="address">
+          <div *ngFor="let group of altInput.controls;let i=index" [formGroupName]="i">
+            <ion-row>
+              <ion-col>
+               <ion-label color="success">Address {{i + 1}}</ion-label> 
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="removeAddr(i)" shape="round" fill="clear">Remove</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item style="padding: 5px;">
+                  <input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" (click)="checkIfPrimaryAddressExists(i)"
+                    name="Primary" formControlName="Primary" type="checkbox"
+                    />&nbsp;&nbsp;
+                    <ion-label color="danger">This is a Primary Address.</ion-label>
                 </ion-item>
               </ion-list>
-            <ion-list class="" no-lines>
-                  <ion-item text-wrap>
-                      <ion-icon name="pin" slot="start" size="small"></ion-icon>
-                      <ion-input   type="search"  name="location" formControlName="location" required placeholder="Location" >
-                      </ion-input>
-                  </ion-item>
-            </ion-list>
-            <ion-list class="" no-lines>
-                <ion-item text-wrap>
-                    <ion-icon name="time" slot="start" size="small"></ion-icon>
-                    <ion-input placeholder="Open"  name="openStart" formControlName="openStart" required ></ion-input> And
-                    <ion-input placeholder="Close" type="text"  name="openStop" formControlName="openStop" required slot="end"></ion-input>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                  <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                    name="address1" formControlName="address1" type="text" placeholder="Address 1 *"></ion-input>
                 </ion-item>
-                
               </ion-list>
-              <ion-list class="" no-lines>
-                  <ion-item text-wrap>
-                      <ion-icon name="globe" slot="start" size="small"></ion-icon>
-                      <ion-input   type="url"  name="website" formControlName="website" required placeholder="Website" >
-                      </ion-input>
-                  </ion-item>
-                </ion-list>
-          <ion-list class="" no-lines>
-            <ion-item text-wrap>
-                <ion-icon name="lock" slot="start" size="small"></ion-icon>
-                <ion-icon slot="end" [name]="passwordIcon" (click)='hideShowPassword()' size="small"></ion-icon>
-                <ion-input  [type]="passwordType" clearOnEdit="false" type="password"  name="password" formControlName="password" required placeholder="********" >
-                </ion-input>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                  <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                    name="postalCode" formControlName="postalCode" type="text" placeholder="Postal code"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                  <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                    name="cityOrTown" formControlName="cityOrTown" type="text" placeholder="City/Town *"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                  <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                    name="country" formControlName="country" type="text" placeholder="Country *"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </div>
+        </div>
+
+
+        <ion-col size="12" class="ion-no-padding" style="margin-top: 10px;">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding" style="border-bottom: 1px solid #fff; margin-right: 15px; margin-top: -2px;">
+              <ion-label style="color: #696868;">Type of Business *</ion-label>
+              <ion-select name="type" formControlName="type"
+                style="border: 1px solid var(--ion-color-primary); border-radius: 15px; padding-top: 5px; padding-bottom: 0px; padding-left: 10px; padding-right: 10px; font-size: 13px; color: var(--ion-color-primary); float: right; right: 1px; position: absolute;"
+                class="ion-no-padding" interface="popover" placeholder="Select type">
+                <ion-select-option value="Shops">Shop</ion-select-option>
+                <ion-select-option value="food">Restaurant</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="kraPin" formControlName="kraPin" type="text" placeholder="KRA PIN *"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="businessPermitNumber" formControlName="businessPermitNumber" type="text"
+                placeholder="Business Permit Number"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="Open" formControlName="Open" type="text" placeholder="Open Time (Am/Pm) *"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="Close" formControlName="Close" type="text" placeholder="Close Time (Am/Pm) *"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="Website" formControlName="Website" type="text" placeholder="Website / Social Media link *">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding"
+              style="border-bottom: 1px solid var(--ion-color-primary); border-radius: 0px; margin-right: 17px;">
+              <ion-textarea name="description" formControlName="description" rows="4" style="font-size: 13px;"
+                placeholder="Shop Description *"></ion-textarea>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <div style="color: #696868; font-size: 18px; margin-top: 30px; margin-bottom: 20px;">Delivery details</div>
+
+        <div style="background-color: #F4F4F4; width: 100%; margin-right: 17px; padding: 10px;">
+          <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+            <ion-item text-center class="ion-no-padding">
+              <input type="checkbox" name="sameDayDelivery" formControlName="sameDayDelivery" /><b
+                style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Same Day delivery</b>
             </ion-item>
           </ion-list>
 
-          <div class="form-group" style="margin-top: 20px;">
-              <ion-button expand="full" shape="round" [disabled]="!registerForm.valid" (click)="register()" color="primary" >Sign Up</ion-button>
-          </div>
-          <div text-center style="background-color: var(--ion-color-primary);color: white;">
-            Have an account ?<br/><a routerLink="/tabs/login" class="link">Login</a>
-          </div>
-        </form>
-        </ion-col>
-        <ion-col size="1"></ion-col>
+          <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+            <ion-item text-center class="ion-no-padding">
+              <input type="checkbox" name="nextDayDelivery" formControlName="nextDayDelivery" /><b
+                style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Next Day delivery</b>
+            </ion-item>
+          </ion-list>
+
+          <ion-list class="i-agree" class="ion-no-padding">
+            <ion-item text-center class="ion-no-padding">
+              <div style="width: 27px; margin-right: 12px;">
+                <select formControlName="daysDelivery" name="daysDelivery" >
+                  <option *ngFor="let item of [0,3,4,5]">{{item}}</option>
+                </select>
+                <!-- <ion-input clearInput
+                  style="border: 1px solid var(--ion-color-primary); height: 25px; background-color: white; color: var(--ion-color-primary); font-size: 12px;"
+                   type="number"></ion-input> -->
+              </div><b style="font-weight: normal; font-size: 12px; color: #696868;"> Days delivery</b>
+            </ion-item>
+          </ion-list>
+        </div>
       </ion-row>
-    </ion-grid>
+
+      <ion-list class="submit-button">
+        <div class="form-group">
+          <ion-buttons class="button-create-account">
+            <ion-button [disabled]="!businessInformationForm.valid"  style="font-size: 13px;" class="ion-text-center"
+              (click)="business_information()">Continue
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-list>
+    </form>
+    <!-- End Of Business Information -->
+
+
+
+    <!-- Payment Details  -->
+    <form [formGroup]="paymentDetailsForm" *ngIf="payment_details_form">
+      <ion-row class="ion-no-padding">
+        <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 20px; margin-bottom: 15px;width: 100%;">Payment
+          Details
+          <ion-buttons style="float: right;font-size: .6em;background-color: #00ade5;padding: 5px;border-radius: 10px;margin-right: 10px;">  
+            <ion-label color="light" (click)="skipPaymentDetails()">Submit Later</ion-label>
+          </ion-buttons>
+        </div>
+
+        <!-- <div style="margin-top: 65px; margin-bottom: 25px;">
+          <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Bank Account</div>
+          <div
+            style="font-size: 15px; float: right; right: 17px; position: absolute; background-color: var(--ion-color-primary); color: white; padding-top: 5px; padding-bottom: 5px; padding-right: 15px; padding-left: 15px; border-radius: 15px;">
+            Add
+          </div>
+        </div> -->
+
+        <div
+          style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;">
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="bankAccountName" formControlName="bankAccountName" type="text" placeholder="Account Name ">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="bankAccountNumber" formControlName="bankAccountNumber" type="text" placeholder="Account Number">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary);font-size: 13px;" clearInput
+                  name="bankName" formControlName="bankName" type="text" placeholder="Bank"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="bankCode" formControlName="bankCode" type="text" placeholder="Bank Code"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="bankBranch" formControlName="bankBranch" type="text" placeholder="Branch"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+
+        <div style="margin-top: 25px; margin-bottom: 15px;">
+          <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Mpesa Account</div>
+        </div>
+
+        <div
+          style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;">
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaRegisteredName" formControlName="mpesaRegisteredName" type="text"
+                  placeholder="Mpesa Registered Name *"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaNumber" formControlName="mpesaNumber" type="text" placeholder="Mpesa Number *"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+
+        <div style="margin-top: 25px; margin-bottom: 15px;">
+          <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Mpesa Till number
+          </div>
+        </div>
+
+        <div
+          style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;">
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaTillRegisteredName" formControlName="mpesaTillRegisteredName" type="text"
+                  placeholder="Mpesa Registered Name *"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaTillNumber" formControlName="mpesaTillNumber" type="text" placeholder="Till number">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+
+        <div style="margin-top: 25px; margin-bottom: 15px;">
+          <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Mpesa Paybill
+            number</div>
+        </div>
+
+        <div
+          style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;">
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaPaybillRegisteredName" formControlName="mpesaPaybillRegisteredName" type="text"
+                  placeholder="Mpesa Registered Name *"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding">
+              <ion-item class="ion-no-padding">
+                <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                  name="mpesaPaybillNumber" formControlName="mpesaPaybillNumber" type="text" placeholder="Paybill">
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+      </ion-row>
+      <ion-list class="submit-button">
+        <div class="form-group">
+          <ion-buttons class="button-create-account">
+            <ion-button [disabled]="!paymentDetailsForm.valid" style="font-size: 13px;" class="ion-text-center"
+              (click)="payment_details()">Continue
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-list>
+    </form>
+    <!-- End of Payment Details -->
+
+
+    <!-- Know your customer -->
+    <form [formGroup]="knowYourCustomerForm" *ngIf="know_your_customer_form">
+      <ion-row class="ion-no-padding">
+        <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 18px; margin-bottom: 15px;">Know Your
+          Customer (KYC) Information </div>
+
+
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding">
+            <ion-item class="ion-no-padding">
+              <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                name="nationalIdOrPassportNumber" formControlName="nationalIdOrPassportNumber" type="text"
+                placeholder="National ID/ Passport Number"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <div style="margin-top: 20px; margin-right: 17px; width: 100%;">
+          <div style="font-size: 13px; margin-bottom: 7px; color: #696868;">Upload Image of National ID / Passport
+            Number</div>
+          <!-- <div style="width: 100%; background-color: #F4F4F4; height: 100px;">
+                      <div style="font-size: 13px; text-align: center; padding-top: 45px; color: #696868;">Upload Front Image</div>
+                  </div> -->
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding"
+              style="width: 100%; background-color: #F4F4F4; height: 100px; padding-left: 30px; padding-top: 25px;">
+              <ion-item class="ion-no-padding">
+                <ion-col *ngIf="imgURLFront !== null">
+                  <img  src="{{imgURLFront}}" width="150px" height="100px">
+                  <ion-icon name="close" color="danger" (click)="imgURLFront = null" style="float: right;"></ion-icon>
+                </ion-col>
+                <!-- <ion-input style="border-bottom: 1px solid #F4F4F4; font-size: 13px; color: #696868;" clearInput
+                  name="frontImage" formControlName="frontImage" type="file" placeholder="National ID/ Passport Number">
+                </ion-input> -->
+                <ion-col *ngIf="imgURLFront === null">
+                  <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
+                  <ion-label color="primary"  (click)="getImageGallery('front')">Upload front image of ID / Passport</ion-label>
+                </ion-col>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+
+        <div style="margin-top: 30px; margin-right: 17px; width: 100%;">
+          <!-- <div style="width: 100%; background-color: #F4F4F4; height: 100px;">
+                      <div style="font-size: 13px; text-align: center; padding-top: 45px; color: #696868;">Upload Back Image</div>
+                  </div> -->
+          <ion-col size="12" class="ion-no-padding">
+            <ion-list class="ion-no-padding"
+              style="width: 100%; background-color: #F4F4F4; height: 100px; padding-left: 30px; padding-top: 25px;">
+              <ion-item class="ion-no-padding">
+                <ion-col *ngIf="imgURLBack !== null">
+                  <img  src="{{imgURLBack}}" width="150px" height="100px">
+                  <ion-icon name="close" color="danger" (click)="imgURLBack = null" style="float: right;"></ion-icon>
+                </ion-col>
+                <!-- <ion-input style="border-bottom: 1px solid #F4F4F4; font-size: 13px; color: #696868;" clearInput
+                  name="frontImage" formControlName="frontImage" type="file" placeholder="National ID/ Passport Number">
+                </ion-input> -->
+                <ion-col *ngIf="imgURLBack === null">
+                  <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
+                  <ion-label color="primary"  (click)="getImageGallery('back')">Upload back image of ID / Passport</ion-label>
+                </ion-col>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </div>
+
+        <div style="width: 100%; margin-right: 17px;">
+          <div style="font-size: 13px; color: var(--ion-color-primary); text-align: center; margin-top: 25px;">KYC
+            APPROVAL WILL TAKE 24 HOURS</div>
+        </div>
+      </ion-row>
+
+      <ion-list class="submit-button">
+        <div class="form-group">
+          <ion-buttons class="button-create-account">
+            <ion-button style="font-size: 13px;" class="ion-text-center"  [disabled]="imgURLBack === null || imgURLFront === null"
+              (click)="submit()">Submit
+            </ion-button>
+          </ion-buttons><br>
+          <ion-buttons class="button-create-account">
+            <ion-button style="font-size: 13px;" class="ion-text-center" 
+              (click)="submit()">Submit KYC later
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-list>
+      <!-- <ion-list class="submit-button">
+        <div class="form-group">
+          
+        </div>
+      </ion-list> -->
+    </form>
+    <!-- End oF Know your customer -->
   </div>
+
+
 </ion-content>

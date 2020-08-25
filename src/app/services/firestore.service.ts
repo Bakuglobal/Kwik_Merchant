@@ -10,6 +10,7 @@ import { Product} from '../models/product';
 import { Category } from '../models/category';
 import { map } from 'rxjs/operators';
 import { Customer } from '../models/customer';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Injectable({
@@ -38,6 +39,7 @@ export class FirestoreService {
     private http: HttpClient,
     private fs: AngularFirestore,
     public db: AngularFireDatabase,
+    private st: AngularFireStorage
 
   ) { }
 
@@ -127,7 +129,20 @@ export class FirestoreService {
       console.log(shop);
    return  this.fs.collection<Category>('Categories').doc(shop);
   }
-
+// register user with mail and pass
+register(email,pass){
+  return this.fauth.auth.createUserWithEmailAndPassword(email,pass);
+}
+deleteUser(){
+  let user = this.fauth.auth.currentUser ;
+ return user.delete()
+}
+profile(){
+  return this.fs.collection('shops')
+}
+editprof(id){
+  return this.fs.collection('shops').doc(id)
+}
   // get all products
   getallProducts(shop){
     this.allproducts = this.fs.collection<Product>(shop, ref => {
@@ -165,4 +180,5 @@ export class FirestoreService {
  
      });
    }
+   
 }

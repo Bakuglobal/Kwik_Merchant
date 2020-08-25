@@ -72,8 +72,16 @@ export class CategoryPage implements OnInit {
     control.removeAt(i);
   }
   manage(val: any): void {
-    this.upload(val);
-    console.dir(val);
+    let arr = [];
+    val.categories.forEach(item => {
+      arr.push(item.name)
+    });
+    let cat = {
+      Date: new Date(),
+      categories: arr
+    }
+    this.upload(cat);
+    console.dir(cat);
     this.form.reset();
   }
   async upload(data) {

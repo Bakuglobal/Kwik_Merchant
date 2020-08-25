@@ -70,7 +70,7 @@ export class DashboardPage implements OnInit {
   // oninit method
 
   ngOnInit() {
-    this.userID = localStorage.getItem('userID');
+    this.userID = localStorage.getItem('user');
     console.log(this.userID);
     if (this.userID != null) {
       // this.getOrders();
@@ -182,5 +182,8 @@ export class DashboardPage implements OnInit {
     });
   }
 
+
+
+ 
   
 }

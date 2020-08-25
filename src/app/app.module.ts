@@ -53,8 +53,8 @@ import { OrderPreviewPageModule } from './order-preview/order-preview.module';
 import { ViewNotificationPageModule } from './view-notification/view-notification.module';
 import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { Badge } from '@ionic-native/badge/ngx';
-
-
+import { Network } from '@ionic-native/network/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -109,6 +109,8 @@ import { Badge } from '@ionic-native/badge/ngx';
     CallNumber,
     Firebase,
     Camera,
+    Network,
+    DocumentViewer,
     FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

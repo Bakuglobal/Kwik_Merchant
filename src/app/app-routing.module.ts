@@ -14,8 +14,6 @@ const routes: Routes = [
   { path: 'order-preview', loadChildren: './order-preview/order-preview.module#OrderPreviewPageModule' },
   { path: 'view-notification', loadChildren: './view-notification/view-notification.module#ViewNotificationPageModule' },
   { path: 'image-display', loadChildren: './image-display/image-display.module#ImageDisplayPageModule' },
-  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
-  
 ];
 @NgModule({
   imports: [

@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
   ) { 
     
     this.service.hiddenTabs = true ; 
-    this.userId = localStorage.getItem('userID');
+    this.userId = localStorage.getItem('user');
   }
 
   
@@ -88,7 +88,9 @@ export class LoginPage implements OnInit {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
 }
-
+signup(){
+  this.navCtrl.navigate(['tabs/signup']);
+}
 submit() {
   this.presentLoading();
   this.db.login(this.data.email, this.data.password).then(
@@ -107,7 +109,7 @@ next(resp) {
   
   const id = resp.user.uid;
   console.log('user id is----:'+id)
-  localStorage.setItem('userID', id);
+  localStorage.setItem('user', id);
   this.loading.dismiss();
   this.ref.getUserDet(id);
   let shopname = this.db.getshopname();

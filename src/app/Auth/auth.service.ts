@@ -16,7 +16,7 @@ export class AuthService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot){
   //  let logs = this.fauth.auth.currentUser ;
-  let logs = localStorage.getItem('userID')
+  let logs = localStorage.getItem('user')
    console.log(logs)
    if(logs != null){
 

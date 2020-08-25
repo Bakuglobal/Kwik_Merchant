@@ -27,13 +27,24 @@
         <ion-row no-padding text-center>
             <ion-col>
                 <ion-label style="font-size: 15px;" class="title">Choose category to filter</ion-label>
-                <ion-select placeholder="category" [(ngModel)]="category" (ionChange)="setFilteredItems()">
+                <!-- <ion-select placeholder="category" [(ngModel)]="category" (ionChange)="setFilteredItems()">
                 <ion-select-option style="font-size: 13px;" *ngFor="let item of categories.categories">{{item}}</ion-select-option>
-                </ion-select>
-            </ion-col>
-            <ion-col size="4">
+                </ion-select> -->
                 <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="pricetags" class="image" color="primary"></ion-icon>
             </ion-col>
+            <!-- <ion-col size="4">
+                <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="pricetags" class="image" color="primary"></ion-icon>
+            </ion-col> -->
+        </ion-row>
+        <ion-row>
+            <ion-segment scrollable  [(ngModel)]="category"  (ionChange)="setFilteredItems()">
+                <ion-segment-button selected value="">
+                    <ion-label>All</ion-label>
+                  </ion-segment-button>
+                <ion-segment-button value="{{item}}" *ngFor="let item of categories.categories">
+                    <ion-label>{{item}}</ion-label>
+                </ion-segment-button>
+              </ion-segment>
         </ion-row>
         <ion-item *ngIf="category != null">
             <ion-input style="font-size: 15px;" type="text" clearInput placeholder="Enter product name"></ion-input>

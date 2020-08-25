@@ -14,6 +14,7 @@ import { OneSignalService } from './one-signal.service';
 import * as $ from "jquery";
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { map } from 'rxjs/operators';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-root',
@@ -53,6 +54,7 @@ export class AppComponent {
         private keyboard: Keyboard,
         private actionSheetCtrl : ActionSheetController,
         private toast: ToastController,
+        private network: Network
   ) {
     
   // initiliaze the app
@@ -75,9 +77,9 @@ export class AppComponent {
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
   // get user id from local and userDetails
-        this.userID = localStorage.getItem('userID');
+        this.userID = localStorage.getItem('user');
         this.sideMenu();
-        if (this.userID !== undefined) {
+        if (this.userID !== null) {
           this.getUserDet(this.userID);
         }
 
@@ -91,7 +93,8 @@ export class AppComponent {
 // get user details from database
         async getUserDet(id) {
            this.service.getUserDetails(id).valueChanges().subscribe(res => {
-            this.shop = res ;
+             let user: any = res ;
+            this.shop = user.sellerInfo ;
             console.log(this.shop);
             this.service.setuser(this.shop);
             this.db.setShopname(this.shop.shop);
@@ -107,6 +110,8 @@ export class AppComponent {
           this.platform.ready().then(() => {
             this.statusBar.styleLightContent();
             this.splashScreen.hide();
+            this.backButtonEvent();
+            this.checkConnection();
 
             this.fcm.getToken().then(token => {
               console.log('fcm - token' + token);
@@ -137,7 +142,7 @@ export class AppComponent {
               }
             });
           });
-          this.backButtonEvent();
+          
         }
  // active hardware back button
  backButtonEvent() {
@@ -260,4 +265,19 @@ async toasted(msg) {
           this.db.logout();
 
         }
+checkConnection(){
+  // watch network for a connection
+this.network.onConnect().subscribe(() => {
+  console.log('network connected!');
+  // We just got a connection but we need to wait briefly
+   // before we determine the connection type. Might need to wait.
+  // prior to doing any api requests as well.
+  setTimeout(() => {
+    if (this.network.type === 'none') {
+      console.log('we got a wifi connection, woohoo!');
+      this.toasted('You are offline');
+    }
+  }, 3000);
+});
+}
 }
