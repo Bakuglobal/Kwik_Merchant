@@ -1,23 +1,22 @@
 <ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-button *ngIf="seller_account_form" (click)="goBackToLogin()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+        <ion-button *ngIf="seller_account_form" (click)="goBackToLogin()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="business_information_form" (click)="goBackToSellerAccount()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+        <ion-button *ngIf="business_information_form" (click)="goBackToSellerAccount()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="payment_details_form" (click)="goBackToBusinessInformation()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+        <ion-button *ngIf="payment_details_form" (click)="goBackToBusinessInformation()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="know_your_customer_form" (click)="goBackToPaymentDetails()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
-
-  </ion-buttons>
-  <ion-title text-center style="margin-right: 15px;">SIGN UP</ion-title>
+        <ion-button *ngIf="know_your_customer_form" (click)="goBackToPaymentDetails()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-title text-center style="margin-right: 15px;">SIGN UP</ion-title>
 </ion-toolbar>
 
 
@@ -28,11 +27,11 @@
   <div class="third-content">
 
     <div style="margin-right: 17px; margin-top: -10px;">
-      <div style="font-size: 20px; color: #696868; padding-bottom: 15px;">Register and start selling.</div>
-      <ion-progress-bar *ngIf="seller_account_form" color="primary" value="0.0"></ion-progress-bar>
-      <ion-progress-bar *ngIf="business_information_form" color="primary" value="0.33"></ion-progress-bar>
-      <ion-progress-bar *ngIf="payment_details_form" color="primary" value="0.66"></ion-progress-bar>
-      <ion-progress-bar *ngIf="know_your_customer_form" color="primary" value="1"></ion-progress-bar>
+        <div style="font-size: 20px; color: #696868; padding-bottom: 15px;">Register and start selling.</div>
+        <ion-progress-bar *ngIf="seller_account_form" color="primary" value="0.0"></ion-progress-bar>
+        <ion-progress-bar *ngIf="business_information_form" color="primary" value="0.33"></ion-progress-bar>
+        <ion-progress-bar *ngIf="payment_details_form" color="primary" value="0.66"></ion-progress-bar>
+        <ion-progress-bar *ngIf="know_your_customer_form" color="primary" value="1"></ion-progress-bar>
     </div>
 
 
@@ -137,7 +136,7 @@
       <ion-row class="ion-no-padding">
         <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 20px; margin-bottom: 15px;">Business
           Information <br>
-          <span style="font-size: .5em;">Enter atleast one address</span>
+          <span style="font-size: .5em;">Enter at least one address</span>
         </div>
 
         <div style="margin-top: 65px; margin-bottom: 25px;">

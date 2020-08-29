@@ -1,76 +1,811 @@
 <ion-header style="background-color: #00ade5;">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
-    </ion-buttons>
-    <ion-title text-center style="margin-right: 25px;">
-      My Profile
-    </ion-title>
-
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons>
+        <ion-title text-center style="margin-right: 25px;">
+            My Profile
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="shop === undefined">
-    <div>
-      <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 170px;"></ion-skeleton-text>
+    <div *ngIf="shop === undefined">
+        <div>
+            <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 170px;"></ion-skeleton-text>
+        </div>
+        <div>
+            <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+                <ion-skeleton-text animated style="object-fit: fill;"></ion-skeleton-text>
+            </ion-avatar>
+        </div>
+        <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
+            <div style="font-size: 15px; font-weight: bold;">
+                <ion-skeleton-text></ion-skeleton-text>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+                <ion-skeleton-text animated></ion-skeleton-text>
+                <ion-skeleton-text animated></ion-skeleton-text>
+            </div>
+        </div>
     </div>
-    <div>
-      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
-        <ion-skeleton-text animated style="object-fit: fill;"></ion-skeleton-text>
-      </ion-avatar>
-    </div>
-    <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
-      <div style="font-size: 15px; font-weight: bold;">
-        <ion-skeleton-text></ion-skeleton-text>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
-        <ion-skeleton-text animated></ion-skeleton-text>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </div>
-    </div>
-  </div>
 
-  <div style="padding-bottom: 15px;" *ngIf="shop !== undefined">
-    <div>
-      <img src="{{shop.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 170px;">
+    <div style="padding-bottom: 0px;" *ngIf="shop !== undefined">
+        <div>
+            <img src="{{shop.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
+        </div>
+        <div>
+            <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+                <img src="{{shop.logo}}" style="object-fit: fill;">
+            </ion-avatar>
+        </div>
+        <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
+            <div style="font-size: 15px; font-weight: bold; color: #636363;">{{shopname}}</div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+              <a><ion-icon name="pin"></ion-icon> {{shop.businessInfo.address[0].address1}}</a>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from {{shop.businessInfo.Open}} - {{shop.businessInfo.Close}} Mon - Sat
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;">Website:
+              <a (click)="inbrowser(shop.businessInfo.Website)">{{shop.businessInfo.Website}}</a>
+            </div>
+          </div>
     </div>
-    <div>
-      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
-        <img src="{{shop.logo}}" style="object-fit: fill;">
-      </ion-avatar>
+
+    <div class="third-content"  *ngIf="shop !== undefined" style="margin-top: -15px;">
+        <ion-row class="ion-no-padding">
+            <div style=" margin-bottom: 10px;">
+                <div style="color: var(--ion-color-primary); float: left; left: 15px; font-size: 15px;">Seller
+                    Account
+                </div>
+                <div *ngIf="edit_seller_account" style="color: var(--ion-color-primary); float: right; right: 15px; position: absolute;">
+                    <div (click)="editSellerAccount()">
+                        Edit
+                    </div>
+                </div>
+            </div>
+        </ion-row>
+        <ion-row class="ion-no-padding" style="margin-bottom: 25px;"  *ngIf="edit_seller_account">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Full Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="owner" type="text" disabled value="{{shop.sellerInfo.owner}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Phone Number <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="Contacts" type="text" disabled value="{{shop.sellerInfo.Contacts}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Shop Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="shop" type="text" disabled value="{{shop.sellerInfo.shop}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Email Address <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="Email" type="email" disabled value="{{shop.sellerInfo.Email}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+        </ion-row>
+
+
+        <form [formGroup]="sellerAccountForm" *ngIf="save_seller_account">
+            <ion-row class="ion-no-padding" style="margin-bottom: 25px;">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Full Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="owner" formControlName="owner" required="" type="text" value="{{sellerInfo.owner}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Phone Number <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="Contacts" formControlName="Contacts" required="" type="text" value="{{sellerInfo.Contacts}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Shop Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="shop" formControlName="shop" type="text" required="" value="{{sellerInfo.shop}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Email Address <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="Email" formControlName="Email" required="" type="email" value="{{sellerInfo.Email}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+            </ion-row>
+
+
+            <ion-list class="submit-button" style="position: absolute; float: right; right: 5px; margin-top: -290px;">
+                <div class="form-group">
+                  <ion-buttons class="button-create-account">
+                    <ion-button [disabled]="!sellerAccountForm.valid" style="font-size: 13px; color: var(--ion-color-primary);"
+                      (click)="saveSellerAccount()">Save
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+              </ion-list>
+        </form>
+
+
+
+        <ion-row>
+            <div style=" margin-bottom: 15px;">
+                <div style="color: var(--ion-color-primary); float: left; left: 15px; font-size: 15px;">Business
+                    Information
+                </div>
+                <div *ngIf="edit_business_information" style="color: var(--ion-color-primary); float: right; right: 15px; position: absolute;">
+                    <div (click)="editBusinessInformation()">
+                        Edit
+                    </div>
+                </div>
+            </div>
+        </ion-row>
+        <ion-row class="ion-no-padding" style="margin-bottom: 25px;" *ngIf="edit_business_information">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Address 1 <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="address1" disabled type="text" value="{{shop.businessInfo.address[0].address1}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Postal code</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="postalCode" disabled type="text" value="{{shop.businessInfo.address[0].postalCode}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">City/Town <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="cityOrTown" disabled type="text" value="{{shop.businessInfo.address[0].cityOrTown}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Country <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="Email" disabled type="email" value="{{shop.businessInfo.address[0].country}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+
+            <ion-col size="12" class="ion-no-padding" style="margin-top: 10px;">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding" style="border-bottom: 1px solid #fff; margin-right: 15px; margin-top: -2px;">
+                    <ion-label style="color: #696868;">Type of Business <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-select name="type" disabled
+                      style="border: 1px solid var(--ion-color-primary); border-radius: 15px; padding-top: 5px; padding-bottom: 0px; padding-left: 10px; padding-right: 10px; font-size: 13px; color: var(--ion-color-primary); float: right; right: 1px; position: absolute;"
+                      class="ion-no-padding" interface="popover" placeholder="Select type">
+                      <ion-select-option selected value="{{shop.businessInfo.type}}">{{shop.businessInfo.type}}</ion-select-option>
+                      <!-- <ion-select-option value="food">Restaurant</ion-select-option> -->
+                    </ion-select>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">KRA PIN <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="kraPin" disabled type="text" value="{{shop.businessInfo.kraPin}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+      
+              <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Business Permit Number</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="businessPermitNumber" disabled type="text" value="{{shop.businessInfo.businessPermitNumber}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+      
+              <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Open Time (Am/Pm) <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Open" type="text" disabled value="{{shop.businessInfo.Open}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+      
+              <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Close Time (Am/Pm) <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Close" type="text" disabled value="{{shop.businessInfo.Close}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+      
+              <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Website / Social Media link <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Website" disabled value="{{shop.businessInfo.Website}}" type="text">
+                    </ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+      
+      
+              <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding"
+                    style="border-bottom: 1px solid var(--ion-color-primary); border-radius: 0px; margin-right: 17px;">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Shop Description <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                    <ion-textarea disabled name="description" rows="4" style="font-size: 13px; color: #636363;" value="{{shop.businessInfo.description}}"></ion-textarea>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+
+              <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Delivery details</div>
+              <div style="background-color: #F4F4F4; width: 100%; margin-right: 17px; padding: 10px;">
+                <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+                  <ion-item text-center class="ion-no-padding">
+                    <input type="checkbox" name="sameDayDelivery" disabled /><b
+                      style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Same Day delivery</b>
+                  </ion-item>
+                </ion-list>
+      
+                <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+                  <ion-item text-center class="ion-no-padding">
+                    <input type="checkbox" name="nextDayDelivery" disabled/><b
+                      style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Next Day delivery</b>
+                  </ion-item>
+                </ion-list>
+      
+                <ion-list class="i-agree" class="ion-no-padding">
+                  <ion-item text-center class="ion-no-padding">
+                    <div style="width: 27px; margin-right: 12px;">
+                      <select name="daysDelivery" >
+                        <option disabled value="{{ shop.businessInfo.daysDelivery}}">{{ shop.businessInfo.daysDelivery}}</option>
+                      </select>
+                    </div><b style="font-weight: normal; font-size: 12px; color: #696868;"> Days delivery</b>
+                  </ion-item>
+                </ion-list>
+              </div>
+    
+    
+        </ion-row>
+
+        <form [formGroup]="businessInformationForm" *ngIf="save_business_information">
+            <ion-row class="ion-no-padding" style="margin-bottom: 25px;">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Address 1 <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="address1" required="" formControlName="address1" type="text" value="{{businessInfo.address[0].address1}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Postal code</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="postalCode" formControlName="postalCode" type="text" value="{{businessInfo.address[0].postalCode}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">City/Town <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="cityOrTown" required="" formControlName="cityOrTown" type="text" value="{{shop.businessInfo.address[0].cityOrTown}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Country <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="country" required="" formControlName="country" type="text" value="{{shop.businessInfo.address[0].country}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+    
+    
+                <ion-col size="12" class="ion-no-padding" style="margin-top: 10px;">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding" style="border-bottom: 1px solid #fff; margin-right: 15px; margin-top: -2px;">
+                        <ion-label style="color: #696868;">Type of Business <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-select name="type" formControlName="type" 
+                          style="border: 1px solid var(--ion-color-primary); border-radius: 15px; padding-top: 5px; padding-bottom: 0px; padding-left: 10px; padding-right: 10px; font-size: 13px; color: var(--ion-color-primary); float: right; right: 1px; position: absolute;"
+                          class="ion-no-padding" interface="popover" placeholder="Select type">
+                          <ion-select-option selected value="{{shop.businessInfo.type}}">{{shop.businessInfo.type}}</ion-select-option>
+                          <!-- <ion-select-option value="food">Restaurant</ion-select-option> -->
+                        </ion-select>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                            <ion-label style="font-size: 13px; color: #636363;" position="floating">KRA PIN <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                            <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="kraPin" formControlName="kraPin" type="text" value="{{shop.businessInfo.kraPin}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+          
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                            <ion-label style="font-size: 13px; color: #636363;" position="floating">Business Permit Number</ion-label>
+                            <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="businessPermitNumber" formControlName="businessPermitNumber" type="text" value="{{businessInfo.businessPermitNumber}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+          
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Open Time (Am/Pm) <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="Open" formControlName="Open" required="" type="text" value="{{businessInfo.Open}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+          
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                            <ion-label style="font-size: 13px; color: #636363;" position="floating">Close Time (Am/Pm) <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                            <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="Close" formControlName="Close" required="" type="text" value="{{businessInfo.Close}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+          
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Website / Social Media link <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="Website" formControlName="Website" required="" value="{{businessInfo.Website}}" type="text">
+                        </ion-input>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+          
+          
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding"
+                        style="border-bottom: 1px solid var(--ion-color-primary); border-radius: 0px; margin-right: 17px;">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Shop Description <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                        <ion-textarea name="description" required="" formControlName="description" rows="4" style="font-size: 13px; color: #636363;" value="{{businessInfo.description}}"></ion-textarea>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+    
+                  <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Delivery details</div>
+                  <div style="background-color: #F4F4F4; width: 100%; margin-right: 17px; padding: 10px;">
+                    <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+                      <ion-item text-center class="ion-no-padding">
+                        <input type="checkbox" name="sameDayDelivery" formControlName="sameDayDelivery"/><b
+                          style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Same Day delivery</b>
+                      </ion-item>
+                    </ion-list>
+          
+                    <ion-list class="ion-no-padding" style="margin-bottom: -20px;">
+                      <ion-item text-center class="ion-no-padding">
+                        <input type="checkbox" name="nextDayDelivery" formControlName="nextDayDelivery"/><b
+                          style="margin-left: 25px; font-weight: normal; font-size: 12px; color: #696868;">Next Day delivery</b>
+                      </ion-item>
+                    </ion-list>
+          
+                    <ion-list class="i-agree" class="ion-no-padding">
+                      <ion-item text-center class="ion-no-padding">
+                        <div style="width: 27px; margin-right: 12px;">
+                          <select formControlName="daysDelivery" name="daysDelivery">
+                            <option value="{{ businessInfo.daysDelivery}}" >{{ businessInfo.daysDelivery}}</option>
+                          </select>
+                        </div><b style="font-weight: normal; font-size: 12px; color: #696868;"> Days delivery</b>
+                      </ion-item>
+                    </ion-list>
+                </div>
+            </ion-row>
+            <ion-list class="submit-button" style="position: absolute; float: right; right: 5px; margin-top: -890px;">
+                <div class="form-group">
+                  <ion-buttons class="button-create-account">
+                    <ion-button [disabled]="!businessInformationForm.valid" style="font-size: 13px; color: var(--ion-color-primary);"
+                      (click)="saveBusinessInformation()">Save
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+            </ion-list>
+        </form>
+
+
+
+        <ion-row>
+            <div style=" margin-bottom: 10px;">
+                <div style="color: var(--ion-color-primary); float: left; left: 15px; font-size: 15px;">Payment
+                    Details
+                </div>
+                <div *ngIf="edit_payment_details" style="color: var(--ion-color-primary); float: right; right: 15px; position: absolute;">
+                    <div (click)="editPaymentDetails()">
+                        Edit
+                    </div>
+                </div>
+            </div>
+        </ion-row>
+        <ion-row class="ion-no-padding" style="margin-bottom: 25px;" *ngIf="edit_payment_details">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Account Name</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="owner" disabled type="text" value="{{ shop.paymentInfo.bankAccountName}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Account Number</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="Contacts" disabled type="text" value="{{ shop.paymentInfo.bankAccountNumber}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Bank</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="shop" disabled type="text" value="{{ shop.paymentInfo.bankName}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+    
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">Bank Code</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="Email" disabled type="text" value="{{ shop.paymentInfo.bankCode}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Branch</ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.bankBranch}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Account</div>
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.bankmpesaRegisteredNameBranch}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Number <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.mpesaNumber}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Till number</div>
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.mpesaTillRegisteredName}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Till number</ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.mpesaTillNumber}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Paybill</div>
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                      name="Email" disabled type="text" value="{{ shop.paymentInfo.mpesaPaybillRegisteredName}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+
+            <ion-col size="12" class="ion-no-padding">
+                <ion-list class="ion-no-padding">
+                  <ion-item class="ion-no-padding">
+                      <ion-label style="font-size: 13px; color: #636363;" position="floating">Paybill</ion-label>
+                      <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                      name="Email" disabled type="email" value="{{ shop.paymentInfo.mpesaPaybillNumber}}"></ion-input>
+                  </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+
+        <form [formGroup]="paymentDetailsForm" *ngIf="save_payment_details">
+            <ion-row class="ion-no-padding" style="margin-bottom: 25px;">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Account Name</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="bankAccountName" formControlName="bankAccountName" type="text" value="{{ paymentInfo.bankAccountName}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Account Number</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="bankAccountNumber" formControlName="bankAccountNumber" type="text" value="{{ paymentInfo.bankAccountNumber}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Bank</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="bankName" formControlName="bankName" type="text" value="{{ paymentInfo.bankName}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+        
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">Bank Code</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="bankCode" formControlName="bankCode" type="text" value="{{ paymentInfo.bankCode}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+    
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Branch</ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="bankBranch" formControlName="bankBranch" type="text" value="{{ paymentInfo.bankBranch}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Account</div>
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="mpesaRegisteredName" formControlName="mpesaRegisteredName" type="text" value="{{ paymentInfo.bankmpesaRegisteredNameBranch}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Number <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="mpesaNumber" formControlName="mpesaNumber" type="text" value="{{ paymentInfo.mpesaNumber}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Till number</div>
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="mpesaTillRegisteredName" formControlName="mpesaTillRegisteredName" type="text" value="{{ paymentInfo.mpesaTillRegisteredName}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Till number</ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="mpesaTillNumber" formControlName="mpesaTillNumber" type="text" value="{{ paymentInfo.mpesaTillNumber}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <div style="font-size: 15px; margin-top: 15px; margin-bottom: 7px; color: var(--ion-color-primary);">Mpesa Paybill</div>
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Mpesa Registered Name <span style="color: var(--ion-color-danger);">*</span></ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
+                          name="mpesaPaybillRegisteredName" formControlName="mpesaPaybillRegisteredName" type="text" value="{{ paymentInfo.mpesaPaybillRegisteredName}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+    
+                <ion-col size="12" class="ion-no-padding">
+                    <ion-list class="ion-no-padding">
+                      <ion-item class="ion-no-padding">
+                          <ion-label style="font-size: 13px; color: #636363;" position="floating">Paybill</ion-label>
+                          <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                          name="mpesaPaybillNumber" formControlName="mpesaPaybillNumber" type="text" value="{{ paymentInfo.mpesaPaybillNumber}}"></ion-input>
+                      </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+            <ion-list class="submit-button" style="position: absolute; float: right; right: 5px; margin-top: -797px;">
+                <div class="form-group">
+                  <ion-buttons class="button-create-account">
+                    <ion-button [disabled]="!paymentDetailsForm.valid" style="font-size: 13px; color: var(--ion-color-primary);"
+                      (click)="savePaymentDetails()">Save
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+            </ion-list>
+        </form>
+
+
+
+
+        <ion-row>
+            <div style=" margin-bottom: 10px;">
+                <div style="color: var(--ion-color-primary); float: left; left: 15px; margin-right: 20px; font-size: 15px;">Know Your
+                    Customer (KYC) Information
+                </div>
+                <div *ngIf="edit_know_your_customer" style="color: var(--ion-color-primary); float: right; right: 15px; position: absolute;">
+                    <div (click)="editKnowYourCustomer()">
+                        Edit
+                    </div>
+                </div>
+            </div>
+        </ion-row>
+        <ion-row class="ion-no-padding" style="margin-bottom: 25px;" *ngIf="edit_know_your_customer">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-list class="ion-no-padding">
+                <ion-item class="ion-no-padding">
+                    <ion-label style="font-size: 13px; color: #636363;" position="floating">National ID/ Passport Number</ion-label>
+                    <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                    name="owner" disabled type="text" value="{{ shop.kyc.nationalIdOrPassportNumber}}"></ion-input>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+        </ion-row>
+
+        <form [formGroup]="knowYourCustomerForm" *ngIf="save_know_your_customer">
+            <ion-row class="ion-no-padding" style="margin-bottom: 25px;">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-list class="ion-no-padding">
+                    <ion-item class="ion-no-padding">
+                        <ion-label style="font-size: 13px; color: #636363;" position="floating">National ID/ Passport Number</ion-label>
+                        <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
+                        name="nationalIdOrPassportNumber" formControlName="nationalIdOrPassportNumber" type="text" value="{{ kyc.nationalIdOrPassportNumber}}"></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-list class="submit-button" style="position: absolute; float: right; right: 5px; margin-top: -138px;">
+                <div class="form-group">
+                  <ion-buttons class="button-create-account">
+                    <ion-button [disabled]="!knowYourCustomerForm.valid" style="font-size: 13px; color: var(--ion-color-primary);"
+                      (click)="saveKnowYourCustomer()">Save
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+            </ion-list>
+        </form>
     </div>
-    <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
-      <div style="font-size: 15px; font-weight: bold;">{{shopname}}</div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">
-        <a >{{shop.Location}} <ion-icon name="pin"></ion-icon></a>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from {{shop.Open}} - {{shop.Close}} Mon - Sat
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;">Website:
-        <a >{{shop.Website}}</a>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top: 15px;">
-    <!-- <ion-label class="ion-padding">Your Posts</ion-label><br> -->
+
+
+
+  <!-- <div style="margin-top: 15px;">
     <div class="ion-padding" *ngIf="!loaded">
       <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
       <br><br>
       <ion-skeleton-text animated style="width: 100%;height: 200px;"></ion-skeleton-text>
     </div>
-    <!-- <div class="ion-text-center ion-padding" *ngIf="Posts.length == 0">
-      <ion-label>  You have no recents posts </ion-label>
-    </div> -->
-  </div>
+  </div> -->
 
-  <div class="page-content"><br>
+  <!-- <div class="page-content"><br>
 
     <ion-card class="card" *ngFor="let item of Posts">
       <div class="header">
@@ -86,12 +821,11 @@
           10 mins ago
         </div>
       </div>
-      <!-- DESCRIPTION -->
       <p class="description">
         {{item.Text}}
       </p>
 
-      <!-- MAIN IMAGE -->
+      
       <div class="main-image">
         <ion-slides>
           <ion-slide *ngFor="let n of item.Images">
@@ -101,7 +835,6 @@
 
       </div>
 
-      <!-- LIKE, COMMENT AND SHARE -->
       <div class="like-comment-share">
         <ion-row>
           <ion-col size="4">
@@ -128,7 +861,6 @@
 
       <div class="line"></div>
 
-      <!-- LAST USER COMMENT -->
       <div class="user-comment">
         <div class="user-avatar">
           <ion-avatar>
@@ -150,5 +882,5 @@
       </div>
     </ion-card><br>
 
-  </div>
+  </div> -->
 </ion-content>

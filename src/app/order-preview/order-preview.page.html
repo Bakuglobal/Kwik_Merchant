@@ -1,49 +1,58 @@
 <ion-content>
-  <ion-toolbar color="primary" padding>
-    <ion-buttons>
-      <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
-      <ion-title text-center>{{OrderID}}</ion-title>
-    </ion-buttons>
-  </ion-toolbar>
-  <div class="body">
-    <ion-label style="color: var(--ion-color-primary);font-size: 1.5rem;padding-top:10px;padding-bottom: 10px;">Ordered by {{username}}</ion-label>
-    <ion-icon name="call" (click)="callCustomer()" style="float: right;font-size: 1.5em;" color="success"></ion-icon>
-    <ion-row  class="top" padding>
-      <ion-col>
-        Product
-      </ion-col>
-      <ion-col>
-        Price
-      </ion-col>
-      <ion-col>
-        Quantity
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let item of products" padding>
-      <ion-col>
-        {{item.product}}
-      </ion-col>
-      <ion-col>
-        {{item.currentprice}}
-      </ion-col>
-      <ion-col>
-        {{item.quantity}}
-      </ion-col>
-    </ion-row>
-    <h4>Order Notes</h4>
-    <ion-row padding>
-      <p >
-        {{notes}}
-      </p>
-      <p *ngIf="notes == ''">
-        No notes
-      </p>
-    </ion-row>
-    <ion-row padding *ngIf="status != 'open'">
-     Picked  &nbsp; &nbsp; <span class="pick">{{Date  | date: 'dd/MM/yyyy' }}</span>
-    </ion-row>
-    <ion-row padding *ngIf="status == 'open'">
-      To be Picked  &nbsp; &nbsp; <span class="pick">{{pickHour}}</span> &nbsp;:&nbsp;<span class="pick">{{pickMins}}</span> &nbsp;&nbsp;<span class="pick">{{pickDay}}</span>
-     </ion-row>
-  </div>
+    <ion-toolbar color="primary">
+        <ion-buttons style="margin-left: 15px;">
+            <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title text-center>{{OrderID}}</ion-title>
+    </ion-toolbar>
+
+
+    <div class="body">
+        <div style="padding-bottom: 30px;">
+            <div style="position: absolute; float: left; left: 20px; color: var(--ion-color-primary);">Ordered by: {{username}}</div>
+            <div style="position: absolute; float: right; right: 15px;">
+                <ion-icon name="call" (click)="callCustomer()" color="success"></ion-icon>
+            </div>
+        </div>
+
+        <!-- <ion-label style="color: var(--ion-color-primary);font-size: 1.5rem;padding-top:10px;padding-bottom: 10px;">Ordered by {{username}}</ion-label> -->
+        <!-- <ion-icon name="call" (click)="callCustomer()" style="float: right;font-size: 1.5em;" color="success"></ion-icon> -->
+        <ion-row class="top" padding style="color: #737373; font-size: 15px;">
+            <ion-col>
+                Product
+            </ion-col>
+            <ion-col>
+                Price
+            </ion-col>
+            <ion-col>
+                Quantity
+            </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of products" padding style="color: #737373; font-size: 13px;">
+            <ion-col>
+                {{item.product}}
+            </ion-col>
+            <ion-col>
+                {{item.currentprice}}
+            </ion-col>
+            <ion-col>
+                {{item.quantity}}
+            </ion-col>
+        </ion-row>
+        <h4 style="font-size: 13px;">Order Notes</h4>
+        <ion-row padding>
+            <p>
+                {{notes}}
+            </p>
+            <p *ngIf="notes == ''">
+                No notes
+            </p>
+        </ion-row>
+        <ion-row padding *ngIf="status != 'open'">
+            Picked  &nbsp; &nbsp; <span class="pick">{{Date  | date: 'dd/MM/yyyy' }}</span>
+        </ion-row>
+        <ion-row padding *ngIf="status == 'open'">
+            To be Picked  &nbsp; &nbsp; <span class="pick">{{pickHour}}</span> &nbsp;:&nbsp;<span class="pick">{{pickMins}}</span> &nbsp;&nbsp;<span class="pick">{{pickDay}}</span>
+        </ion-row>
+    </div>
 </ion-content>

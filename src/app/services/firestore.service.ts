@@ -108,12 +108,12 @@ export class FirestoreService {
   // get past orders
   getReadyOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
-      return ref.where('status', '==', 'Ready').where('shop', '==', shop).orderBy('Date', 'asc');
+      return ref.where('status', '==', 'complete').where('shop', '==', shop).orderBy('Date', 'desc');
     });
   }
   getCanceledOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
-      return ref.where('status', '==', 'canceled').where('shop', '==', shop).orderBy('Date', 'asc');
+      return ref.where('status', '==', 'canceled').where('shop', '==', shop).orderBy('Date', 'desc');
     });
   }
   // get user details

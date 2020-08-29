@@ -203,16 +203,14 @@ export class SignupPage implements OnInit {
   async business_information() {
     console.log(this.businessInformationForm.value);
     if (this.businessInformationForm.value.sameDayDelivery && this.businessInformationForm.value.nextDayDelivery && this.businessInformationForm.value.daysDelivery) {
-      console.log("Oops 1");
+      console.log("Oops");
       this.presentAlert("Please select one of the options: Same day, Next day and Days delivery");
     }
     else if (!this.businessInformationForm.value.sameDayDelivery && !this.businessInformationForm.value.nextDayDelivery && !this.businessInformationForm.value.daysDelivery) {
-      console.log("Oops 2");
+      console.log("Oops");
       this.presentAlert("Please select one of the options: Same day, Next day and Days delivery");
     }
     else {
-
-
       this.seller_account_form = false;
       this.business_information_form = false;
       this.payment_details_form = true;
@@ -229,8 +227,6 @@ export class SignupPage implements OnInit {
 
   // PAYMENT DETAILS
   async payment_details() {
-
-
     console.log("==============================");
     console.log(this.paymentDetailsForm.value);
     console.log("==============================");
