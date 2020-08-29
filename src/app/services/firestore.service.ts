@@ -127,7 +127,7 @@ export class FirestoreService {
   //get all categories from firestore
     getallcategories(shop) {
       console.log(shop);
-   return  this.fs.collection<Category>('Categories').doc(shop);
+   return  this.fs.collection('Categories').doc<Category>(shop);
   }
 // register user with mail and pass
 register(email,pass){

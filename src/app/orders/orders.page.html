@@ -71,9 +71,11 @@
 
 <ion-footer *ngIf="view" style="background-color: #f3f3f3;text-align: center;">
     <ion-label color="danger">This Order is already Paid for.</ion-label>
-    <ion-row *ngIf="prod.status">
+    <ion-row >
         <ion-col>
-            <ion-button style="font-size: 13px;" expand="full" color="success" (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">Ready</ion-button>
+            <ion-button style="font-size: 13px;" expand="full" color="success" (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">
+                Ready for pick
+            </ion-button>
         </ion-col>
     </ion-row>
 </ion-footer>

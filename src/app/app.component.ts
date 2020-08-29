@@ -70,19 +70,21 @@ export class AppComponent {
             $('body').animate({ 'marginTop': 0 + 'px' }, 100);
           });
         }
-
+ // get user id from local and userDetails
+ this.userID = localStorage.getItem('user');
+       
+ this.sideMenu();
+ if (this.userID !== null) {
+   this.getUserDet(this.userID);
+ }
 
 
   }
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
-  // get user id from local and userDetails
-        this.userID = localStorage.getItem('user');
-        this.sideMenu();
-        if (this.userID !== null) {
-          this.getUserDet(this.userID);
-        }
-
+ 
+    this.backButtonEvent();
+    this.checkConnection();
   }
 
 // go to login
@@ -110,8 +112,7 @@ export class AppComponent {
           this.platform.ready().then(() => {
             this.statusBar.styleLightContent();
             this.splashScreen.hide();
-            this.backButtonEvent();
-            this.checkConnection();
+           
 
             this.fcm.getToken().then(token => {
               console.log('fcm - token' + token);

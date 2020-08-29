@@ -41,7 +41,7 @@ export class DashboardPage implements OnInit {
   ) {
     this.service.hiddenTabs = false;
     this.date = new Date();
-    
+
   }
   // scroll events
   onScroll(event) {
@@ -121,7 +121,7 @@ export class DashboardPage implements OnInit {
   // count unprepared orders of the day
 
   // get the shop name
-  async  getShop() {
+  async getShop() {
     this.shopname = localStorage.getItem('shop');
     console.log(this.shopname);
     this.getOrders();
@@ -149,6 +149,20 @@ export class DashboardPage implements OnInit {
       }
     });
   }
+  sortDeliveryOrders() {
+  return  this.DeliveryOrders.sort((a, b) => {
+      if (a.status === 'complete') { return 1 } else { return -1 }
+    }
+    )
+  }
+
+sortPickPayOrders() {
+  return  this.PickPayOrders.sort((a, b) => {
+    if (a.status === 'Ready') { return 1 } else { return -1 }
+  }
+  )
+}
+
 
   // view order
   openOrder(item) {
@@ -184,6 +198,6 @@ export class DashboardPage implements OnInit {
 
 
 
- 
-  
+
+
 }

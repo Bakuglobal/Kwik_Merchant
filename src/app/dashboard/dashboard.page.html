@@ -12,8 +12,6 @@
                 (ionChange)="setFilteredItems()"></ion-searchbar>
             <ion-title text-center *ngIf="!search">Dashboard</ion-title>
         </ion-toolbar>
-
-
         <div>
             <ion-row>
                 <ion-col size="4" class="main-nav" tappable (click)="stock()">
@@ -43,7 +41,6 @@
             </ion-row>
         </div>
     </div>
-
 
     <div class="body" style="background-color: white;">
         <div>
@@ -78,7 +75,7 @@
 
         <div *ngIf="active === 'Deliveries'" style="padding-top: -10px; margin-bottom: 35px;margin-bottom: 60px;">
             <div *ngIf="!loader">
-                <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready','complete': item.status == 'complete'}">
+                <ion-card padding *ngFor="let item of sortDeliveryOrders() " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready','complete': item.status == 'complete'}">
                     <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
                     <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
                     <ion-label color="warning" style="font-size: 13px;" *ngIf="item.status == 'open'">Open</ion-label>
@@ -100,7 +97,7 @@
 
         <div *ngIf="active === 'PickPay'" style="padding-top: -10px; margin-bottom: 60px;">
             <div *ngIf="!loader">
-                <ion-card padding *ngFor="let item of PickPayOrders " (click)="openOrder(item)"
+                <ion-card padding *ngFor="let item of sortPickPayOrders() " (click)="openOrder(item)"
                 [ngClass]="{'ready': item.status == 'Ready'}">
                 <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
                 <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready'">Ready</ion-label>

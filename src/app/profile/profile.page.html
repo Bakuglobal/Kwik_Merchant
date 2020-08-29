@@ -47,7 +47,7 @@
         </div>
         <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
             <div style="font-size: 15px; font-weight: bold; color: #636363;">{{shopname}}</div>
-            <div style="font-size: 13px; color: #636363; margin-top: 8px;">
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="shop.businessInfo.address !== undefined">
               <a><ion-icon name="pin"></ion-icon> {{shop.businessInfo.address[0].address1}}</a>
             </div>
             <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from {{shop.businessInfo.Open}} - {{shop.businessInfo.Close}} Mon - Sat
@@ -209,7 +209,7 @@
                 <ion-item class="ion-no-padding">
                     <ion-label style="font-size: 13px; color: #636363;" position="floating">City/Town <span style="color: var(--ion-color-danger);">*</span></ion-label>
                     <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px; color: #636363;" clearInput
-                    name="cityOrTown" disabled type="text" value="{{shop.businessInfo.address[0].cityOrTown}}"></ion-input>
+                    name="cityOrTown" disabled type="text" value="{{shop.businessInfo.address[0].cityOrTown}}" ></ion-input>
                 </ion-item>
               </ion-list>
             </ion-col>
@@ -754,7 +754,7 @@
                 </div>
                 <div *ngIf="edit_know_your_customer" style="color: var(--ion-color-primary); float: right; right: 15px; position: absolute;">
                     <div (click)="editKnowYourCustomer()">
-                        Edit
+                        Change
                     </div>
                 </div>
             </div>
