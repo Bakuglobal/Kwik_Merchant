@@ -1,12 +1,9 @@
 export class Shop {
-    Contacts?: String;
-    Email?: String ;
-    Location? : String ;
-    Open? : String ;
-    Close?:any;
-    shop?: String ;
-    Website?: String ;
-    userID?: String;
+    Date?: any;
+    businessInfo?:any;
+    kyc?:any;
+    paymentInfo?:any;
+    sellerInfo?:any;
     cover?:any;
     logo?:any; 
 

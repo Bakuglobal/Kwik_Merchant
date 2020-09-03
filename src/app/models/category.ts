@@ -1,3 +1,3 @@
 export interface Category {
-    categories?:  [];
+    categories?: any [];
 }

@@ -9,6 +9,7 @@ import { Category } from '../models/category';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { map } from 'rxjs/operators';
+import { StockAlert } from '../models/stockAlert';
 
 @Component({
   selector: 'app-stock',
@@ -23,6 +24,7 @@ categories ;
 category: string ;
 shopname ;
 show = false ;
+myAlerts: StockAlert[];
   constructor(
     private navCtrl: Router,
     private service: FirestoreService,
@@ -32,7 +34,7 @@ show = false ;
     private db: DatabaseService,
   ) { 
     this.service.hiddenTabs = true ;
-    
+    this.getStockLimits();
     
   }
   ionViewDidEnter(){
@@ -118,5 +120,11 @@ show = false ;
     this.service.setProduct(item);
     console.log(item)
     this.navCtrl.navigate(['tabs/productmodal']);
+  }
+  getStockLimits(){
+    this.db.getAlaerts(localStorage.getItem("user")).subscribe(res => {
+      console.log(res);
+      this.myAlerts = res ;
+    })
   }
 }

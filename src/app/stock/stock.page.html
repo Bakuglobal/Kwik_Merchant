@@ -39,13 +39,24 @@
         </ion-card-title>
 
         <ion-card-content class="content">
-            <!-- <div>
+            <div>
                 <ion-label>Low on stock</ion-label>
-                <div style="color: #737373; font-size: 13px; margin-top: 10px;">
-                    <div>You haven't set any Stock alerts on your products.</div>
-                    <div style="margin-top: 10px;">Go to <ion-icon name="settings"></ion-icon> and get started</div>
+                <div style="color: #737373; font-size: 13px; margin-top: 10px;" *ngIf="myAlerts === undefined">
+                    <div>You haven't set any low limit stock alerts on your products.</div>
+                    <div style="margin-top: 10px;">Click on settings <ion-icon name="settings"></ion-icon> and get started</div>
                 </div>
-            </div> -->
+                <div *ngIf="myAlerts !== undefined">
+                    <br><br>
+                    <div *ngIf="myAlerts[0].categories.length > 0 ">
+                        <ion-label style="color: #737373;font-size: .8rem;">Generating report ...</ion-label>
+                        <ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
+                    </div>
+                    <div *ngIf="myAlerts[0].categories.length === 0 ">
+                        <ion-text color="dark">You have 0 alerts left</ion-text>
+                    </div>
+                    
+                </div>
+            </div>
 
             <div>
                 <div class="section-two">

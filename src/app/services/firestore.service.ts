@@ -108,12 +108,12 @@ export class FirestoreService {
   // get past orders
   getReadyOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
-      return ref.where('status', '==', 'Ready').where('shop', '==', shop).orderBy('Date', 'asc');
+      return ref.where('status', '==', 'complete').where('shop', '==', shop).orderBy('Date', 'desc');
     });
   }
   getCanceledOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
-      return ref.where('status', '==', 'canceled').where('shop', '==', shop).orderBy('Date', 'asc');
+      return ref.where('status', '==', 'canceled').where('shop', '==', shop).orderBy('Date', 'desc');
     });
   }
   // get user details
@@ -127,7 +127,7 @@ export class FirestoreService {
   //get all categories from firestore
     getallcategories(shop) {
       console.log(shop);
-   return  this.fs.collection<Category>('Categories').doc(shop);
+   return  this.fs.collection('Categories').doc<Category>(shop);
   }
 // register user with mail and pass
 register(email,pass){
