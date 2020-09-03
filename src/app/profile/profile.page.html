@@ -233,7 +233,6 @@
                       style="border: 1px solid var(--ion-color-primary); border-radius: 15px; padding-top: 5px; padding-bottom: 0px; padding-left: 10px; padding-right: 10px; font-size: 13px; color: var(--ion-color-primary); float: right; right: 1px; position: absolute;"
                       class="ion-no-padding" interface="popover" placeholder="Select type">
                       <ion-select-option selected value="{{shop.businessInfo.type}}">{{shop.businessInfo.type}}</ion-select-option>
-                      <!-- <ion-select-option value="food">Restaurant</ion-select-option> -->
                     </ion-select>
                   </ion-item>
                 </ion-list>
@@ -381,8 +380,10 @@
                         <ion-select name="type" formControlName="type" 
                           style="border: 1px solid var(--ion-color-primary); border-radius: 15px; padding-top: 5px; padding-bottom: 0px; padding-left: 10px; padding-right: 10px; font-size: 13px; color: var(--ion-color-primary); float: right; right: 1px; position: absolute;"
                           class="ion-no-padding" interface="popover" placeholder="Select type">
-                          <ion-select-option selected value="{{shop.businessInfo.type}}">{{shop.businessInfo.type}}</ion-select-option>
-                          <!-- <ion-select-option value="food">Restaurant</ion-select-option> -->
+                          <!-- <ion-select-option selected value="{{shop.businessInfo.type}}">{{shop.businessInfo.type}}</ion-select-option> -->
+                          <ion-select-option value="Shops">Shop</ion-select-option>
+                          <!-- <ion-select-option value="recipes">Recipes</ion-select-option> -->
+                          <ion-select-option value="food">Restaurant</ion-select-option>
                         </ion-select>
                       </ion-item>
                     </ion-list>

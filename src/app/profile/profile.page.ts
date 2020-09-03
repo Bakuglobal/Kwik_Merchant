@@ -65,11 +65,12 @@ export class ProfilePage implements OnInit {
 
     ) {
         this.shopname = localStorage.getItem('shop');
-        this.userID   = localStorage.getItem('user');
+        this.userID = localStorage.getItem('user');
 
     }
 
     ngOnInit() {
+        this.getUserDetails(this.userID);
     }
 
     ionViewDidEnter() {
@@ -90,7 +91,7 @@ export class ProfilePage implements OnInit {
             postalCode: [this.businessInfo.address[0].postalCode],
             cityOrTown: [this.businessInfo.address[0].cityOrTown],
             country: [this.businessInfo.address[0].country],
-      
+
             type: [this.businessInfo.type],
             kraPin: [this.businessInfo.kraPin],
             businessPermitNumber: [this.businessInfo.businessPermitNumber],
@@ -129,17 +130,16 @@ export class ProfilePage implements OnInit {
     // GET SHOP DETAILS
     async getUserDetails(id) {
         this.service.getUserDetails(id).valueChanges().subscribe(res => {
-            this.shop         = res;
-            let user: any     = res;
-            this.sellerInfo   = user.sellerInfo ;
+            this.shop = res;
+            let user: any = res;
+            this.sellerInfo = user.sellerInfo;
             this.businessInfo = user.businessInfo;
-            this.paymentInfo  = user.paymentInfo;
-            this.kyc          = user.kyc;
+            this.paymentInfo = user.paymentInfo;
+            this.kyc = user.kyc;
             console.log("============= SHOP DATA ==========");
             console.log(this.shop);
         });
     }
-
 
     scanAndPay() {
         this.modalCtrl.dismiss(["scan", this.shopname]);
@@ -266,14 +266,14 @@ export class ProfilePage implements OnInit {
         this.save_seller_account = false;
         this.edit_seller_account = true;
 
-        this.presentloading('Updating profile ...');
+        // this.presentloading('Updating profile ...');
         const ref = this.fs.collection("shops").doc(this.userID);
-        let data  = {sellerInfo: this.sellerAccountForm.value}
+        let data = { sellerInfo: this.sellerAccountForm.value }
         ref.update(data).then(res => {
             console.log("============ SELLER ACCOUNT UPDATED ============");
-            this.loading.dismiss();
+            // this.loading.dismiss();
         }).catch(error => {
-            this.loading.dismiss();
+            // this.loading.dismiss();
             console.log(error);
         })
     }
@@ -288,14 +288,35 @@ export class ProfilePage implements OnInit {
         this.save_business_information = false;
         this.edit_business_information = true;
 
-        this.presentloading('Updating profile ...');
+        // this.presentloading('Updating profile ...');
         const ref = this.fs.collection("shops").doc(this.userID);
-        let data  = {businessInfo: this.businessInformationForm.value}
-        ref.update(data).then(res => {
+        let businessData = {
+            businessInfo: {
+                type: this.businessInformationForm.value.type,
+                kraPin: this.businessInformationForm.value.kraPin,
+                businessPermitNumber: this.businessInformationForm.value.businessPermitNumber,
+                Open: this.businessInformationForm.value.Open,
+                Close: this.businessInformationForm.value.Close,
+                Website: this.businessInformationForm.value.Website,
+                description: this.businessInformationForm.value.description,
+                sameDayDelivery: this.businessInformationForm.value.sameDayDelivery,
+                nextDayDelivery: this.businessInformationForm.value.nextDayDelivery,
+                daysDelivery: this.businessInformationForm.value.daysDelivery,
+                address: [
+                    {
+                        address1: this.businessInformationForm.value.address1,
+                        postalCode: this.businessInformationForm.value.postalCode,
+                        cityOrTown: this.businessInformationForm.value.cityOrTown,
+                        country: this.businessInformationForm.value.country
+                    }
+                ]
+            }
+        }
+        ref.update(businessData).then(res => {
             console.log("============ BUSINESS INFO UPDATED ============");
-            this.loading.dismiss();
+            // this.loading.dismiss();
         }).catch(error => {
-            this.loading.dismiss();
+            // this.loading.dismiss();
             console.log(error);
         })
     }
@@ -310,14 +331,14 @@ export class ProfilePage implements OnInit {
         this.save_payment_details = false;
         this.edit_payment_details = true;
 
-        this.presentloading('Updating profile ...');
+        // this.presentloading('Updating profile ...');
         const ref = this.fs.collection("shops").doc(this.userID);
-        let data  = {paymentInfo: this.paymentDetailsForm.value}
+        let data = { paymentInfo: this.paymentDetailsForm.value }
         ref.update(data).then(res => {
             console.log("============ PAYMENT INFO UPDATED ============");
-            this.loading.dismiss();
+            // this.loading.dismiss();
         }).catch(error => {
-            this.loading.dismiss();
+            // this.loading.dismiss();
             console.log(error);
         })
     }
@@ -332,16 +353,19 @@ export class ProfilePage implements OnInit {
         this.save_know_your_customer = false;
         this.edit_know_your_customer = true;
 
-        this.presentloading('Updating profile ...');
+        // this.presentloading('Updating profile ...');
         const ref = this.fs.collection("shops").doc(this.userID);
-        let data  = {kyc: this.knowYourCustomerForm.value}
+        let data = { kyc: this.knowYourCustomerForm.value }
+        console.log("============ 1 ============");
+        console.log(data);
         ref.update(data).then(res => {
             console.log("============ KNOW YOUR CUSTOMER INFO UPDATED ============");
-            this.loading.dismiss();
+            // this.loading.dismiss();
         }).catch(error => {
-            this.loading.dismiss();
+            // this.loading.dismiss();
             console.log(error);
         })
+        console.log("============ 2 ============");
     }
 
 
@@ -352,7 +376,7 @@ export class ProfilePage implements OnInit {
         await this.loading.present();
     }
 
-    async alertShow(msg){
+    async alertShow(msg) {
         const alt = await this.alert.create({
             message: msg,
             buttons: [
