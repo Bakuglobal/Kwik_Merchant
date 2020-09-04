@@ -10,6 +10,7 @@ import { Shop } from './models/shops';
 import * as firebase from 'firebase';
 import { HttpClient } from '@angular/common/http';
 import { Post } from './models/post';
+import { StockAlert } from './models/stockAlert';
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +118,23 @@ getPosts(){
 getPostsComments(postid){
   let posts = this.firestore.collection<Comment>('comments',ref => {
     return ref.where('postID','==',postid).orderBy('time','desc')
+  })
+  return posts.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const id = a.payload.doc.id ;
+        const data = a.payload.doc.data();
+        return {id, ... data}
+      });
+    })
+  )
+}
+StockAlert(id){
+  return this.firestore.collection('StockAlerts').doc<StockAlert>(id)
+}
+getAlaerts(id){
+  let posts = this.firestore.collection<StockAlert>('StockAlerts',ref => {
+    return ref.orderBy('Date','desc')
   })
   return posts.snapshotChanges().pipe(
     map(actions => {

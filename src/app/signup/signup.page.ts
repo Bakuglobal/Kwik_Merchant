@@ -48,9 +48,12 @@ export class SignupPage implements OnInit {
   // variables holders for base64 Image URL selected
   imgURLBack = null;
   imgURLFront = null;
+  coverImg = null;
+  logoImg = null;
 
   //  Boolean variables for form validation
   submitSeller = false;
+  logo_cover = false;
 
   constructor(
     public db: DatabaseService,
@@ -130,6 +133,8 @@ export class SignupPage implements OnInit {
 
 
 
+
+
   }
 
   ngOnInit() {
@@ -203,16 +208,14 @@ export class SignupPage implements OnInit {
   async business_information() {
     console.log(this.businessInformationForm.value);
     if (this.businessInformationForm.value.sameDayDelivery && this.businessInformationForm.value.nextDayDelivery && this.businessInformationForm.value.daysDelivery) {
-      console.log("Oops 1");
+      console.log("Oops");
       this.presentAlert("Please select one of the options: Same day, Next day and Days delivery");
     }
     else if (!this.businessInformationForm.value.sameDayDelivery && !this.businessInformationForm.value.nextDayDelivery && !this.businessInformationForm.value.daysDelivery) {
-      console.log("Oops 2");
+      console.log("Oops");
       this.presentAlert("Please select one of the options: Same day, Next day and Days delivery");
     }
     else {
-
-
       this.seller_account_form = false;
       this.business_information_form = false;
       this.payment_details_form = true;
@@ -220,17 +223,32 @@ export class SignupPage implements OnInit {
     }
 
   }
+  // upload logo and cover
+  logoANDcover() {
+    this.seller_account_form = false;
+    this.business_information_form = false;
+    this.payment_details_form = false;
+    this.know_your_customer_form = false;
+    this.logo_cover = true;
+  }
+  backToKyc(){
+    this.seller_account_form = false;
+    this.business_information_form = false;
+    this.payment_details_form = false;
+    this.know_your_customer_form = true;
+    this.logo_cover = false ;
+  }
+  
   skipPaymentDetails() {
     this.seller_account_form = false;
     this.business_information_form = false;
     this.payment_details_form = false;
     this.know_your_customer_form = true;
+    this.logo_cover = false ;
   }
 
   // PAYMENT DETAILS
   async payment_details() {
-
-
     console.log("==============================");
     console.log(this.paymentDetailsForm.value);
     console.log("==============================");
@@ -239,6 +257,7 @@ export class SignupPage implements OnInit {
     this.business_information_form = false;
     this.payment_details_form = false;
     this.know_your_customer_form = true;
+    this.logo_cover = false ;
   }
 
 
@@ -253,6 +272,7 @@ export class SignupPage implements OnInit {
     this.business_information_form = false;
     this.payment_details_form = false;
     this.know_your_customer_form = false;
+    this.logo_cover = false ;
   }
 
   goBackToBusinessInformation() {
@@ -260,6 +280,7 @@ export class SignupPage implements OnInit {
     this.business_information_form = true;
     this.payment_details_form = false;
     this.know_your_customer_form = false;
+    this.logo_cover = false ;
   }
 
   goBackToPaymentDetails() {
@@ -267,6 +288,7 @@ export class SignupPage implements OnInit {
     this.business_information_form = false;
     this.payment_details_form = true;
     this.know_your_customer_form = false;
+    this.logo_cover = false ;
   }
 
   async presentAlert(message) {
@@ -310,17 +332,43 @@ export class SignupPage implements OnInit {
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true
     }).then((res) => {
-      if (type === 'front') {
-        this.imgURLFront = 'data:image/jpeg;base64,' + res;
-        this.knowYourCustomerForm.value.frontImage = this.uploadTostorage(this.imgURLFront);
-      } else {
-        this.imgURLBack = 'data:image/jpeg;base64,' + res;
-        this.knowYourCustomerForm.value.backImage = this.uploadTostorage(this.imgURLBack);
+      switch (type) {
+        case 'front':
+          this.imgURLFront = 'data:image/jpeg;base64,' + res;
+          this.knowYourCustomerForm.value.frontImage = this.uploadTostorage(this.imgURLFront);
+          break;
+        case 'back':
+          this.imgURLBack = 'data:image/jpeg;base64,' + res;
+          this.knowYourCustomerForm.value.backImage = this.uploadTostorage(this.imgURLBack);
+          break;
+        case 'cover':
+          this.coverImg = 'data:image/jpeg;base64,' + res;
+          this.coverImg = this.uploadTostorage(this.coverImg);
+          break;
+        case 'logo':
+          this.logoImg = 'data:image/jpeg;base64,' + res;
+          this.logoImg = this.uploadTostorage(this.logoImg);
+          break;
+        default:
+          break;
       }
-
     });
   }
 
+  typeNull(){
+    if(this.businessInformationForm.value.type.length > 0){
+      return true ;
+    }else {
+      return false ;
+    }
+  }
+  kraNumber(){
+    if(this.businessInformationForm.value.kraPin.length > 0 ){
+      return true ;
+    }else {
+      return false ;
+    }
+  }
 
   submit() {
     this.presentLoading();
@@ -330,7 +378,10 @@ export class SignupPage implements OnInit {
         sellerInfo: this.sellerAccountForm.value,
         businessInfo: this.businessInformationForm.value,
         paymentInfo: this.paymentDetailsForm.value,
-        kyc: this.knowYourCustomerForm.value
+        kyc: this.knowYourCustomerForm.value,
+        Date:new Date(),
+        cover: this.coverImg.__zone_symbol__value,
+        logo: this.logoImg.__zone_symbol__value
       }
     } else {
       console.table('back', this.knowYourCustomerForm.value.backImage.__zone_symbol__value);
@@ -342,11 +393,14 @@ export class SignupPage implements OnInit {
           backImage: this.knowYourCustomerForm.value.backImage.__zone_symbol__value,
           frontImage: this.knowYourCustomerForm.value.frontImage.__zone_symbol__value,
           nationalIdOrPassportNumber: this.knowYourCustomerForm.value.nationalIdOrPassportNumber
-        }
+        },
+        Date:new Date(),
+        cover: this.coverImg.__zone_symbol__value,
+        logo: this.logoImg.__zone_symbol__value
       }
       console.table(user);
     }
-
+   
 
 
     // CREATE USER BY EMAIL & PASSWORD THEN CREATE PROFILE USER

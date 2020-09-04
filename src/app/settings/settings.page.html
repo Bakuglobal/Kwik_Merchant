@@ -15,15 +15,16 @@
   <div class="body">
     <ion-list no-lines>
         <ion-item style="font-size: 15px; color: #737373;">
-            <ion-label>Set Stock alert limit</ion-label>
-            <ion-toggle color="primary" slot="end" checked [(ngModel)]="setAlertLimit"></ion-toggle>
+            <ion-label>Get Stock low limit Alerts</ion-label>&nbsp;<span *ngIf="!setAlertLimit">OFF</span><span *ngIf="setAlertLimit" style="color:red">ON</span>
+            <ion-toggle [color]="!setAlertLimit ? 'light' : 'success'" slot="end" checked [(ngModel)]="setAlertLimit" (click)="setOffAlert()"></ion-toggle>
         </ion-item>
       </ion-list>
 
 
 
       <div *ngIf="setAlertLimit">
-        <ion-row style="margin-right: 10px; margin-left: 10px;">
+          <ion-label class="ion-padding" color="primary">Set a new Stock Alert</ion-label>
+        <ion-row style="margin: 10px;">
             <ion-col size="8" style="font-size: 15px; color: #737373;">
                 <ion-label>Category</ion-label><br>
                 <ion-select placeholder="category"  [(ngModel)]="category" *ngIf="categories !== undefined">
@@ -31,13 +32,13 @@
                 </ion-select>
             </ion-col>
 
-            <ion-col  size="3" padding disabled="category != null">
+            <ion-col  size="3" padding disabled="category != null" style="margin-top: 10px;">
                 <ion-input type="number" color="primary" style="float:right; font-size: 15px; margin-top: -20px;" [(ngModel)]="limit"></ion-input>
             </ion-col>
 
-            <ion-col size="1" style="font-size: 15px; float: right; margin-top: -10px;" disabled="category != null">
-                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="add" (click)="addLimit()"></ion-icon></ion-badge><br>
-                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="remove" (click)="reduceLimit()"></ion-icon></ion-badge>
+            <ion-col size="1" style="font-size: 15px; float: right; margin-top: 0px;" disabled="category != null">
+                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="add" (click)="addLimit()"></ion-icon></ion-badge><br><br>
+                <ion-badge style="width: 16px; height: 16px;"><ion-icon style="color: white; width: 12px; height: 12px; margin-left: -2px; margin-top: -1px;" name="remove" (click)="reduceLimit()"></ion-icon></ion-badge><br>
             </ion-col>
         </ion-row>
         <div style="height: 1px; margin-left: 15px; margin-right: 0px; margin-top: -12px; background-color: #DEDEDE;"></div>
@@ -46,8 +47,30 @@
           <ion-button (click)="setLimit()" shape="round" text-center>SET</ion-button>
         </ion-row>
       </div>
+      <div class="myalert" *ngIf="MyAlerts !== undefined" style="padding-top: 10px;">
+        <ion-row>
+            <ion-col>
+                <ion-label color="primary" class="ion-padding">My Alerts</ion-label>
+            </ion-col>
+            <ion-col *ngIf="MyAlerts.length > 0">
+                <ion-label color="danger" style="padding: 15px;font-size: .8rem;" >Slide left to delete</ion-label>
+            </ion-col>
+        </ion-row>
+          <ion-item-sliding *ngFor="let item of MyAlerts;let i = index">
+            <ion-item>
+                <ion-col>{{item.name}}</ion-col>
+                <ion-col>{{item.limit}}</ion-col>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option color="danger" (click)="DeleteAlert(i)">
+                <ion-icon slot="end" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+                Delete
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+      </div>
         <ion-item style="font-size: 15px; color: #737373; margin-left: -3px; margin-right: -5px;">
-            <ion-label>Remove a Category</ion-label>
+            <ion-label>Remove / Add a Category</ion-label>
             <ion-icon style="width: 20px; height: 20px;" name="arrow-round-forward" color="primary" slot="end" (click)="removeCategory()"></ion-icon>
         </ion-item>
   </div>

@@ -12,8 +12,6 @@
                 (ionChange)="setFilteredItems()"></ion-searchbar>
             <ion-title text-center *ngIf="!search">Dashboard</ion-title>
         </ion-toolbar>
-
-
         <div>
             <ion-row>
                 <ion-col size="4" class="main-nav" tappable (click)="stock()">
@@ -44,16 +42,37 @@
         </div>
     </div>
 
-
     <div class="body" style="background-color: white;">
         <div>
+            <!-- <div style="width: 100%; background-color: red;">
+                <div>My shop performance for this month</div>
+                    <ion-col size="12">
+                        <ion-slides pager="false" [options]="slideOptions">
+                            <ion-slide *ngFor="let item of [0,1,2,3,4,5,6]">
+                                <div>
+                                    <ion-label style="font-size: .5em;">MM, YY</ion-label><br><br>
+                                </div>
+                                <div>
+                                    <ion-label style="font-size: .5em;">DD</ion-label><br><br>
+                                </div>
+                                <div>
+                                    <ion-label style="font-size: .5em;">1</ion-label><br><br>
+                                </div>
+                            </ion-slide>
+                        </ion-slides>
+                    </ion-col>
+                </div>
+            </div> -->
+
+
+
             <ion-item color="light">
-                <ion-label color="primary" style="font-size: 15px;">Orders Due Today</ion-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <!-- <ion-label>{{getCount()}} Pending </ion-label> -->
-                <!-- <ion-input style="padding-top: 10px; font-size: 15px;" clearInput type="text" placeholder="Enter OrderID" color="medium"
-                *ngIf="inputSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()">
-                </ion-input>
-                <ion-icon style="width: 20px; height: 20px;" name="search" color="medium" *ngIf="inputSearch"></ion-icon> -->
+                <div no-padding style="font-size: 14px; width: 100%;">
+                    <ion-label no-padding style="font-size: 14px; color: #737373;">Click to filter by date &nbsp;&nbsp;&nbsp;</ion-label>
+                    <ion-datetime no-padding [pickerOptions]="customPickerOptions" style="color: #737373; float: right; margin-top: -15px;" displayFormat="DDDD" [max]=""
+                        value="{{ date }}">
+                    </ion-datetime>
+                </div>
             </ion-item>
         </div>
 
@@ -80,9 +99,9 @@
             <div *ngIf="!loader">
                 <ion-card padding *ngFor="let item of DeliveryOrders " (click)="openOrder(item)" [ngClass]="{'ready': item.status == 'Ready','complete': item.status == 'complete'}">
                     <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon>&nbsp;
-                    <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready' && item.paid == 'False'">Ready</ion-label>
+                    <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'Ready'">Ready</ion-label>
                     <ion-label color="warning" style="font-size: 13px;" *ngIf="item.status == 'open'">Open</ion-label>
-                    <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'complete'">Complete</ion-label>
+                    <!-- <ion-label color="success" style="font-size: 13px;" *ngIf="item.status == 'complete'">Complete</ion-label> -->
                     <ion-label style="float: right; font-size: 13px;" color="primary">{{item.OrderID}}</ion-label><br><br>
                     <div style="text-align:start; font-size: 13px;">
                         Order for: <ion-label style="font-size: 13px;" *ngFor="let item of item.products"><b>{{item.product}}</b></ion-label> ...

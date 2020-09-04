@@ -1,23 +1,26 @@
 <ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-button *ngIf="seller_account_form" (click)="goBackToLogin()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+        <ion-button *ngIf="seller_account_form" (click)="goBackToLogin()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="business_information_form" (click)="goBackToSellerAccount()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+        <ion-button *ngIf="business_information_form" (click)="goBackToSellerAccount()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="payment_details_form" (click)="goBackToBusinessInformation()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+        <ion-button *ngIf="payment_details_form" (click)="goBackToBusinessInformation()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-    <ion-button *ngIf="know_your_customer_form" (click)="goBackToPaymentDetails()">
-      <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
-    </ion-button>
+        <ion-button *ngIf="know_your_customer_form" (click)="goBackToPaymentDetails()">
+            <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+        </ion-button>
 
-  </ion-buttons>
-  <ion-title text-center style="margin-right: 15px;">SIGN UP</ion-title>
+        <ion-button *ngIf="logo_cover" (click)="backToKyc()">
+          <ion-icon style="width: 20px; height: 20px;" size="small" color="light" name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title text-center style="margin-right: 15px;">SIGN UP</ion-title>
 </ion-toolbar>
 
 
@@ -28,11 +31,12 @@
   <div class="third-content">
 
     <div style="margin-right: 17px; margin-top: -10px;">
-      <div style="font-size: 20px; color: #696868; padding-bottom: 15px;">Register and start selling.</div>
-      <ion-progress-bar *ngIf="seller_account_form" color="primary" value="0.0"></ion-progress-bar>
-      <ion-progress-bar *ngIf="business_information_form" color="primary" value="0.33"></ion-progress-bar>
-      <ion-progress-bar *ngIf="payment_details_form" color="primary" value="0.66"></ion-progress-bar>
-      <ion-progress-bar *ngIf="know_your_customer_form" color="primary" value="1"></ion-progress-bar>
+        <div style="font-size: 20px; color: #696868; padding-bottom: 15px;">Register and start selling.</div>
+        <ion-progress-bar *ngIf="seller_account_form" color="primary" value="0.0"></ion-progress-bar>
+        <ion-progress-bar *ngIf="business_information_form" color="primary" value="0.33"></ion-progress-bar>
+        <ion-progress-bar *ngIf="payment_details_form" color="primary" value="0.66"></ion-progress-bar>
+        <ion-progress-bar *ngIf="know_your_customer_form" color="primary" value="0.88"></ion-progress-bar>
+        <ion-progress-bar *ngIf="logo_cover" color="primary" value="1"></ion-progress-bar>
     </div>
 
 
@@ -137,15 +141,12 @@
       <ion-row class="ion-no-padding">
         <div style="color: var(--ion-color-primary); margin-top: 20px; font-size: 20px; margin-bottom: 15px;">Business
           Information <br>
-          <span style="font-size: .5em;">Enter atleast one address</span>
+          <span style="font-size: .5em;color: red;">Enter at least one address</span>
         </div>
 
         <div style="margin-top: 65px; margin-bottom: 25px;">
           <div style="font-size: 18px; float: left; left: 17px; color: #696868; position: absolute;">Address(es)</div>
-          <div
-            style="font-size: 15px; float: right; right: 17px; position: absolute; background-color: var(--ion-color-primary); color: white; padding-top: 5px; padding-bottom: 5px; padding-right: 15px; padding-left: 15px; border-radius: 15px;" (click)="addNewAddr()">
-            Add
-          </div>
+         
         </div>
 
         <div style="background-color: #F4F4F4; width: 100%; margin-right: 17px; margin-top: 10px; padding-bottom: 10px;"
@@ -207,6 +208,10 @@
             </ion-col>
           </div>
         </div>
+        <div
+        style="font-size: 15px; float: right; right: 17px; background-color: var(--ion-color-primary); color: white; padding-top: 5px; padding-bottom: 5px; padding-right: 15px; padding-left: 15px; border-radius: 15px;" (click)="addNewAddr()">
+        Add
+      </div>
 
 
         <ion-col size="12" class="ion-no-padding" style="margin-top: 10px;">
@@ -219,6 +224,10 @@
                 <ion-select-option value="Shops">Shop</ion-select-option>
                 <ion-select-option value="food">Restaurant</ion-select-option>
               </ion-select>
+              <ion-label *ngIf="!typeNull()"color="danger" style="font-size: .7em;float: right;" >Select a type</ion-label>
+            </ion-item>
+            <ion-item >
+              
             </ion-item>
           </ion-list>
         </ion-col>
@@ -229,6 +238,7 @@
               <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
                 name="kraPin" formControlName="kraPin" type="text" placeholder="KRA PIN *"></ion-input>
             </ion-item>
+            <ion-label *ngIf="!kraNumber()"color="danger" style="font-size: .7em;" >Required Field</ion-label>
           </ion-list>
         </ion-col>
 
@@ -236,7 +246,7 @@
           <ion-list class="ion-no-padding">
             <ion-item class="ion-no-padding">
               <ion-input style="border-bottom: 1px solid var(--ion-color-primary); font-size: 13px;" clearInput
-                name="businessPermitNumber" formControlName="businessPermitNumber" type="text"
+                name="businessPermitNumber" formControlName="businessPermitNumber" type="number"
                 placeholder="Business Permit Number"></ion-input>
             </ion-item>
           </ion-list>
@@ -530,7 +540,7 @@
                 </ion-input> -->
                 <ion-col *ngIf="imgURLFront === null">
                   <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
-                  <ion-label color="primary"  (click)="getImageGallery('front')">Upload front image of ID / Passport</ion-label>
+                  <ion-label color="primary"  (click)="getImageGallery('front')">Click to Upload front image of ID / Passport</ion-label>
                 </ion-col>
               </ion-item>
             </ion-list>
@@ -555,7 +565,7 @@
                 </ion-input> -->
                 <ion-col *ngIf="imgURLBack === null">
                   <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
-                  <ion-label color="primary"  (click)="getImageGallery('back')">Upload back image of ID / Passport</ion-label>
+                  <ion-label color="primary"  (click)="getImageGallery('back')">Click to Upload back image of ID / Passport</ion-label>
                 </ion-col>
               </ion-item>
             </ion-list>
@@ -572,23 +582,67 @@
         <div class="form-group">
           <ion-buttons class="button-create-account">
             <ion-button style="font-size: 13px;" class="ion-text-center"  [disabled]="imgURLBack === null || imgURLFront === null"
-              (click)="submit()">Submit
+              (click)="logoANDcover()">Submit
             </ion-button>
           </ion-buttons><br>
           <ion-buttons class="button-create-account">
             <ion-button style="font-size: 13px;" class="ion-text-center" 
-              (click)="submit()">Submit KYC later
+              (click)="logoANDcover()">Submit KYC later
             </ion-button>
           </ion-buttons>
         </div>
       </ion-list>
-      <!-- <ion-list class="submit-button">
-        <div class="form-group">
-          
-        </div>
-      </ion-list> -->
     </form>
     <!-- End oF Know your customer -->
+
+    <!-- LOGO AND COVER IMAGE -->
+    <div *ngIf="logo_cover">
+      <ion-label color="primary">You are almost done </ion-label>
+      <ion-item>
+        <ion-col size="12" class="ion-no-padding">
+          <ion-list class="ion-no-padding"
+            style="width: 100%; background-color: #F4F4F4; height: 100px; padding-left: 30px; padding-top: 25px;">
+            <ion-item class="ion-no-padding">
+              <ion-col *ngIf="coverImg !== null">
+                <img  src="{{coverImg}}" width="150px" height="100px">
+                <ion-icon name="close" color="danger" (click)="coverImg = null" style="float: right;"></ion-icon>
+              </ion-col>
+              <ion-col *ngIf="coverImg === null">
+                <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
+                <ion-label color="primary"  (click)="getImageGallery('cover')">Click to Upload a cover image</ion-label>
+              </ion-col>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-item><br>
+     <ion-item>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-list class="ion-no-padding"
+          style="width: 100%; background-color: #F4F4F4; height: 100px; padding-left: 30px; padding-top: 25px;">
+          <ion-item class="ion-no-padding">
+            <ion-col *ngIf="logoImg !== null">
+              <img  src="{{logoImg}}" width="150px" height="100px">
+              <ion-icon name="close" color="danger" (click)="logoImg = null" style="float: right;"></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="logoImg === null">
+              <ion-icon name="cloud-upload-outline" color="dark"></ion-icon> <br>
+              <ion-label color="primary"  (click)="getImageGallery('logo')">Click to Upload a logo image</ion-label>
+            </ion-col>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+     </ion-item>
+     
+      <ion-list class="submit-button">
+        <div class="form-group">
+          <ion-buttons class="button-create-account">
+            <ion-button style="font-size: 13px;" class="ion-text-center"  [disabled]="coverImg === null || logoImg === null"
+              (click)="submit()">Submit
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-list>
+    </div>
   </div>
 
 
