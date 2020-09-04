@@ -36,6 +36,7 @@ export class OrderStatsPage implements OnInit {
 
     
 
+    
     constructor(
         private service: FirestoreService,
         private navCtrl: Router,

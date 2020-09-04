@@ -97,7 +97,8 @@ export class FirestoreService {
   }
   getTodaysOrders(shop) {
     return this.OderCollection = this.fs.collection('Orders', ref => {
-      return ref.where('shop', '==', shop).orderBy('Date', 'desc').where('pickDay', '==', 'Today');
+      // return ref.where('shop', '==', shop).orderBy('Date', 'desc').where('pickDay', '==', 'Today');
+      return ref.where('shop', '==', shop).orderBy('Date', 'desc');
     });
   }
   // getTodaysReadyOrders(shop) {
