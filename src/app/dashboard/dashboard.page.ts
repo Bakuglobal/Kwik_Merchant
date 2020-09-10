@@ -39,6 +39,13 @@ export class DashboardPage implements OnInit {
     };
     deliveryInitialData: Order[] = [];
     pickPayInitialData: Order[] = [];
+    currentMonth: any;
+    currentYear: any;
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    days   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    daysOfCurrentMonth = [];
+    currentDay: any;
+
 
     constructor(
         private fs: AngularFirestore,
@@ -48,7 +55,11 @@ export class DashboardPage implements OnInit {
         private db: DatabaseService,
     ) {
         this.service.hiddenTabs = false;
-        this.date = new Date();
+        // this.date = new Date();
+        // this.currentMonth = this.date.getMonth();
+        
+
+        // this.getDaysOfTheCurrentMonth();
 
         this.customPickerOptions = {
             buttons: [
@@ -62,8 +73,6 @@ export class DashboardPage implements OnInit {
                 {
                     text: 'This month',
                     handler: (res) => {
-                        // let newDate = Number(res.day.text);
-                        // console.log("=====BUTTON=====");
                         this.DeliveryOrders = this.deliveryInitialData;
                         this.PickPayOrders = this.pickPayInitialData;
                     }
@@ -72,10 +81,8 @@ export class DashboardPage implements OnInit {
                     text: 'Done',
                     handler: (res) => {
                         let newDate = Number(res.day.text);
-                        console.log("=====BUTTON=====");
                         console.log(newDate);
                         this.formatDate(newDate)
-                        // this.myOpenOrders = this.filterByDate(newDate);
                     }
                 }
 
@@ -83,6 +90,37 @@ export class DashboardPage implements OnInit {
         }
 
     }
+
+    // GET DAYS OF THE CURRENT MONTH
+    getDaysOfTheCurrentMonth() {
+        let totalDays = this.extractDays(this.date.getMonth(), this.date.getFullYear());
+
+        console.log("======= GET TOTAL DAYS ======");
+        console.log(totalDays);
+
+        for (var i = 1; i < totalDays+1; i++) {
+            let element = {day:i};
+            this.daysOfCurrentMonth.push(element);
+        }
+    }
+    
+
+    // EXTRACT DAYS 
+    extractDays(month, year) {
+        return new Date(year, month+1, 0).getDate();
+    }
+
+    getDay(y, m, d) {  
+        // let days = ['Sunday','Monday','Tuesday', 'Wednesday','Thursday','Friday','Saturday']; 
+        let day = new Date(y, --m, d); 
+        return d && this.days[day.getDay()];
+    }
+
+    // RETURN NAME
+    returnName(date) {
+        return this.days[date];
+    }
+
     // scroll events
     onScroll(event) {
         if (event.detail.scrollTop === 148) {
@@ -94,8 +132,21 @@ export class DashboardPage implements OnInit {
     // ionviewwill enter function
     ionViewWillEnter() {
         this.getShop();
+        this.date = new Date();
 
+        this.currentYear  = this.date.getFullYear();
+        this.currentMonth = this.months[this.date.getMonth()];
+        this.currentDay   = this.date.getDate();
+        console.log("============ GET DAY =======");
+        console.log(this.currentDay);
+        console.log(this.date.getDate());
+        console.log("=========== END GET DAY =======");
+
+        this.getDaysOfTheCurrentMonth();
+        console.log("=========== DAYS OF THE CURRENT MONTH  =======");
+        console.log(this.daysOfCurrentMonth);
     }
+
     changeCategory(event) {
         if (event.detail.value === 'delivery') {
             this.active = "Deliveries";
@@ -104,11 +155,12 @@ export class DashboardPage implements OnInit {
             this.active = "PickPay";
         }
     }
+    
     getCount() {
         return this.count;
     }
-    // oninit method
 
+    // oninit method
     ngOnInit() {
         this.userID = localStorage.getItem('user');
         console.log(this.userID);
@@ -119,6 +171,7 @@ export class DashboardPage implements OnInit {
         }
         this.service.shopFirst();
     }
+
     // show searchbar
     showsearch() {
         if (this.search === false) {
@@ -206,15 +259,14 @@ export class DashboardPage implements OnInit {
         this.service.hiddenTabs = true;
         this.navCtrl.navigate(['tabs/orders']);
     }
+    
     // filter delivery orders
     filterDelivery() {
         this.DeliveryOrders = this.filter('Deliver it to me');
-        this.Deliverycount = 0;
-        this.DeliveryOrders.forEach(item => {
-            if (item.status == 'open' || item.status == 'Ready') {
-                this.Deliverycount++;
-            }
-        });
+
+        this.DeliveryOrders = this.filterOrdersToCurrentMonth();
+        console.log("CONSOLE DELIVERY ORDERS");
+        console.log(this.DeliveryOrders);
         console.log("========= FILTER DELIVERY 1 =========");
         this.DeliveryOrders = this.sortDeliveryOrders();
         console.log(this.DeliveryOrders);
@@ -222,18 +274,43 @@ export class DashboardPage implements OnInit {
         console.log("========= FILTER DELIVERY 2 =========");
         console.log(this.DeliveryOrders);
         this.deliveryInitialData = this.DeliveryOrders;
+
+        this.Deliverycount = 0;
+        this.DeliveryOrders.forEach(item => {
+            if (item.status == 'open' || item.status == 'Ready') {
+                this.Deliverycount++;
+            }
+        });
     }
+
+    filterOrdersToCurrentMonth() {
+        return this.deliveryInitialData.filter(item => {
+            item.Date.toDate().getMonth()===this.date.getMonth();
+        })
+    }
+
+    // FILTER PICKPAY
     filterPickPay() {
         this.PickPayOrders = this.filter('I will pick it');
+        this.PickPayOrders = this.filterPickPayToCurrentMonth();
+
+        this.PickPayOrders = this.sortPickPayOrders();
+        this.removeCompleteOrders(this.PickPayOrders);
+        this.pickPayInitialData = this.PickPayOrders;
+
         this.PickPayCount = 0;
         this.PickPayOrders.forEach(item => {
             if (item.status == 'open' || item.status == 'Ready') {
                 this.PickPayCount++;
             }
         });
-        this.PickPayOrders = this.sortPickPayOrders();
-        this.removeCompleteOrders(this.PickPayOrders);
-        this.pickPayInitialData = this.PickPayOrders;
+    }
+
+
+    filterPickPayToCurrentMonth() {
+        return this.pickPayInitialData.filter(item => {
+            item.Date.toDate().getMonth()===this.date.getMonth();
+        })
     }
 
     filter(check) {
@@ -260,13 +337,16 @@ export class DashboardPage implements OnInit {
         } 
     }
 
+    // FORMAT DATE
     formatDate(date) {
+        this.currentDay = date;
         let delivaryTemp = this.deliveryInitialData;
         let pickPayTemp = this.pickPayInitialData;
         this.DeliveryOrders = this.filterByDate(date, delivaryTemp);
         this.PickPayOrders  = this.filterByDate(date, pickPayTemp);
     }
 
+    // FILTER BY DATE
     filterByDate(date, arr) {
         return arr.filter(item => {
             return item.Date.toDate().getDate() == date;

@@ -44,36 +44,34 @@
 
     <div class="body" style="background-color: white;">
         <div>
-            <!-- <div style="width: 100%; background-color: red;">
-                <div>My shop performance for this month</div>
-                    <ion-col size="12">
-                        <ion-slides pager="false" [options]="slideOptions">
-                            <ion-slide *ngFor="let item of [0,1,2,3,4,5,6]">
-                                <div>
-                                    <ion-label style="font-size: .5em;">MM, YY</ion-label><br><br>
-                                </div>
-                                <div>
-                                    <ion-label style="font-size: .5em;">DD</ion-label><br><br>
-                                </div>
-                                <div>
-                                    <ion-label style="font-size: .5em;">1</ion-label><br><br>
-                                </div>
-                            </ion-slide>
-                        </ion-slides>
-                    </ion-col>
+            <div style="width: 100%; color: #737373; padding-left: 15px; padding-right: 15px; padding-top: 10px;">
+                <div style="margin-top: 5px; margin-bottom: 15px; font-size: 15px;">
+                    <div style="margin-left: 5px">My shop performance for this month</div>
+                    <div style="color: var(--ion-color-primary); position: absolute; float: right; right: 20px; margin-top: -17px;">{{ currentMonth }}, {{ currentYear }}</div>
                 </div>
-            </div> -->
+                <ion-slides pager="false" [options]="slideOptions">
+                    <ion-slide *ngFor="let item of daysOfCurrentMonth" [ngClass]="{active: item.day === currentDay}" (click)="formatDate(item.day)">
+                        <div style="padding-bottom: 7px; padding-top: 7px; margin-bottom: 2px;">
+                            <!-- <ion-label style="font-size: .5em;">{{ currentMonth }}, {{ currentYear }}</ion-label><br> -->
+
+                            <ion-label style="font-size: 13px; margin-bottom: 7px;">{{ getDay(currentYear,date.getMonth(),item.day)}}</ion-label><br>
+
+                            <ion-label style="font-size: 13px; margin-bottom: 10px; margin-top: 5px;">{{ item.day }}</ion-label><br>
+                        </div>
+                    </ion-slide>
+                </ion-slides>
+            </div>
 
 
 
-            <ion-item color="light">
+            <!-- <ion-item color="light">
                 <div no-padding style="font-size: 14px; width: 100%;">
                     <ion-label no-padding style="font-size: 14px; color: #737373;">Click to filter by date &nbsp;&nbsp;&nbsp;</ion-label>
                     <ion-datetime no-padding [pickerOptions]="customPickerOptions" style="color: #737373; float: right; margin-top: -15px;" displayFormat="DDDD" [max]=""
                         value="{{ date }}">
                     </ion-datetime>
                 </div>
-            </ion-item>
+            </ion-item> -->
         </div>
 
         <ion-segment (ionChange)="changeCategory($event)" style="background-color: white; padding-top: 7px;">
