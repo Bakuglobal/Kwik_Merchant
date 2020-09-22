@@ -12,7 +12,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 // FIREBASE
 import { AngularFireModule, } from '@angular/fire';
@@ -112,6 +112,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
     Network,
     DocumentViewer,
     FCM,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

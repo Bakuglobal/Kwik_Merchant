@@ -99,9 +99,10 @@ export class AppComponent {
             this.shop = user.sellerInfo ;
             console.log(this.shop);
             this.service.setuser(this.shop);
-            this.db.setShopname(this.shop.shop);
-            localStorage.setItem('shop',this.shop.shop);
-            console.log(this.shop.shop);
+            this.db.setShopname(user.sellerInfo.shop);
+            localStorage.setItem('shop',user.sellerInfo.shop);
+            localStorage.setItem('logo',user.logo);
+            console.log(user.sellerInfo.shop);
             console.log(this.shop);
             this.loggedIn = true ;
           });
