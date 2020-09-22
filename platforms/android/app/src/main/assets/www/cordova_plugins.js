@@ -542,6 +542,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
+    },
+    {
+      "id": "es6-promise-plugin.Promise",
+      "file": "plugins/es6-promise-plugin/www/promise.js",
+      "pluginId": "es6-promise-plugin",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-x-socialsharing.SocialSharing",
+      "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+      "pluginId": "cordova-plugin-x-socialsharing",
+      "clobbers": [
+        "window.plugins.socialsharing"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -570,6 +584,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-streaming-media": "2.2.0",
     "cordova-plugin-telerik-imagepicker": "2.3.3",
     "cordova-plugin-whitelist": "1.3.3",
-    "phonegap-plugin-barcodescanner": "8.1.0"
+    "phonegap-plugin-barcodescanner": "8.1.0",
+    "es6-promise-plugin": "4.2.2",
+    "cordova-plugin-x-socialsharing": "6.0.2"
   };
 });
