@@ -7,10 +7,10 @@
   </ion-button>
 
   <!-- IMAGE -->
-  <ion-slides [options]="sliderOpts">
+  <ion-slides [options]="sliderOpts" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
       <ion-slide>
           <div class="swiper-zoom-container" #slider>
-              <img src="{{img}}" alt="">
+              <img src="{{img}}"  alt="">
           </div>
       </ion-slide>
   </ion-slides>

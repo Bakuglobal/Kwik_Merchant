@@ -6,4 +6,5 @@ export interface Post {
     time: any ;
     logo: any;
     comments: any ;
+    liked?: any ;
 }

@@ -192,6 +192,10 @@ export class FirestoreService {
         return this.fs.collection('shops').doc(userID).valueChanges();
     }
 
+    alreadyLiked(postId) {
+        return this.fs.collection('Likes').doc<Reaction>(postId);
+    }
+
     
 
 }

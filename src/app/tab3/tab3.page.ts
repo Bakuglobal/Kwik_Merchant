@@ -17,6 +17,7 @@ import { User } from '../models/user';
 import { DatabaseService } from '../database.service';
 import { Post } from '../models/post';
 import { Reaction } from '../models/reaction';
+import { post } from 'jquery';
 
 
 
@@ -94,7 +95,10 @@ export class Tab3Page {
         this.db.getPosts().subscribe(res => {
             this.Posts = res;
             this.unfilteredPosts = res;
-            console.log('POSTS :', res)
+            console.log('POSTS :', res);
+            this.Posts.forEach(post=> {
+                this.alreadyLiked(post);
+            })
         });
     }
 
@@ -186,7 +190,6 @@ export class Tab3Page {
                 this.likesReaction = res;
                 console.log("=====reaction======");
                 console.log(res);
-    
                 this.likes = this.likesReaction.likes;
                 this.disLikes = this.likesReaction.disLikes;
                 if (this.liked == false) {
@@ -224,6 +227,24 @@ export class Tab3Page {
             }
         },error => {
             console.log(error);
+        });
+    }
+
+    alreadyLiked(post) {
+        this.service.alreadyLiked(post.id).valueChanges().subscribe(res => {
+            console.log("===ALREADY LIKED====");
+            console.log(res);
+            if (res == undefined) {
+                return ;
+            } else {
+
+                if (res.likes.userId.includes(localStorage.getItem('user'))) {
+                    let index = this.Posts.indexOf(post);
+                    this.Posts[index].liked = true;
+                    console.log("===SECOND ALREADY LIKED====");
+                    console.log(this.Posts[index]);
+                } 
+            }
         });
     }
 

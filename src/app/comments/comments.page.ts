@@ -37,12 +37,14 @@ export class CommentsPage implements OnInit {
         this.userName = localStorage.getItem('shop');
         this.userLogo = localStorage.getItem('logo');
         this.postId = this.navParams.get('postId');        
+       console.log("====LOGO======");
+       console.log(this.userLogo);
+       
        
         this.db.getPostsComments(this.postId).subscribe(res => {
             this.comments = res;
             console.log('Comments: ', res);
         });
- 
     }
 
     close() {
