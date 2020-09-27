@@ -91,7 +91,7 @@
 <ion-footer translucent>
     <ion-item>
         <ion-button expand="block" fill="clear" color="primary">
-            <ion-icon src="../../assets/images/profile.svg" slot="icon-only"></ion-icon>
+            <img src="{{userLogo}}" style="width: 25px; border-radius: 50%; border: 2px solid var(--ion-color-primary);">
         </ion-button>
         <ion-input  style="color: #737373; font-size: 13px;" type="text" placeholder="Add a comment..." [(ngModel)]="commentText"></ion-input>
         <ion-button fill="clear" expand="block" [disabled]="!commentText" (click)="postComment()">
