@@ -4,7 +4,7 @@ import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './models/user';
-import { Router } from '@angular/router' ;
+import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Shop } from './models/shops';
 import * as firebase from 'firebase';
@@ -16,22 +16,22 @@ import { StockAlert } from './models/stockAlert';
   providedIn: 'root'
 })
 export class DatabaseService {
-   
+
 
 
   private pathUsers = '/users';
   operationUser: AngularFireList<User> = null;
-  userid ;
-  shopname ;
+  userid;
+  shopname;
 
   constructor(
-    
+
     private db: AngularFireDatabase,
     private af: AngularFireAuth,
     private navCtrl: Router,
     private firestore: AngularFirestore,
     public http: HttpClient,
-  ) { 
+  ) {
     this.operationUser = db.list(this.pathUsers);
   }
   getCurrentUser() {
@@ -46,8 +46,8 @@ export class DatabaseService {
     });
   }
   //get transaction from database
-  checktransaction(key,transId){
-      return this.db.list(`Transactions/${key}/${transId}`);
+  checktransaction(key, transId) {
+    return this.db.list(`Transactions/${key}/${transId}`);
   }
 
   logout() {
@@ -64,13 +64,13 @@ export class DatabaseService {
   login(email: any, password: any) {
     return this.af.auth.signInWithEmailAndPassword(email, password);
   }
-  
+
   register(data) {
     return this.af.auth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((authData: any) => {
         localStorage.setItem('user', authData.user.uid);
-        this.userid = authData.user.uid ;
+        this.userid = authData.user.uid;
         let userData = {
           "shop": data.name,
           "Contacts": data.contact,
@@ -78,75 +78,78 @@ export class DatabaseService {
           "Website": data.website,
           "logo": '',
           "Location": data.location,
-          "Open": data.openStart+''+'Am',
-          "Close":data.openStop+''+'PM'
+          "Open": data.openStart + '' + 'Am',
+          "Close": data.openStop + '' + 'PM'
         };
         this.createUser(userData);
-        
+
       }).catch(err => console.log(err))
   }
 
-  
-  getShopInfo(id){
+
+  getShopInfo(id) {
     return this.firestore.collection('shops').doc(id).valueChanges();
   }
   //create a user account
-  createUser(data){
+  createUser(data) {
     this.firestore.collection('shops').doc(this.userid).set(data);
   }
-// set shopname to share across pages
-setShopname(name){
-  this.shopname = name ;
-}
-getshopname(){
-  return this.shopname ;
-}
-getPosts(){
-  let posts = this.firestore.collection<Post>('posts',ref => {
-    return ref.orderBy('time','desc')
-  })
-  return posts.snapshotChanges().pipe(
-    map(actions => {
-      return actions.map(a => {
-        const id = a.payload.doc.id ;
-        const data = a.payload.doc.data();
-        return {id, ... data}
-      });
+  // set shopname to share across pages
+  setShopname(name) {
+    this.shopname = name;
+  }
+  getshopname() {
+    return this.shopname;
+  }
+  getPosts() {
+    let posts = this.firestore.collection<Post>('posts', ref => {
+      return ref.orderBy('time', 'desc')
     })
-  )
-}
-getPostsComments(postid){
-  let posts = this.firestore.collection<Comment>('comments',ref => {
-    return ref.where('postID','==',postid).orderBy('time','desc')
-  })
-  return posts.snapshotChanges().pipe(
-    map(actions => {
-      return actions.map(a => {
-        const id = a.payload.doc.id ;
-        const data = a.payload.doc.data();
-        return {id, ... data}
-      });
+    return posts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, ...data }
+        });
+      })
+    )
+  }
+  getPostsComments(postid) {
+    // let posts = this.firestore.collection<Comment>('comments', ref => {
+    //   return ref.where('postID', '==', postid).orderBy('time', 'desc')
+    // })
+    let posts = this.firestore.collection<Comment>('comments').doc(postid).collection<Comment>("allComments", ref=> {
+      return ref.orderBy('time');
     })
-  )
-}
-StockAlert(id){
-  return this.firestore.collection('StockAlerts').doc<StockAlert>(id)
-}
-getAlaerts(id){
-  let posts = this.firestore.collection<StockAlert>('StockAlerts',ref => {
-    return ref.orderBy('Date','desc')
-  })
-  return posts.snapshotChanges().pipe(
-    map(actions => {
-      return actions.map(a => {
-        const id = a.payload.doc.id ;
-        const data = a.payload.doc.data();
-        return {id, ... data}
-      });
+    return posts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, ...data }
+        });
+      })
+    )
+  }
+  StockAlert(id) {
+    return this.firestore.collection('StockAlerts').doc<StockAlert>(id)
+  }
+  getAlaerts(id) {
+    let posts = this.firestore.collection<StockAlert>('StockAlerts', ref => {
+      return ref.orderBy('Date', 'desc')
     })
-  )
-}
+    return posts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, ...data }
+        });
+      })
+    )
+  }
 
- 
-    
+
+
 }
