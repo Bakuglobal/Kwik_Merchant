@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
-import { ModalController } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
 import { DatabaseService } from '../database.service';
 import { Order } from '../models/order';
-import { timeout } from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard',
@@ -13,9 +12,8 @@ import { timeout } from 'rxjs/operators';
     styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
+    @ViewChild('slide',{static:false}) slides: IonSlides;
     // variables
-
     Myorders = [];
     readyOrders = [];
     filterOrder;
@@ -35,6 +33,7 @@ export class DashboardPage implements OnInit {
     PickPayCount = 0;
     customPickerOptions: any;
     slideOptions = {
+        initialSlide:0,
         slidesPerView: 7,
     };
     deliveryInitialData: Order[] = [];
@@ -45,7 +44,7 @@ export class DashboardPage implements OnInit {
     days   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     daysOfCurrentMonth = [];
     currentDay: any;
-
+    allOrd = false ;
 
     constructor(
         private fs: AngularFirestore,
@@ -111,8 +110,11 @@ export class DashboardPage implements OnInit {
     }
 
     getDay(y, m, d) {  
+        if(d === this.currentDay){
+            this.slides.slideTo(d-1,500);
+        }
         // let days = ['Sunday','Monday','Tuesday', 'Wednesday','Thursday','Friday','Saturday']; 
-        let day = new Date(y, --m, d); 
+        let day = new Date(y, m, d); 
         return d && this.days[day.getDay()];
     }
 
@@ -133,7 +135,6 @@ export class DashboardPage implements OnInit {
     ionViewWillEnter() {
         this.getShop();
         this.date = new Date();
-
         this.currentYear  = this.date.getFullYear();
         this.currentMonth = this.months[this.date.getMonth()];
         this.currentDay   = this.date.getDate();
@@ -235,6 +236,7 @@ export class DashboardPage implements OnInit {
 
             this.filterDelivery();
             this.filterPickPay();
+            this.formatDate(this.date.getDate());
             this.loader = false;
         });
     }
@@ -262,18 +264,25 @@ export class DashboardPage implements OnInit {
     
     // filter delivery orders
     filterDelivery() {
-        this.DeliveryOrders = this.filter('Deliver it to me');
-
-        this.DeliveryOrders = this.filterOrdersToCurrentMonth();
-        console.log("CONSOLE DELIVERY ORDERS");
-        console.log(this.DeliveryOrders);
-        console.log("========= FILTER DELIVERY 1 =========");
-        this.DeliveryOrders = this.sortDeliveryOrders();
-        console.log(this.DeliveryOrders);
-        this.removeCompleteOrders(this.DeliveryOrders);
-        console.log("========= FILTER DELIVERY 2 =========");
-        console.log(this.DeliveryOrders);
+        // get orders for delivery from this.Myorders
+        this.DeliveryOrders = this.filter('deliver');
+        console.log('delivery orders',this.DeliveryOrders);
         this.deliveryInitialData = this.DeliveryOrders;
+
+        // filter them to current month
+        this.DeliveryOrders = this.filterOrdersToCurrentMonth();
+        console.log("==== This month Orders ====");
+        console.log('delivery orders for this month',this.DeliveryOrders);
+
+        // sort the delivery orders for this month
+        this.DeliveryOrders = this.sortDeliveryOrders();
+        console.log('sorted delivery orders for this month',this.DeliveryOrders);
+
+        // remove the complete delivey orders for this month
+        this.removeCompleteOrders(this.DeliveryOrders);
+        console.log("========= final orders array list =========");
+        console.log('delivery orders without complete orders',this.DeliveryOrders);
+        
 
         this.Deliverycount = 0;
         this.DeliveryOrders.forEach(item => {
@@ -285,13 +294,14 @@ export class DashboardPage implements OnInit {
 
     filterOrdersToCurrentMonth() {
         return this.deliveryInitialData.filter(item => {
-            item.Date.toDate().getMonth()===this.date.getMonth();
+            console.log( item.Date.toDate().getMonth(),this.date.getMonth())
+          return  item.Date.toDate().getMonth()===this.date.getMonth();
         })
     }
 
     // FILTER PICKPAY
     filterPickPay() {
-        this.PickPayOrders = this.filter('I will pick it');
+        this.PickPayOrders = this.filter('pick');
         this.PickPayOrders = this.filterPickPayToCurrentMonth();
 
         this.PickPayOrders = this.sortPickPayOrders();
@@ -339,11 +349,29 @@ export class DashboardPage implements OnInit {
 
     // FORMAT DATE
     formatDate(date) {
+        this.allOrd = false;
         this.currentDay = date;
         let delivaryTemp = this.deliveryInitialData;
         let pickPayTemp = this.pickPayInitialData;
         this.DeliveryOrders = this.filterByDate(date, delivaryTemp);
         this.PickPayOrders  = this.filterByDate(date, pickPayTemp);
+        this.Deliverycount = 0 ;
+        this.DeliveryOrders.forEach(item => {
+            if (item.status == 'open' || item.status == 'Ready') {
+                this.Deliverycount++;
+            }
+        });
+        this.PickPayCount = 0
+        this.PickPayOrders.forEach(item => {
+            if (item.status == 'open' || item.status == 'Ready') {
+                this.PickPayCount++;
+            }
+        });
+    }
+    allOrders(){
+        this.allOrd = true ;
+        this.filterDelivery();
+        this.filterPickPay();
     }
 
     // FILTER BY DATE
