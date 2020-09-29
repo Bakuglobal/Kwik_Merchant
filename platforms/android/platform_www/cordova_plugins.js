@@ -586,6 +586,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-whitelist": "1.3.3",
     "es6-promise-plugin": "4.2.2",
     "cordova-plugin-x-socialsharing": "6.0.2",
-    "phonegap-plugin-barcodescanner": "8.1.0"
+    "phonegap-plugin-barcodescanner": "8.1.0",
+    "cordova-plugin-androidx": "3.0.0",
+    "cordova-plugin-androidx-adapter": "1.1.1"
   };
 });
