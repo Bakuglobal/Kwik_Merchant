@@ -242,7 +242,7 @@ export class DashboardPage implements OnInit {
     }
     sortDeliveryOrders() {
         return this.DeliveryOrders.sort((a, b) => {
-            if (a.status === 'open') { return -1 } else { return 1 }
+            if (a.status === 'open' ) { return -1 } else { return 1 }
         })
     }
 
@@ -286,7 +286,7 @@ export class DashboardPage implements OnInit {
 
         this.Deliverycount = 0;
         this.DeliveryOrders.forEach(item => {
-            if (item.status == 'open' || item.status == 'Ready') {
+            if (item.status == 'open' && item.status == 'Ready' || item.status == 'canceled') {
                 this.Deliverycount++;
             }
         });
@@ -301,16 +301,29 @@ export class DashboardPage implements OnInit {
 
     // FILTER PICKPAY
     filterPickPay() {
+        // get orders for delivery from this.Myorders
         this.PickPayOrders = this.filter('pick');
-        this.PickPayOrders = this.filterPickPayToCurrentMonth();
-
-        this.PickPayOrders = this.sortPickPayOrders();
-        this.removeCompleteOrders(this.PickPayOrders);
+        console.log('pick orders',this.PickPayOrders);
         this.pickPayInitialData = this.PickPayOrders;
+
+         // filter them to current month
+        this.PickPayOrders = this.filterPickPayToCurrentMonth();
+        console.log("==== This month Orders ====");
+        console.log('pick orders for this month',this.PickPayOrders);
+
+         // sort the delivery orders for this month
+        this.PickPayOrders = this.sortPickPayOrders();
+        console.log('sorted pick orders for this month',this.PickPayOrders);
+
+        // remove the complete delivey orders for this month
+        this.removeCompleteOrders(this.PickPayOrders);
+        // this.pickPayInitialData = this.PickPayOrders;
+        console.log("========= final orders array list =========");
+        console.log('pick orders without complete orders',this.PickPayOrders);
 
         this.PickPayCount = 0;
         this.PickPayOrders.forEach(item => {
-            if (item.status == 'open' || item.status == 'Ready') {
+            if (item.status == 'open' || item.status == 'Ready' || item.status == 'canceled') {
                 this.PickPayCount++;
             }
         });
@@ -319,7 +332,7 @@ export class DashboardPage implements OnInit {
 
     filterPickPayToCurrentMonth() {
         return this.pickPayInitialData.filter(item => {
-            item.Date.toDate().getMonth()===this.date.getMonth();
+          return  item.Date.toDate().getMonth()===this.date.getMonth();
         })
     }
 
@@ -328,14 +341,27 @@ export class DashboardPage implements OnInit {
             return item.Delivery.toLowerCase().indexOf(check.toLowerCase()) > -1;
         });
     }
-
+    updateCounts(){
+        this.Deliverycount = 0 ;
+        this.DeliveryOrders.forEach(item => {
+            if (item.status == 'open' || item.status == 'Ready' || item.status == 'canceled') {
+                this.Deliverycount++;
+            }
+        });
+        this.PickPayCount = 0
+        this.PickPayOrders.forEach(item => {
+            if (item.status == 'open' || item.status == 'Ready' || item.status == 'canceled') {
+                this.PickPayCount++;
+            }
+        });
+    }
 
     // REMOVE COMPLETE ORDER
     removeCompleteOrders(arr:Order[]){
         let tempArr: Order[] = arr;
         if(tempArr.length > 0) {
             tempArr.forEach(item => {
-                if(item.status == 'canceled' || item.status == 'complete') {
+                if(item.status == 'complete') {
                     let index = arr.indexOf(item);
                     console.log("========   ARR 1 1   ======");
                     console.log(index);
@@ -355,23 +381,13 @@ export class DashboardPage implements OnInit {
         let pickPayTemp = this.pickPayInitialData;
         this.DeliveryOrders = this.filterByDate(date, delivaryTemp);
         this.PickPayOrders  = this.filterByDate(date, pickPayTemp);
-        this.Deliverycount = 0 ;
-        this.DeliveryOrders.forEach(item => {
-            if (item.status == 'open' || item.status == 'Ready') {
-                this.Deliverycount++;
-            }
-        });
-        this.PickPayCount = 0
-        this.PickPayOrders.forEach(item => {
-            if (item.status == 'open' || item.status == 'Ready') {
-                this.PickPayCount++;
-            }
-        });
+        this.updateCounts();
     }
     allOrders(){
         this.allOrd = true ;
         this.filterDelivery();
         this.filterPickPay();
+        this.updateCounts();
     }
 
     // FILTER BY DATE
