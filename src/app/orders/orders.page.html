@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
             <ion-icon style="width: 20px; height: 20px; margin-left: 5px;" (click)="close()" name="arrow-back" size="large"></ion-icon>
@@ -17,7 +17,7 @@
         <ion-spinner name="circles" color="primary"></ion-spinner>
     </div>
     <div *ngIf="view">
-        <!-- Display order details -->
+        <!-- Display order details 
         <ion-item *ngFor="let item of prod.products" style="margin-right: 15px; margin-left: -5px;">
             <div style="width: 20%;">
                 <img class="img" src="{{item.image}}" style="float: left; left: 0px; height: 70px;">
@@ -38,7 +38,7 @@
             </ion-col>
             <ion-col class="qty" style="float: right; right: 0px; position: absolute;">
                 <div style="font-size: 13px; color: #737373;"><b>{{item.count}} x {{item.quantity}}</b></div>
-            </ion-col> -->
+            </ion-col> 
         </ion-item>
 
         <div text-center style="margin-top: 10px;">
@@ -74,6 +74,113 @@
     <ion-row >
         <ion-col>
             <ion-button style="font-size: 13px;" expand="full" color="success" (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status == 'Ready'">
+                Ready for pick
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>
+ -->
+
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons class="go-back" slot="start">
+            <ion-icon slot="start" size="small" name="arrow-back" (click)="close()"></ion-icon>
+        </ion-buttons>
+        <ion-title *ngIf="prod !== undefined" class="ion-text-center">Order ID: {{prod.OrderID}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div *ngIf="view">
+        <br><br>
+        <!-- FIRST CONTENT -->
+        <div class="first-content">
+            <ion-row>
+                <ion-col class="first-col">
+                    Ordered by {{prod.username}}
+                </ion-col>
+                <ion-col size="2" class="second-col">
+                    <ion-icon name="call" (click)="callUserNumber(userDetail.phone)"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </div>
+        <!-- SECOND CONTENT -->
+        <div class="second-content">
+            <ion-row class="content-1">
+                <ion-col size="8">
+                    Product
+                </ion-col>
+                <ion-col size="2" class="ion-text-right">
+                    Price
+                </ion-col>
+                <ion-col size="2" class="ion-text-right">
+                    Qty
+                </ion-col>
+            </ion-row>
+            <ion-row class="content-2" *ngFor="let item of prod.products" no-padding>
+                <ion-col size="8">
+                    {{item.product}}
+                </ion-col>
+                <ion-col size="2" class="ion-text-center">
+                    {{item.currentprice}}
+                </ion-col>
+                <ion-col size="2" class="ion-text-center">
+                    {{item.quantity}}
+                </ion-col>
+            </ion-row>
+        </div>
+        <!-- THIRD CONTENT -->
+        <div class="third-content">
+            <h4>Order Notes</h4>
+            <ion-row padding>
+                <p>
+                    {{prod.notes}}
+                </p>
+                <p *ngIf="prod.notes == ''">
+                    No notes
+                </p>
+            </ion-row>
+        </div>
+        <!-- FOURTH CONTENT -->
+        <div class="fourth-content" *ngIf="prod.status !== 'canceled'">
+            <ion-row class="content-2">
+                <ion-col>
+                    <h4 color="primary">Delivery Options</h4>
+                    <p *ngIf="prod.Delivery === 'deliver'">
+                        <strong>
+                            Deliver it to {{prod.Location}}
+                        </strong>
+                    </p>
+                    <p *ngIf="prod.Delivery === 'pick'">
+                        <strong>
+                            <ion-label disabled>None</ion-label><br>
+                            Pick Up Order
+                        </strong>
+                    </p>
+                </ion-col>
+            </ion-row>
+        </div>
+        <!-- TOTAL SUM -->
+        <ion-item class="total">
+            <ion-label>Total: Kshs. {{getTotalCart()}}</ion-label>&nbsp;
+            <span style="color: red;" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'deliver'">( To be paid on
+                Delivery)</span>
+            <span style="color: red;" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'pick'">( To be paid on Pick
+                up)</span>
+            <span *ngIf="prod.payment === 'paid'" style="color: red;">( Paid )</span>
+        </ion-item>
+        <br>
+        <div *ngIf="prod.status === 'canceled'" class="ion-text-center">
+            <br><br>
+            <ion-label color="danger">This order is canceled</ion-label>
+        </div>
+    </div>
+</ion-content>
+<ion-footer *ngIf="view" style="background-color: #f3f3f3;text-align: center;">
+    <!-- <ion-label color="danger">This Order is already Paid for.</ion-label> -->
+    <ion-row>
+        <ion-col>
+            <ion-button style="font-size: 13px;" expand="full" color="success"
+                (click)="ready(prod.OrderID,prod.username)" [disabled]="prod.status !== 'open'">
                 Ready for pick
             </ion-button>
         </ion-col>
