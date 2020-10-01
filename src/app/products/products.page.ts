@@ -44,9 +44,9 @@ export class ProductsPage implements OnInit {
     products;
     unfilteredProducts;
     shop;
-    loading;
+    loading: any;
     date;
-    shopType:any;
+    shopType: any;
     user: any;
 
     constructor(
@@ -207,15 +207,17 @@ export class ProductsPage implements OnInit {
         })
     }
 
-    addProduct() {
-        this.Toast('uploading...');
-        this.uploadTostorage(this.image);
+    async addProduct() {
+        this.Toast('Uploading product...');
+        // alert(1);
+       await  this.uploadTostorage(this.image);
+        // alert('shop => ' + this.shop);
         let data: Product = {
             "shop": this.shop,
             "currentprice": this.productForm.value.currentprice,
             "quantity": this.productForm.value.quantity,
             "product": this.productForm.value.product,
-            "image": this.productForm.value.image,
+            "image": this.image,
             "status": this.productForm.value.status,
             "stock": this.productForm.value.stock,
             "category": this.productForm.value.category,
@@ -227,9 +229,14 @@ export class ProductsPage implements OnInit {
         this.fs.collection(this.shop).add(data).then(res => {
             this.productForm.reset();
             this.category = '';
-            this.upload.presentToast('Product upload successful');
+            this.image = '';
+            this.upload.presentToast('Product uploaded successfully');
+            // alert(2)
+             this.loading.dismiss();
         }).catch(err => {
-            console.log(err);
+            // alert(err);
+            this.loading.dismiss();
+            // alert(3)
         })
     }
     scan() {
@@ -284,68 +291,69 @@ export class ProductsPage implements OnInit {
         await modal.present();
     }
 
-    async selectImage() {
-        const actionSheet = await this.asc.create({
-            header: "Select Image Source",
-            buttons: [
-                {
-                    text: 'Load from Library',
-                    handler: () => {
-                        this.openImagePickerCrop();
-                    }
-                },
-                {
-                    text: 'Cancel',
-                    role: 'cancel'
-                }
-            ]
-        });
-        await actionSheet.present();
-    }
+    // async selectImage() {
+    //     const actionSheet = await this.asc.create({
+    //         header: "Select Image Source",
+    //         buttons: [
+    //             {
+    //                 text: 'Load from Library',
+    //                 handler: () => {
+    //                     this.openImagePickerCrop();
+    //                 }
+    //             },
+    //             {
+    //                 text: 'Cancel',
+    //                 role: 'cancel'
+    //             }
+    //         ]
+    //     });
+    //     await actionSheet.present();
+    // }
 
-    openImagePickerCrop() {
-        this.imagePicker.hasReadPermission().then(
-        (result) => {
-            if (result == false) {
-                // no callbacks required as this opens a popup which returns async
-                this.imagePicker.requestReadPermission();
-            }
-            else if (result == true) {
-                this.imagePicker.getPictures({
-                    maximumImagesCount: 1
-                }).then(
-                    (results) => {
-                        for (var i = 0; i < results.length; i++) {
-                            this.cropService.crop(results[i], { quality: 75 }).then(
-                                newImage => {
-                                    this.uploadImageToFirebase(newImage);
-                                },
-                                error => alert("Error cropping image" + error)
-                            );
-                        }
-                    }, (err) => alert(err)
-                ).catch(err => console.log(err));
-            }
-        }, (err) => {
-            alert(err);
-        }).catch(err => alert(err))
-    }
+    // openImagePickerCrop() {
+    //     this.imagePicker.hasReadPermission().then(
+    //         (result) => {
+    //             if (result == false) {
+    //                 // no callbacks required as this opens a popup which returns async
+    //                 this.imagePicker.requestReadPermission();
+    //             }
+    //             else if (result == true) {
+    //                 this.imagePicker.getPictures({
+    //                     maximumImagesCount: 1
+    //                 }).then(
+    //                     (results) => {
+    //                         for (var i = 0; i < results.length; i++) {
+    //                             this.cropService.crop(results[i], { quality: 75 }).then(
+    //                                 newImage => {
+    //                                     this.uploadImageToFirebase(newImage);
+    //                                 },
+    //                                 error => alert("Error cropping image" + error)
+    //                             );
+    //                         }
+    //                     }, (err) => alert(err)
+    //                 ).catch(err => console.log(err));
+    //             }
+    //         }, (err) => {
+    //             alert(err);
+    //         }).catch(err => alert(err))
+    // }
 
-    uploadImageToFirebase(image) {
-        image = this.webview.convertFileSrc(image);
+    // uploadImageToFirebase(image) {
+    //     image = this.webview.convertFileSrc(image);
 
-        //uploads img to firebase storage
-        this.upload.uploadImage(image)
-            .then(photoURL => {
-                console.log(photoURL);
-                this.upload.presentToast('Image was updated successfully');
+    //     //uploads img to firebase storage
+    //     this.upload.uploadImage(image)
+    //         .then(photoURL => {
+    //             console.log(photoURL);
+    //             this.upload.presentToast('Image was updated successfully');
 
-            })
-    }
+    //         })
+    // }
+
     async Toast(msg) {
         this.loading = await this.loader.create({
             message: msg,
-            duration: 2000,
+            // duration: 2000,
         });
         await this.loading.present();
     }
@@ -390,50 +398,63 @@ export class ProductsPage implements OnInit {
             }
             const results = await this.camera.getPicture(options);
             const image = `data:image/jpeg;base64,${results}`;
-
             this.image = image;
-
         }
         catch (e) {
             console.log(e);
         }
     }
+    sanitizeBase64Path(ImagePath) {
+        var copyPath = ImagePath;
+        var splitPath = copyPath.split('/');
+        var imageName = splitPath[splitPath.length - 1];
+        var filePath = ImagePath.split(imageName)[0];
+        this.file.readAsDataURL(filePath, imageName).then(base64 => {
+          this.image = base64;
+        }, error => {
+          alert('Error in sanitizing image' + error);
+        });
+      }
 
     async getImageGallery() {
         this.imagePicker.hasReadPermission().then(
-        (result) => {
-            if (result == false) {
-                this.imagePicker.requestReadPermission();
-            }
-            else if (result == true) {
-                this.imagePicker.getPictures({
-                    maximumImagesCount: 1
-                }).then(
-                    (results) => {
-                        for (var i = 0; i < results.length; i++) {
-                            this.cropService.crop(results[i], { quality: 75 }).then(
-                                newImage => {
-                                    // this.uploadTostorage(newImage);
-                                    const image = `data:image/jpeg;base64,${newImage}`;
-                                    this.image = newImage;
-                                },
-                                error => alert("Error cropping image" + error)
-                            );
-                        }
-                    }, (err) => alert(err)
-                ).catch(err => console.log(err));
-            }
-        }, (err) => {
-            alert(err);
-        }).catch(err => alert(err))
+            (result) => {
+                if (result == false) {
+                    this.imagePicker.requestReadPermission();
+                }
+                else if (result == true) {
+                    this.imagePicker.getPictures({
+                        maximumImagesCount: 1
+                    }).then(
+                        (results) => {
+                            for (var i = 0; i < results.length; i++) {
+                                this.cropService.crop(results[i], { quality: 75 }).then(newImage => {
+                                    this.sanitizeBase64Path(newImage.split('?')[0]);
+                                }
+                                ).catch(error => alert("Error cropping image" + error));
+                            }
+                        }, (err) => alert(err)
+                    ).catch(err => console.log(err));
+                }
+            }, (err) => {
+                alert(err);
+            }).catch(err => alert(err))
     }
 
 
     uploadTostorage(image) {
-        const pictures = this.st.storage.ref(this.shop + '/' + this.date);
-        pictures.putString(image, 'data_url').then(url => {
-            this.image = url.downloadURL;
-        });
+        // alert(image);
+        const pictures = this.st.storage.ref('XXX' + '/' + this.date);
+        pictures.putString(image).then(url => {
+            url.ref.getDownloadURL().then(url => {
+                this.image = url;
+                // alert('image URL ' + this.image);
+            }).catch(error => {
+                // alert('get url error ' + error);
+            })
+        }).catch(error => {
+            // alert('put to storage error ' + error);
+        })
+        // alert('image URL ' + this.image);
     }
-
 }
