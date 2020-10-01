@@ -26,13 +26,14 @@ export class AppComponent {
     timePeriodToExit = 2000;
     showSplash = true;
     data = [];
+    logo = ''
 
     @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
 
     // varaibles
     navigate;
     loggedIn = false;
-    shop: User;
+    shop: any;
     email;
     userID;
     unreadNotice = [];
@@ -102,6 +103,7 @@ export class AppComponent {
             this.db.setShopname(user.sellerInfo.shop);
             localStorage.setItem('shop', user.sellerInfo.shop);
             localStorage.setItem('logo', user.logo);
+            this.logo = user.logo ;
             localStorage.setItem('type', user.businessInfo.type);
             console.log(user.sellerInfo.shop);
             console.log(this.shop);

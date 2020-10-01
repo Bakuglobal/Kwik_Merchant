@@ -105,8 +105,8 @@
             <form (ngSubmit)="addRestaurant()" [formGroup]="restaurantForm" style="margin-right: 15px; margin-left: 15px;">
                 <ion-list no-padding>
                     <ion-item no-padding>
-                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="Enter meal name"
-                            placeholder="Meal" required></ion-input>
+                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="Meal"
+                            placeholder="Enter meal name" required></ion-input>
                     </ion-item>
                     <ion-item no-padding (click)="selectCategory()">
                         <ion-label style="font-size: 13px; color: #737373;">Select Category </ion-label>
@@ -155,7 +155,7 @@
                             slot="end" name="camera"></ion-icon>
                     </ion-item>
                     <ion-item no-padding>
-                        <ion-textarea formControlName="ingridients"
+                        <ion-textarea rows="6" formControlName="ingridients"
                           value="" placeholder="Ingridients">
                         </ion-textarea>
                     </ion-item>
@@ -216,8 +216,8 @@
                             placeholder="Enter Product Price" required></ion-input>
                     </ion-item>
                     <ion-item no-padding>
-                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="description"
-                            placeholder="Enter Description"></ion-input>
+                        <ion-textarea rows="6" style="font-size: 13px; color: #737373;" formControlName="description"
+                            placeholder="Enter Description"></ion-textarea>
                     </ion-item>
                     <!-- <ion-item>
                     <ion-label>Set product status </ion-label>
@@ -228,6 +228,9 @@
                     <ion-toggle checked slot="end" formControlName="status"></ion-toggle>
                     </ion-item> -->
                     <ion-item no-padding (click)="newProductUploadImage()">
+                        <!-- <div style="width: 100%; height: 50px;">
+                            <img src="{{image}}" alt="">
+                        </div> -->
                         <ion-label style="font-size: 13px; color: #737373;">Image:</ion-label>
                         <ion-input style="font-size: 13px; color: #737373;" formControlName="image" value="{{image}}"
                             readonly required></ion-input>

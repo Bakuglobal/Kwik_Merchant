@@ -9,14 +9,14 @@
         <ion-row text-center>
           <ion-col class="logo">
             <ion-avatar>
-              <img src="../assets/images/icon.png">
+              <img src="{{logo}}">
             </ion-avatar>
           </ion-col>
         </ion-row>
         <ion-row text-center>
             <ion-col text-center *ngIf="loggedIn" style="color: white;">
-              <ion-label >{{shop.shop}}</ion-label><br>
-             <ion-label >{{shop.Email}}</ion-label>
+              <ion-label style="font-size: .7em;">{{shop.shop}}</ion-label><br>
+             <ion-label style="font-size: .6em;">{{shop.Email}}</ion-label>
             </ion-col>
             <ion-col *ngIf="!loggedIn">
                 <ion-icon color="warning"name="warning"></ion-icon><br>
