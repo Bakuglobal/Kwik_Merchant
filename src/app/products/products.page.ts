@@ -89,6 +89,7 @@ export class ProductsPage implements OnInit {
             image: [this.image, Validators.required]
         });
 
+        
         this.restaurantForm = formBuilder.group({
             Meal: ['', Validators.required],
             category: [this.value, Validators.required],
@@ -290,65 +291,6 @@ export class ProductsPage implements OnInit {
         localStorage.setItem('shop', this.db.getshopname());
         await modal.present();
     }
-
-    // async selectImage() {
-    //     const actionSheet = await this.asc.create({
-    //         header: "Select Image Source",
-    //         buttons: [
-    //             {
-    //                 text: 'Load from Library',
-    //                 handler: () => {
-    //                     this.openImagePickerCrop();
-    //                 }
-    //             },
-    //             {
-    //                 text: 'Cancel',
-    //                 role: 'cancel'
-    //             }
-    //         ]
-    //     });
-    //     await actionSheet.present();
-    // }
-
-    // openImagePickerCrop() {
-    //     this.imagePicker.hasReadPermission().then(
-    //         (result) => {
-    //             if (result == false) {
-    //                 // no callbacks required as this opens a popup which returns async
-    //                 this.imagePicker.requestReadPermission();
-    //             }
-    //             else if (result == true) {
-    //                 this.imagePicker.getPictures({
-    //                     maximumImagesCount: 1
-    //                 }).then(
-    //                     (results) => {
-    //                         for (var i = 0; i < results.length; i++) {
-    //                             this.cropService.crop(results[i], { quality: 75 }).then(
-    //                                 newImage => {
-    //                                     this.uploadImageToFirebase(newImage);
-    //                                 },
-    //                                 error => alert("Error cropping image" + error)
-    //                             );
-    //                         }
-    //                     }, (err) => alert(err)
-    //                 ).catch(err => console.log(err));
-    //             }
-    //         }, (err) => {
-    //             alert(err);
-    //         }).catch(err => alert(err))
-    // }
-
-    // uploadImageToFirebase(image) {
-    //     image = this.webview.convertFileSrc(image);
-
-    //     //uploads img to firebase storage
-    //     this.upload.uploadImage(image)
-    //         .then(photoURL => {
-    //             console.log(photoURL);
-    //             this.upload.presentToast('Image was updated successfully');
-
-    //         })
-    // }
 
     async Toast(msg) {
         this.loading = await this.loader.create({
