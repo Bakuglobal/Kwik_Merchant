@@ -41,10 +41,10 @@
         <ion-row>
             <ion-segment scrollable [(ngModel)]="category" (ionChange)="setFilteredItems()">
                 <ion-segment-button selected value="">
-                    <ion-label>All</ion-label>
+                    <ion-label style="font-size: 12px;">All</ion-label>
                 </ion-segment-button>
                 <ion-segment-button value="{{item}}" *ngFor="let item of categories.categories">
-                    <ion-label>{{item}}</ion-label>
+                    <ion-label style="font-size: 12px;">{{item}}</ion-label>
                 </ion-segment-button>
             </ion-segment>
         </ion-row>
@@ -53,43 +53,95 @@
             <ion-icon style="width: 20px; height: 20px;" name="search" slot="end"></ion-icon>
         </ion-item>
 
+        <!-- RESTAURANT -->
+        <div *ngIf="shopType === 'food'">
+            <ion-item no-padding text-center
+                style="background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;">
+                <ion-col size="9" style="text-align: left; margin-left: 10px;">
+                    Meal
+                </ion-col>
+                <ion-col size="3" style="text-align: right; padding-right: 10px;">
+                    Price
+                </ion-col>
+            </ion-item>
+            <ion-item no-padding text-center (click)="viewProduct(item)" *ngFor="let item of products"
+                style="font-size: 13px; color: #737373; ">
+                <ion-col size="9" style="text-align: left; margin-left: 10px;">
+                    {{item.Meal}}
+                </ion-col>
+                <ion-col size="3" style="text-align: right; padding-right: 10px;">
+                    {{item.currentprice}}
+                </ion-col>
+            </ion-item>
+        </div>
 
-        <ion-item no-padding text-center
-            style="background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;">
-            <ion-col size="2">
-                Icon
-            </ion-col>
-            <ion-col size="4">
-                Product
-            </ion-col>
-            <ion-col size="2">
-                Stock
-            </ion-col>
-            <ion-col size="2">
-                Units
-            </ion-col>
-            <ion-col size="2">
-                Price
-            </ion-col>
-        </ion-item>
-        <ion-item no-padding text-center (click)="viewProduct(item)" *ngFor="let item of products"
-            style="font-size: 13px; color: #737373; ">
-            <ion-col text-center size="2">
-                <img [src]="item.image" style="width: 50px;">
-            </ion-col>
-            <ion-col size="4">
-                {{item.product}}
-            </ion-col>
-            <ion-col size="2">
-                {{item.stock}}
-            </ion-col>
-            <ion-col size="2">
-                {{item.quantity}}
-            </ion-col>
-            <ion-col size="2">
-                {{item.currentprice}}
-            </ion-col>
-        </ion-item>
+        <!-- RECIPES -->
+        <div *ngIf="shopType === 'recipes'">
+            <ion-item no-padding text-center
+                style="background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;">
+                <ion-col size="3">
+                    Icon
+                </ion-col>
+                <ion-col size="6" style="text-align: left; padding-left: 5px;">
+                    Recipe
+                </ion-col>
+                <ion-col size="3" style="text-align: right; padding-right: 10px;">
+                    Price
+                </ion-col>
+            </ion-item>
+            <ion-item no-padding text-center (click)="viewProduct(item)" *ngFor="let item of products"
+                style="font-size: 13px; color: #737373; ">
+                <ion-col text-center size="3">
+                    <img [src]="item.image" style="width: 75px; height: 50px;">
+                </ion-col>
+                <ion-col size="6" style="text-align: left; padding-left: 5px;">
+                    {{item.recipe}}
+                </ion-col>
+                <ion-col size="3" style="text-align: right; padding-right: 10px;">
+                    {{item.currentprice}}
+                </ion-col>
+            </ion-item>
+        </div>
+
+        <!-- SHOP -->
+        <div *ngIf="shopType === 'Shops'">
+            <ion-item no-padding text-center
+                style="background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;">
+                <ion-col size="2">
+                    Icon
+                </ion-col>
+                <ion-col size="4" style="text-align: left;">
+                    Product
+                </ion-col>
+                <ion-col size="2">
+                    Stock
+                </ion-col>
+                <ion-col size="2">
+                    Units
+                </ion-col>
+                <ion-col size="2">
+                    Price
+                </ion-col>
+            </ion-item>
+            <ion-item no-padding text-center (click)="viewProduct(item)" *ngFor="let item of products"
+                style="font-size: 13px; color: #737373; ">
+                <ion-col text-center size="2">
+                    <img [src]="item.image"  style="width: 75px; height: 50px;">
+                </ion-col>
+                <ion-col size="4" style="text-align: left;">
+                    {{item.product}}
+                </ion-col>
+                <ion-col size="2">
+                    {{item.stock}}
+                </ion-col>
+                <ion-col size="2">
+                    {{item.quantity}}
+                </ion-col>
+                <ion-col size="2">
+                    {{item.currentprice}}
+                </ion-col>
+            </ion-item>
+        </div><br><br>
     </div>
 
 
