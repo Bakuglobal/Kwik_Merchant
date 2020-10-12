@@ -34,11 +34,12 @@ export class OrderStatsPage implements OnInit {
     pickAndCollectOrders = [];
     monthDeliveriesCount = 0;
     monthPickAndCollectCount = 0;
+    
 
-    monthNames = ["Jan", "February", "March", "April", "May", "Jun",
+    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "December"
     ];  
-    last3Months = []  
+    last3Months:any[] = []  
 
     
     constructor(
@@ -55,8 +56,8 @@ export class OrderStatsPage implements OnInit {
     
 
     ionViewWillEnter() {
-        this.shopname = this.db.getshopname();
-        // this.shopname = "Kakila Organic";
+        // this.shopname = this.db.getshopname();
+        this.shopname = "Kakila Organic";
         console.log("====SHOP NAME ======");
         console.log(this.shopname);
         this.getLast3Months();
@@ -72,7 +73,14 @@ export class OrderStatsPage implements OnInit {
         this.last3Months = [];
         let today = new Date();
         for (let i = 0; i < 3; i++) {
-            this.last3Months.push(this.monthNames[(today.getMonth() - (i+1))]);
+            let month = this.monthNames[(today.getMonth() - (i+1))];
+            let monthObj:any = {month:month};
+            if(i==0) {
+                monthObj.status = 'active';
+            } else {
+                monthObj.status = 'inactive';
+            }
+            this.last3Months.push(monthObj);
         }
         console.log("======= LAST THREE MONTHS ====");
         console.log(this.last3Months);
@@ -81,14 +89,16 @@ export class OrderStatsPage implements OnInit {
     // GET DELIVERED ORDERS
     getDeliveredOrders() {
         this.Deliveredcount = 0;
+        this.monthDeliveriesCount = 0;
         this.service.getDeliveriesOrders(this.shopname).valueChanges().subscribe(res => {
             console.log("======= DELIVERIES ORDERS ====");
-            this.monthDeliveriesCount = res.length;
+
             this.deliveredOrders = res.filter(item => {
                 console.log("DATE => "+this.date.getMonth());
                 let final_data = item.Date.toDate().getMonth()===this.date.getMonth()-1;
                 if(final_data) {
                     this.Deliveredcount ++;
+                    this.monthDeliveriesCount ++;
                 }
                 return final_data
             });
@@ -116,7 +126,15 @@ export class OrderStatsPage implements OnInit {
     }
 
     // FILTER DERLIVERED ORDERS BY MONTH
-    filterByMonth(month) {
+    filterByMonth(month, i) {
+        // this.last3Months.reverse();
+        this.last3Months.forEach((newMonth, index) => {
+            if(i == index) {
+                newMonth.status = 'active';
+            } else {
+                newMonth.status = 'inactive';
+            }
+        })
         this.Deliveredcount = 0;
         this.PickAndCollectPayCount = 0;
         console.log("==== MONTH ====");
@@ -193,9 +211,9 @@ export class OrderStatsPage implements OnInit {
         // item.phone = this.CustomerNumber ;
         const mod = await this.modal.create({
             component: OrderPreviewPage,
-            componentProps: {
-                data: item
-            }
+            componentProps:
+            item
+          
         });
         await mod.present();
     }
