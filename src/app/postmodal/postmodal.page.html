@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="primary" >
+    <ion-toolbar color="primary">
         <ion-buttons (click)="close()" slot="start" style="margin-left: 10px;">
             <ion-icon name="arrow-back" size="small"  style="width: 20px; height: 20px;"></ion-icon>
         </ion-buttons>
@@ -14,37 +14,40 @@
 
 <ion-content>
     
-    <ion-buttons style="margin-left: 5px;">
+    <ion-buttons style="margin-left: 5px; margin-top: 3px;">
         <ion-chip style="background-color: #f7f7f7;"> 
-            <ion-avatar><img src="{{logo}}"></ion-avatar>
-            <ion-label>{{shop}}</ion-label>
-        </ion-chip><br>
-        <ion-label style="color: #737373;"><b style="color: green; font-size: 2em;">.</b>online</ion-label>
+            <ion-avatar><img src="{{userLogo}}"></ion-avatar>
+            <ion-label style="color: var(--ion-color-primary);">{{userName}}</ion-label>
+        </ion-chip>
     </ion-buttons>
 
 
     <!-- TEXT AREA -->
     <div style="background-color: #f7f7f7; margin-right: 10px; margin-left: 10px; margin-top: 10px; color: #737373; font-size: 13px;">
-        <ion-textarea [(ngModel)]="postText" placeholder="What is happening at your shop ?" rows="6">
-
-        </ion-textarea>
+        <ion-textarea [(ngModel)]="postText" placeholder="What is happening at your shop ?" rows="6"></ion-textarea>
     </div>
 
     <!-- DISPLAYING IMAGES -->
-    <div *ngIf="images.length != 0">
-        <ion-grid no-padding>
-        <ion-col *ngFor="let img of images">
-            <img [src]="img">
-        </ion-col>
-        </ion-grid>
-    </div>
-    <div  *ngIf="videos.length != 0">
-        <ion-grid no-padding>
-        <ion-col *ngFor="let vid of videos">
-            <video  controls [src]="vid"></video>
-        </ion-col>
-        </ion-grid>
-    </div>
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngIf="images.length != 0">
+            <ion-grid no-padding>
+                <ion-col *ngFor="let img of images">
+                    <img [src]="img">
+                </ion-col>
+            </ion-grid>
+        </ion-slide>
+    </ion-slides>
+
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngIf="videos.length != 0">
+            <ion-grid no-padding>
+                <ion-col *ngFor="let vid of videos">
+                    <video  controls [src]="vid"></video>
+                </ion-col>
+            </ion-grid>
+        </ion-slide>
+    </ion-slides>
+
 </ion-content>
 
 

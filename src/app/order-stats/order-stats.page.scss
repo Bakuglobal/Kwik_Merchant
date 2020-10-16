@@ -39,6 +39,10 @@ ion-card{
     position: fixed;bottom: 0px;overflow-y: scroll;width: 100%;top: 35%;
 }
 
+.activeMonth {
+    background-color: var(--ion-color-dark)!important;
+}
+
 
 @media only screen and (max-width: 320px) {
    .openOrder{

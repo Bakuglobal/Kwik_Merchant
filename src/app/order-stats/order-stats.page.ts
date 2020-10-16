@@ -24,17 +24,22 @@ export class OrderStatsPage implements OnInit {
     ready = true ;
     canceled = false ;
     shopname;
-    myOpenOrders = [] ;
-    CanceledOrders = [] ;
-    ReadyOrders = [] ;
-    OpenOrderForFilter = [] ;
-    TotalPastOrders = 0 ;
-    TotalOpenOrders = 0 ;
     loader = true ;
     CustomerNumber: any ;
     date = new Date();
-
+    active = "Deliveries";
+    Deliveredcount = 0;
+    PickAndCollectPayCount = 0;
+    deliveredOrders = [];
+    pickAndCollectOrders = [];
+    monthDeliveriesCount = 0;
+    monthPickAndCollectCount = 0;
     
+
+    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "December"
+    ];  
+    last3Months:any[] = []  
 
     
     constructor(
@@ -45,214 +50,143 @@ export class OrderStatsPage implements OnInit {
         private call: CallNumber
     ) {
         this.service.hiddenTabs = true ;
-        this.customPickerOptions = {
-            buttons: [
-                {
-                    text: 'Cancel',
-                    handler: () => {
-                        console.log('Clicked Log. Do not Dismiss.');
-                        return false;
-                    }
-                },
-                {
-                    text: 'Done',
-                    handler: (res) => {
-                        let newDate = Number(res.day.text);
-                        console.log("=====BUTTON=====");
-                        console.log(newDate);
-                        this.myOpenOrders = this.filterByDate(newDate);
-                    } 
-                }
-            
-            ]
-        }
+
     }
 
     
 
     ionViewWillEnter() {
-        this.shopname = this.db.getshopname();
+        // this.shopname = this.db.getshopname();
+        this.shopname = "Kakila Organic";
+        console.log("====SHOP NAME ======");
         console.log(this.shopname);
-        this.getOpenOrders();
-        // this.getcanceledOrders();
-        // this.getreadyOders();
-
-        
+        this.getLast3Months();
+        this.getDeliveredOrders();
+        this.getPickAndCollectOrders(); 
     }
 
 
-    ngOnInit() {
+    ngOnInit() { }
+
+    // GET THE LAST 3 MONTHS
+    getLast3Months() {
+        this.last3Months = [];
+        let today = new Date();
+        for (let i = 0; i < 3; i++) {
+            let month = this.monthNames[(today.getMonth() - (i+1))];
+            let monthObj:any = {month:month};
+            if(i==0) {
+                monthObj.status = 'active';
+            } else {
+                monthObj.status = 'inactive';
+            }
+            this.last3Months.push(monthObj);
+        }
+        console.log("======= LAST THREE MONTHS ====");
+        console.log(this.last3Months);
     }
+
+    // GET DELIVERED ORDERS
+    getDeliveredOrders() {
+        this.Deliveredcount = 0;
+        this.monthDeliveriesCount = 0;
+        this.service.getDeliveriesOrders(this.shopname).valueChanges().subscribe(res => {
+            console.log("======= DELIVERIES ORDERS ====");
+
+            this.deliveredOrders = res.filter(item => {
+                console.log("DATE => "+this.date.getMonth());
+                let final_data = item.Date.toDate().getMonth()===this.date.getMonth()-1;
+                if(final_data) {
+                    this.Deliveredcount ++;
+                    this.monthDeliveriesCount ++;
+                }
+                return final_data
+            });
+
+        })
+        this.loader = false ;
+    }
+
+    // GET PICK AND COLLECT ORDERS
+    getPickAndCollectOrders() {
+        this.PickAndCollectPayCount  = 0;
+        this.service.getPickAndCollectOrders(this.shopname).valueChanges().subscribe(res => {
+            console.log("======= PICK AND COLLECT ORDERS ====");
+            this.pickAndCollectOrders = res.filter(item => {
+                console.log("DATE => "+this.date.getMonth());
+                let final_data = item.Date.toDate().getMonth()===this.date.getMonth()-1;
+                if(final_data) {
+                    this.PickAndCollectPayCount ++;
+                }
+                return final_data
+            });
+
+        })
+        this.loader = false ;
+    }
+
+    // FILTER DERLIVERED ORDERS BY MONTH
+    filterByMonth(month, i) {
+        // this.last3Months.reverse();
+        this.last3Months.forEach((newMonth, index) => {
+            if(i == index) {
+                newMonth.status = 'active';
+            } else {
+                newMonth.status = 'inactive';
+            }
+        })
+        this.Deliveredcount = 0;
+        this.PickAndCollectPayCount = 0;
+        console.log("==== MONTH ====");
+        console.log(month);
+        let monthNumber = this.monthNames.indexOf(month);
+        console.log(monthNumber);
+        // GET DELIVERIES BY MONTH
+        this.service.getDeliveriesOrders(this.shopname).valueChanges().subscribe(res => {
+            this.deliveredOrders = res.filter(item => {
+                let final_deliveries_data = item.Date.toDate().getMonth()===monthNumber;
+                if(final_deliveries_data) {
+                    this.Deliveredcount ++;
+                }
+                return final_deliveries_data
+            });
+        })
+
+        // GET PICK AND COLLECT BY MONTH
+        this.service.getPickAndCollectOrders(this.shopname).valueChanges().subscribe(res => {
+            this.pickAndCollectOrders = res.filter(item => {
+                let final_pick_and_collect_data = item.Date.toDate().getMonth()===monthNumber;
+                if(final_pick_and_collect_data) {
+                    this.PickAndCollectPayCount ++;
+                }
+                return final_pick_and_collect_data
+            });
+        })
+        this.loader = false ;
+    }
+
+    getMonthDeliveriesCount(month) {
+        this.monthDeliveriesCount = 0;
+        console.log("=== MONTH DELIVERIES COUNT YES ===");
+        let monthNumber = this.monthNames.indexOf(month);
+        console.log(monthNumber);
+        return this.monthDeliveriesCount;
+    }
+
+
+    changeCategory(event) {
+        if (event.detail.value === 'delivery') {
+            this.active = "Deliveries";
+        }
+        if (event.detail.value === "pick&pay") {
+            this.active = "PickPay";
+        }
+    }
+
 
     home() {
         this.service.hiddenTabs = false ;
         this.navCtrl.navigate(['tabs/dashboard']);
-
-    }
-
-
-    DaysegmentChanged(event) {
-        // console.log(event.detail.value);
-        switch (event.detail.value) {
-        case 'Today':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Mon':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Tue':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Wed':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Thur':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Fri':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Sat':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        case 'Sun':
-            this.filterOpenOders(event.detail.value);
-            console.log(event.detail.value);
-            break;
-        default:
-            break;
-        }
-
-    }
-
-
-    TopsegmentChanged(event) {
-        // console.log(event);
-        switch (event.detail.value) {
-        case 'canceled':
-            this.past = true ;
-            this.ready = false ;
-            this.canceled = true ;
-            console.log(event.detail.value);
-            break;
-        case 'ready':
-            this.past = true ;
-            this.ready = true ;
-            this.canceled = false ;
-            console.log(event.detail.value);
-            break;
-        default:
-            break;
-        }
-    }
-
-
-    openOrders() {
-        if (this.top !== 'open') {
-        this.top = 'open' ;
-        this.open = true ;
-        this.past = false ;
-        this.canceled = false ;
-        this.ready = false ;
-        this.filterOpenOders('Today');
-        }
-    }
-
-
-    pastOrders() {
-        if (this.top !== 'past') {
-        this.top = 'past' ;
-        this.open = false ;
-        this.past = true ;
-        this.ready = true ;
-        }
-    }
-
-
-    // get open orders
-    getOpenOrders() {
-        console.log("=======TIMESTAMP====");
-        console.log(this.date);
-        
-        this.service.getReadyOrders(this.shopname).valueChanges().subscribe(res => {
-        this.myOpenOrders = res ;
-        this.OpenOrderForFilter = res ;
-        this.TotalOpenOrders = this.myOpenOrders.length ;
-        this.loader = false ;
-
-        this.formatDate();
-        this.myOpenOrders = this.filterByDate(this.date.getDate());
-        console.log("=========FILTERING ==========");
-        console.log(this.myOpenOrders);
-
-        console.log('open orders' + this.myOpenOrders);
-        });
-    }
-
-    formatDate() {
-        this.OpenOrderForFilter.forEach(item => {
-            item.Date = item.Date.toDate().getDate();
-        });
-        console.log("=== MY OPEN ORDER =====");
-        console.log(this.OpenOrderForFilter);
-    }
-
-    filterByDate(date) {
-        return this.OpenOrderForFilter.filter(item => {
-            console.log("=== CHECK DATES =====");
-            console.log(item.Date);
-            console.log(date);
-            return item.Date == date;
-        })
-    }
-
-
-    // get canceled orders
-    getcanceledOrders() {
-        this.service.getCanceledOrders(this.shopname).valueChanges().subscribe(res => {
-        this.CanceledOrders = res ;
-        this.loader = false ;
-        console.log('canceled orders' + this.CanceledOrders);
-        });
-    }
-
-
-    // get Ready orders
-    getreadyOders() {
-        this.service.getReadyOrders(this.shopname).valueChanges().subscribe(res => {
-        this.ReadyOrders = res;
-        console.log("========DATE HERE======");
-        console.log(res);
-        this.loader = false ;
-
-        this.TotalPastOrders = this.ReadyOrders.length + this.CanceledOrders.length ;
-        console.log('ready orders' + this.ReadyOrders);
-        });  
-    }
-
-
-    // filter open orders by day of pick up
-    filterOpenOders(event) {
-        const unfiltered = this.OpenOrderForFilter ;
-        const filtered = [] ;
-        // tslint:disable-next-line: no-shadowed-variable
-        unfiltered.forEach( element => {
-        if (element.pickDay === event) {
-            filtered.push(element);
-        } else {
-            return ;
-        }
-        return ;
-        });
-        this.loader = false ;
-        this.myOpenOrders = filtered ;
     }
 
 
@@ -272,16 +206,15 @@ export class OrderStatsPage implements OnInit {
 
 
     async viewOrder(item) {
-        item.phone = this.CustomerNumber ;
-        const mod = await this.modal.create({
-        component: OrderPreviewPage,
-        componentProps: {
-            data: item
-        }
-        });
-        console.log("VIEW MORE");
+        console.log("====== VIEW MORE =====");
         console.log(item);
-        console.log("VIEW MORE");
+        // item.phone = this.CustomerNumber ;
+        const mod = await this.modal.create({
+            component: OrderPreviewPage,
+            componentProps:
+            item
+          
+        });
         await mod.present();
     }
 

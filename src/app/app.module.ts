@@ -55,6 +55,8 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { Badge } from '@ionic-native/badge/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

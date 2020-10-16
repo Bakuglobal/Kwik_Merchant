@@ -54,11 +54,6 @@ export class DashboardPage implements OnInit {
         private db: DatabaseService,
     ) {
         this.service.hiddenTabs = false;
-        // this.date = new Date();
-        // this.currentMonth = this.date.getMonth();
-        
-
-        // this.getDaysOfTheCurrentMonth();
 
         this.customPickerOptions = {
             buttons: [
@@ -84,10 +79,8 @@ export class DashboardPage implements OnInit {
                         this.formatDate(newDate)
                     }
                 }
-
             ]
         }
-
     }
 
     // GET DAYS OF THE CURRENT MONTH
@@ -184,7 +177,6 @@ export class DashboardPage implements OnInit {
     // filter searchbar
     setFilteredItems() {
         if (this.searchTerm !== null || this.searchTerm !== '') {
-            // this.Myorders = this.filterItems();
             this.DeliveryOrders = this.filterItems();
             this.PickPayOrders = this.filterItems();
             console.log(this.Myorders);
@@ -220,8 +212,6 @@ export class DashboardPage implements OnInit {
         this.shopname = localStorage.getItem('shop');
         console.log(this.shopname);
         this.getOrders();
-
-        //  this.getDeliveryOrders();
     }
     // get orders from firestore
     getOrders() {

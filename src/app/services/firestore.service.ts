@@ -113,6 +113,28 @@ export class FirestoreService {
             return ref.where('status', '==', 'complete').where('shop', '==', shop).orderBy('Date', 'desc');
         });
     }
+
+    // GET DELIVERIES ORDERS
+    getDeliveriesOrders(shop) {
+        return this.OderCollection = this.fs.collection('Orders', ref => {
+            return ref.where('Delivery', '==', 'deliver').where('shop', '==', shop).orderBy('Date', 'desc');
+        });
+    }
+
+    // GET PICK AND COLLECT ORDERS
+    getPickAndCollectOrders(shop) {
+        return this.OderCollection = this.fs.collection('Orders', ref => {
+            return ref.where('Delivery', '==', 'pick').where('shop', '==', shop).orderBy('Date', 'desc');
+        });
+    }
+
+    // GET ORDERS
+    getOrders(shop) {
+        return this.OderCollection = this.fs.collection('Orders', ref => {
+            return ref.where('shop', '==', shop).orderBy('Date', 'desc');
+        });
+    }
+
     getCanceledOrders(shop) {
         return this.OderCollection = this.fs.collection('Orders', ref => {
             return ref.where('status', '==', 'canceled').where('shop', '==', shop).orderBy('Date', 'desc');
