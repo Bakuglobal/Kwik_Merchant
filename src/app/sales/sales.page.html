@@ -11,16 +11,19 @@
 
 
     <div class="card-main">
+        <!-- <div *ngFor="let m of orders">
+            {{m.Date.toDate()  | date: 'dd/MM/yyyy' }}
+        </div> -->
 
         <ion-segment style="background-color: white;" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="Week" checked>
-                <ion-label style="font-size: 12px; margin-bottom: -5px;">weekly</ion-label>
+            <ion-segment-button value="Week" checked (click)="filterByWeek()">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">Weekly</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="Month">
-                <ion-label style="font-size: 12px; margin-bottom: -5px;">monthly</ion-label>
+            <ion-segment-button value="Month" (click)="filterByMonth()">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">Monthly</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="Year">
-                <ion-label style="font-size: 12px; margin-bottom: -5px;">yearly</ion-label>
+            <ion-segment-button value="Year" (click)="filterByYear()">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">Yearly</ion-label>
             </ion-segment-button>
         </ion-segment>
 
@@ -33,7 +36,7 @@
                     </ion-col>
                     <ion-col size="7" style="margin-top: 3px;">
                         <ion-label>Selected {{text}}</ion-label><br>
-                        <ion-text>{{date}}</ion-text>
+                        <!-- <ion-text>{{date.toDate() | date}}</ion-text> -->
                     </ion-col>
                     <ion-col size="2">
                         <ion-icon name="create" color="primary" class="edit" (click)="edit()"></ion-icon>
