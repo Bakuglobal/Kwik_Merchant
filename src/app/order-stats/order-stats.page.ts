@@ -56,9 +56,9 @@ export class OrderStatsPage implements OnInit {
     
 
     ionViewWillEnter() {
-        // this.shopname = this.db.getshopname();
-        this.shopname = "Kakila Organic";
-        console.log("====SHOP NAME ======");
+        this.shopname = this.db.getshopname();
+        // this.shopname = "Kakila Organic";
+        // console.log("====SHOP NAME ======");
         console.log(this.shopname);
         this.getLast3Months();
         this.getDeliveredOrders();

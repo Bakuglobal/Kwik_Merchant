@@ -118,14 +118,14 @@ export class PostmodalPage implements OnInit {
                 likes: 0,
                 comments: 0,
                 shop: this.shop,
-                logo: this.logo,
+                logo: this.userLogo,
                 time: this.time,
                 lastComment: {
                     Text: '',
                     image: '',
                     postID: '',
                     time: '',
-                    user: 'Maxime Lee'
+                    user: ''
                 }
             }).then(() => {
                 //if everything went well --display success toast and close postmodal
