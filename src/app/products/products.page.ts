@@ -356,7 +356,7 @@ export class ProductsPage implements OnInit {
         }, error => {
           alert('Error in sanitizing image' + error);
         });
-      }
+    }
 
     async getImageGallery() {
         this.imagePicker.hasReadPermission().then(
@@ -386,7 +386,7 @@ export class ProductsPage implements OnInit {
 
     uploadTostorage(image) {
         // alert(image);
-        const pictures = this.st.storage.ref('XXX' + '/' + this.date);
+        const pictures = this.st.storage.ref('Products' + '/' + this.date);
         pictures.putString(image).then(url => {
             url.ref.getDownloadURL().then(url => {
                 this.image = url;

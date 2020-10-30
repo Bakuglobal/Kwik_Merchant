@@ -32,6 +32,7 @@ export class PostmodalPage implements OnInit {
     time;
     userName: string;
     userLogo: any;
+    date = new Date();
 
     slideOpts = {
         initialSlide: 0,
@@ -77,37 +78,15 @@ export class PostmodalPage implements OnInit {
             //create a post in firestore
             //----first upload images or videos to storage if any
             if (this.images.length != 0) {
-                //upload images and get url
                 this.images.forEach((element) => {
-                    this.file.resolveLocalFilesystemUrl(element).then((newPath) => {
-                        alert(newPath);
-                        let dirPath = newPath.nativeURL;
-                        let segmentsOfPath = dirPath.split('/');
-                        segmentsOfPath.pop();
-                        dirPath = segmentsOfPath.join('/');
-                        this.file.readAsArrayBuffer(dirPath, newPath.name).then(async (buffer) => {
-                            await this.upload(buffer, newPath.name).then(url => {
-                                this.PostedImages.push(url)
-                            });
-                        })
-                    })
+                    this.uploadImage(element);
+                    this.PostedImages.push(element);
                 })
             }
             if (this.videos.length != 0) {
-                //upload videos and get url
                 this.videos.forEach((element) => {
-                    this.file.resolveLocalFilesystemUrl(element).then((newPath) => {
-                        alert(newPath);
-                        let dirPath = newPath.nativeURL;
-                        let segmentsOfPath = dirPath.split('/');
-                        segmentsOfPath.pop();
-                        dirPath = segmentsOfPath.join('/');
-                        this.file.readAsArrayBuffer(dirPath, newPath.name).then(async (buffer) => {
-                            await this.upload(buffer, newPath.name).then(url => {
-                                this.PostedVideos.push(url);
-                            });
-                        }).catch(err => { alert(JSON.stringify(err)) })
-                    })
+                    this.uploadVideo(element);
+                    this.PostedVideos.push(element);
                 })
             }
             //Now create the post
@@ -128,7 +107,6 @@ export class PostmodalPage implements OnInit {
                     user: ''
                 }
             }).then(() => {
-                //if everything went well --display success toast and close postmodal
                 this.images.length = 0;
                 this.videos.length = 0;
                 this.PostedImages.length = 0;
@@ -140,12 +118,31 @@ export class PostmodalPage implements OnInit {
 
         }
     }
+
+    uploadImage(image) {
+        const pictures = this.storage.storage.ref('PostImages' + '/' + this.date);
+        pictures.putString(image).then(url => {
+            url.ref.getDownloadURL().then(url => {
+                this.PostedImages.push(url);
+            }).catch(error => { })
+        }).catch(error => { })
+    }
+    uploadVideo(video) {
+        const pictures = this.storage.storage.ref('PostVideos' + '/' + this.date);
+        pictures.putString(video).then(url => {
+            url.ref.getDownloadURL().then(url => {
+                this.PostedImages.push(url);
+            }).catch(error => { })
+        }).catch(error => { })
+    }
+
+
     pickFile(value) {
         if (value == 'image') {
             //pick images
             const options: CameraOptions = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
@@ -153,23 +150,24 @@ export class PostmodalPage implements OnInit {
                 allowEdit: true
             }
             this.camera.getPicture(options).then((image) => {
-                this.images.push(image);
+                let newImage = `data:image/jpeg;base64,${image}`;
+                this.images.push(newImage);
             }, (err) => {
                 //handle err
             })
-
         } else {
             //pick videos
             const options: CameraOptions = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 // encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.VIDEO,
                 targetHeight: 100,
             }
             this.camera.getPicture(options).then((video) => {
-                this.videos.push(video);
+                let newVideo = `data:video/mp4;base64,${video}`;
+                this.videos.push(newVideo);
             }, (err) => {
                 //handle err
                 alert(err);
@@ -204,20 +202,20 @@ export class PostmodalPage implements OnInit {
                     this.openCamera('image');
                 },
             },
-            {
-                text: 'Select Video',
-                icon: 'play',
-                handler: () => {
-                    this.pickFile('video');
-                }
-            },
-            {
-                text: 'Capture Video',
-                icon: 'videocam',
-                handler: () => {
-                    this.openCamera('video');
-                }
-            },
+            // {
+            //     text: 'Select Video',
+            //     icon: 'play',
+            //     handler: () => {
+            //         this.pickFile('video');
+            //     }
+            // },
+            // {
+            //     text: 'Capture Video',
+            //     icon: 'videocam',
+            //     handler: () => {
+            //         this.openCamera('video');
+            //     }
+            // },
             {
                 text: 'Cancel',
                 role: 'cancel'
@@ -233,7 +231,7 @@ export class PostmodalPage implements OnInit {
         if (value == 'image') {
             const options: CameraOptions = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
                 targetHeight: 100,
@@ -242,13 +240,14 @@ export class PostmodalPage implements OnInit {
                 cameraDirection: this.camera.Direction.BACK,
             }
             this.camera.getPicture(options).then((image) => {
-                this.images.push(image)
+                let newImage = `data:image/jpeg;base64,${image}`;
+                this.images.push(newImage);
             })
 
         } else {
             const options: CameraOptions = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 // encodingType: this.camera.EncodingType.JPEG ,
                 mediaType: this.camera.MediaType.VIDEO,
                 targetHeight: 100,
@@ -256,7 +255,8 @@ export class PostmodalPage implements OnInit {
                 cameraDirection: this.camera.Direction.BACK,
             }
             this.camera.getPicture(options).then((video) => {
-                this.videos.push(video);
+                let newVideo = `data:image/jpeg;base64,${video}`;
+                this.videos.push(newVideo);
             })
         }
     }

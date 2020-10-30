@@ -581,7 +581,7 @@ module.exports = "<ion-header>\n    <ion-toolbar color=\"primary\">\n        <io
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n    <ion-toolbar color=\"primary\">\n        <ion-buttons (click)=\"close()\" slot=\"start\" style=\"margin-left: 10px;\">\n            <ion-icon name=\"arrow-back\" size=\"small\"  style=\"width: 20px; height: 20px;\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center>Create Post</ion-title>\n        <ion-buttons slot=\"end\" style=\"margin-right: 0px;\">\n            <ion-button style=\"font-size: 13px;\" (click)=\"post()\">Post</ion-button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n\n\n<ion-content>\n    \n    <ion-buttons style=\"margin-left: 5px; margin-top: 3px;\">\n        <ion-chip style=\"background-color: #f7f7f7;\"> \n            <ion-avatar><img src=\"{{userLogo}}\"></ion-avatar>\n            <ion-label style=\"color: var(--ion-color-primary);\">{{userName}}</ion-label>\n        </ion-chip>\n    </ion-buttons>\n\n\n    <!-- TEXT AREA -->\n    <div style=\"background-color: #f7f7f7; margin-right: 10px; margin-left: 10px; margin-top: 10px; color: #737373; font-size: 13px; margin-bottom: 10px;\">\n        <ion-textarea [(ngModel)]=\"postText\" placeholder=\"What is happening at your shop ?\" rows=\"6\"></ion-textarea>\n    </div>\n\n    <!-- DISPLAYING IMAGES -->\n    <ion-slides pager=\"true\" [options]=\"slideOpts\" style=\"margin-bottom: 10px;\">\n        <ion-slide *ngFor=\"let img of images\">\n            <img [src]=\"img\" style=\"width: 50%; height: 100p; margin: auto;\">\n        </ion-slide>\n    </ion-slides>\n\n    <ion-slides pager=\"true\" [options]=\"slideOpts\">\n        <ion-slide *ngFor=\"let vid of videos\">\n            <video  controls [src]=\"vid\" width=\"100%\" height=\"200px\"></video>\n        </ion-slide>\n    </ion-slides>\n\n</ion-content>\n\n\n<!-- FOOTER -->\n<ion-footer>\n    <ion-item>\n        <ion-label style=\"font-size: 14px; color: #737373;\" (click)=\"actionSheet()\">Add media to your post</ion-label>\n        <ion-icon style=\"width: 20px; height: 20px;\" (click)=\"pickFile('image')\" name=\"image\" slot=\"end\" color=\"primary\"></ion-icon>&nbsp;\n        <ion-icon style=\"width: 20px; height: 20px;\" (click)=\"pickFile('video')\" name=\"videocam\" slot=\"end\" color=\"primary\"></ion-icon>\n    </ion-item>\n</ion-footer>\n"
+module.exports = "<ion-header>\n    <ion-toolbar color=\"primary\">\n        <ion-buttons (click)=\"close()\" slot=\"start\" style=\"margin-left: 10px;\">\n            <ion-icon name=\"arrow-back\" size=\"small\"  style=\"width: 20px; height: 20px;\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center>Create Post</ion-title>\n        <ion-buttons slot=\"end\" style=\"margin-right: 0px;\">\n            <ion-button style=\"font-size: 13px;\" (click)=\"post()\">Post</ion-button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n\n\n<ion-content>\n    \n    <ion-buttons style=\"margin-left: 5px; margin-top: 3px;\">\n        <ion-chip style=\"background-color: #f7f7f7;\"> \n            <ion-avatar><img src=\"{{userLogo}}\"></ion-avatar>\n            <ion-label style=\"color: var(--ion-color-primary);\">{{userName}}</ion-label>\n        </ion-chip>\n    </ion-buttons>\n\n\n    <!-- TEXT AREA -->\n    <div style=\"background-color: #f7f7f7; margin-right: 10px; margin-left: 10px; margin-top: 10px; color: #737373; font-size: 13px; margin-bottom: 10px;\">\n        <ion-textarea [(ngModel)]=\"postText\" placeholder=\"What is happening at your shop ?\" rows=\"6\"></ion-textarea>\n    </div>\n\n    <!-- DISPLAYING IMAGES -->\n    <ion-slides pager=\"true\" [options]=\"slideOpts\" style=\"margin-bottom: 10px;\">\n        <ion-slide *ngFor=\"let img of images\">\n            <img [src]=\"img\" style=\"width: 50%; height: 200px; margin: auto;\">\n        </ion-slide>\n    </ion-slides>\n\n    <ion-slides pager=\"true\" [options]=\"slideOpts\">\n        <ion-slide *ngFor=\"let vid of videos\">\n            <video  controls src=\"{{vid}}\" width=\"100%\" height=\"200px\"></video>\n        </ion-slide>\n    </ion-slides>\n\n</ion-content>\n\n\n<!-- FOOTER -->\n<ion-footer>\n    <ion-item>\n        <ion-label style=\"font-size: 14px; color: #737373;\" (click)=\"actionSheet()\">Add media to your post</ion-label>\n        <ion-icon style=\"width: 20px; height: 20px;\" (click)=\"pickFile('image')\" name=\"image\" slot=\"end\" color=\"primary\"></ion-icon>&nbsp;\n        <!-- <ion-icon style=\"width: 20px; height: 20px;\" (click)=\"pickFile('video')\" name=\"videocam\" slot=\"end\" color=\"primary\"></ion-icon> -->\n    </ion-item>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -3146,6 +3146,7 @@ var PostmodalPage = /** @class */ (function () {
         this.videos = [];
         this.PostedImages = [];
         this.PostedVideos = [];
+        this.date = new Date();
         this.slideOpts = {
             initialSlide: 0,
             slidesPerView: 1,
@@ -3180,53 +3181,15 @@ var PostmodalPage = /** @class */ (function () {
             //create a post in firestore
             //----first upload images or videos to storage if any
             if (this.images.length != 0) {
-                //upload images and get url
                 this.images.forEach(function (element) {
-                    _this.file.resolveLocalFilesystemUrl(element).then(function (newPath) {
-                        alert(newPath);
-                        var dirPath = newPath.nativeURL;
-                        var segmentsOfPath = dirPath.split('/');
-                        segmentsOfPath.pop();
-                        dirPath = segmentsOfPath.join('/');
-                        _this.file.readAsArrayBuffer(dirPath, newPath.name).then(function (buffer) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                            var _this = this;
-                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, this.upload(buffer, newPath.name).then(function (url) {
-                                            _this.PostedImages.push(url);
-                                        })];
-                                    case 1:
-                                        _a.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); });
-                    });
+                    _this.uploadImage(element);
+                    _this.PostedImages.push(element);
                 });
             }
             if (this.videos.length != 0) {
-                //upload videos and get url
                 this.videos.forEach(function (element) {
-                    _this.file.resolveLocalFilesystemUrl(element).then(function (newPath) {
-                        alert(newPath);
-                        var dirPath = newPath.nativeURL;
-                        var segmentsOfPath = dirPath.split('/');
-                        segmentsOfPath.pop();
-                        dirPath = segmentsOfPath.join('/');
-                        _this.file.readAsArrayBuffer(dirPath, newPath.name).then(function (buffer) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                            var _this = this;
-                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, this.upload(buffer, newPath.name).then(function (url) {
-                                            _this.PostedVideos.push(url);
-                                        })];
-                                    case 1:
-                                        _a.sent();
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); }).catch(function (err) { alert(JSON.stringify(err)); });
-                    });
+                    _this.uploadVideo(element);
+                    _this.PostedVideos.push(element);
                 });
             }
             //Now create the post
@@ -3247,7 +3210,6 @@ var PostmodalPage = /** @class */ (function () {
                     user: ''
                 }
             }).then(function () {
-                //if everything went well --display success toast and close postmodal
                 _this.images.length = 0;
                 _this.videos.length = 0;
                 _this.PostedImages.length = 0;
@@ -3258,13 +3220,31 @@ var PostmodalPage = /** @class */ (function () {
             }).catch(function (err) { alert(JSON.stringify(err)); });
         }
     };
+    PostmodalPage.prototype.uploadImage = function (image) {
+        var _this = this;
+        var pictures = this.storage.storage.ref('PostImages' + '/' + this.date);
+        pictures.putString(image).then(function (url) {
+            url.ref.getDownloadURL().then(function (url) {
+                _this.PostedImages.push(url);
+            }).catch(function (error) { });
+        }).catch(function (error) { });
+    };
+    PostmodalPage.prototype.uploadVideo = function (video) {
+        var _this = this;
+        var pictures = this.storage.storage.ref('PostVideos' + '/' + this.date);
+        pictures.putString(video).then(function (url) {
+            url.ref.getDownloadURL().then(function (url) {
+                _this.PostedImages.push(url);
+            }).catch(function (error) { });
+        }).catch(function (error) { });
+    };
     PostmodalPage.prototype.pickFile = function (value) {
         var _this = this;
         if (value == 'image') {
             //pick images
             var options = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
@@ -3272,7 +3252,8 @@ var PostmodalPage = /** @class */ (function () {
                 allowEdit: true
             };
             this.camera.getPicture(options).then(function (image) {
-                _this.images.push(image);
+                var newImage = "data:image/jpeg;base64," + image;
+                _this.images.push(newImage);
             }, function (err) {
                 //handle err
             });
@@ -3281,14 +3262,15 @@ var PostmodalPage = /** @class */ (function () {
             //pick videos
             var options = {
                 quality: 100,
-                destinationType: this.camera.DestinationType.FILE_URI,
+                destinationType: this.camera.DestinationType.DATA_URL,
                 sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 // encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.VIDEO,
                 targetHeight: 100,
             };
             this.camera.getPicture(options).then(function (video) {
-                _this.videos.push(video);
+                var newVideo = "data:video/mp4;base64," + video;
+                _this.videos.push(newVideo);
             }, function (err) {
                 //handle err
                 alert(err);
@@ -3325,20 +3307,20 @@ var PostmodalPage = /** @class */ (function () {
                                         _this.openCamera('image');
                                     },
                                 },
-                                {
-                                    text: 'Select Video',
-                                    icon: 'play',
-                                    handler: function () {
-                                        _this.pickFile('video');
-                                    }
-                                },
-                                {
-                                    text: 'Capture Video',
-                                    icon: 'videocam',
-                                    handler: function () {
-                                        _this.openCamera('video');
-                                    }
-                                },
+                                // {
+                                //     text: 'Select Video',
+                                //     icon: 'play',
+                                //     handler: () => {
+                                //         this.pickFile('video');
+                                //     }
+                                // },
+                                // {
+                                //     text: 'Capture Video',
+                                //     icon: 'videocam',
+                                //     handler: () => {
+                                //         this.openCamera('video');
+                                //     }
+                                // },
                                 {
                                     text: 'Cancel',
                                     role: 'cancel'
@@ -3363,7 +3345,7 @@ var PostmodalPage = /** @class */ (function () {
                 if (value == 'image') {
                     options = {
                         quality: 100,
-                        destinationType: this.camera.DestinationType.FILE_URI,
+                        destinationType: this.camera.DestinationType.DATA_URL,
                         encodingType: this.camera.EncodingType.JPEG,
                         mediaType: this.camera.MediaType.PICTURE,
                         targetHeight: 100,
@@ -3372,13 +3354,14 @@ var PostmodalPage = /** @class */ (function () {
                         cameraDirection: this.camera.Direction.BACK,
                     };
                     this.camera.getPicture(options).then(function (image) {
-                        _this.images.push(image);
+                        var newImage = "data:image/jpeg;base64," + image;
+                        _this.images.push(newImage);
                     });
                 }
                 else {
                     options = {
                         quality: 100,
-                        destinationType: this.camera.DestinationType.FILE_URI,
+                        destinationType: this.camera.DestinationType.DATA_URL,
                         // encodingType: this.camera.EncodingType.JPEG ,
                         mediaType: this.camera.MediaType.VIDEO,
                         targetHeight: 100,
@@ -3386,7 +3369,8 @@ var PostmodalPage = /** @class */ (function () {
                         cameraDirection: this.camera.Direction.BACK,
                     };
                     this.camera.getPicture(options).then(function (video) {
-                        _this.videos.push(video);
+                        var newVideo = "data:image/jpeg;base64," + video;
+                        _this.videos.push(newVideo);
                     });
                 }
                 return [2 /*return*/];
