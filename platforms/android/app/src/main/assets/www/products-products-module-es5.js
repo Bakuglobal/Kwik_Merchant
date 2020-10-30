@@ -539,7 +539,7 @@ var ProductsPage = /** @class */ (function () {
     ProductsPage.prototype.uploadTostorage = function (image) {
         var _this = this;
         // alert(image);
-        var pictures = this.st.storage.ref('XXX' + '/' + this.date);
+        var pictures = this.st.storage.ref('Products' + '/' + this.date);
         pictures.putString(image).then(function (url) {
             url.ref.getDownloadURL().then(function (url) {
                 _this.image = url;

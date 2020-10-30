@@ -31,8 +31,8 @@
                         <img src="{{item.logo}}">
                     </ion-avatar>
                 </div>
-                <div class="name" (click)="infoModal(item)">
-                    {{item.shop.slice(0, 12)}}
+                <div class="name" style="margin-right: 105px;" (click)="infoModal(item)">
+                    {{item.shop}}
                 </div>
                 <div class="date">
                     {{item.time.toDate() | date}}
@@ -51,7 +51,10 @@
                         <img src="{{n}}" (click)="showImage(n)">
                     </ion-slide>
                     <ion-slide *ngFor="let v of item.Videos">
-                        <img src="{{v}}" (click)="showImage(n)">
+                        <video  controls src="{{v}}"></video>
+                        <!-- <video controls>
+                            <source src="{{v}}">
+                          </video> -->
                     </ion-slide>
                 </ion-slides>
 

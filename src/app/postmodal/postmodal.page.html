@@ -30,13 +30,13 @@
     <!-- DISPLAYING IMAGES -->
     <ion-slides pager="true" [options]="slideOpts" style="margin-bottom: 10px;">
         <ion-slide *ngFor="let img of images">
-            <img [src]="img" style="width: 50%; height: 100p; margin: auto;">
+            <img [src]="img" style="width: 50%; height: 200px; margin: auto;">
         </ion-slide>
     </ion-slides>
 
     <ion-slides pager="true" [options]="slideOpts">
         <ion-slide *ngFor="let vid of videos">
-            <video  controls [src]="vid" width="100%" height="200px"></video>
+            <video  controls src="{{vid}}" width="100%" height="200px"></video>
         </ion-slide>
     </ion-slides>
 
@@ -48,6 +48,6 @@
     <ion-item>
         <ion-label style="font-size: 14px; color: #737373;" (click)="actionSheet()">Add media to your post</ion-label>
         <ion-icon style="width: 20px; height: 20px;" (click)="pickFile('image')" name="image" slot="end" color="primary"></ion-icon>&nbsp;
-        <ion-icon style="width: 20px; height: 20px;" (click)="pickFile('video')" name="videocam" slot="end" color="primary"></ion-icon>
+        <!-- <ion-icon style="width: 20px; height: 20px;" (click)="pickFile('video')" name="videocam" slot="end" color="primary"></ion-icon> -->
     </ion-item>
 </ion-footer>

@@ -454,7 +454,7 @@ let ProductsPage = class ProductsPage {
     }
     uploadTostorage(image) {
         // alert(image);
-        const pictures = this.st.storage.ref('XXX' + '/' + this.date);
+        const pictures = this.st.storage.ref('Products' + '/' + this.date);
         pictures.putString(image).then(url => {
             url.ref.getDownloadURL().then(url => {
                 this.image = url;
