@@ -98,6 +98,7 @@ export class NotificationsPage implements OnInit {
             err => { console.log(err) }
         )
     }
+
     async gotoModal(order) {
         const mod = await this.mod.create({
             component: OrderPreviewPage,
@@ -106,6 +107,7 @@ export class NotificationsPage implements OnInit {
         console.log(order);
         await mod.present();
     }
+    
     async loader() {
         const ld = await this.load.create({
             message: 'Getting order ...',

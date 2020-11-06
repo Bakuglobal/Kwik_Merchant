@@ -1,82 +1,22 @@
-<!-- <ion-content>
-    <ion-toolbar color="primary">
-        <ion-buttons style="margin-left: 15px;">
-            <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
-        </ion-buttons>
-        <ion-title text-center>{{OrderID}}</ion-title>
-    </ion-toolbar>
-
-
-    <div class="body">
-        <div style="padding-bottom: 30px;">
-            <div style="position: absolute; float: left; left: 20px; color: var(--ion-color-primary);">Ordered by: {{username}}</div>
-            <div style="position: absolute; float: right; right: 15px;">
-                <ion-icon name="call" (click)="callCustomer()" color="success"></ion-icon>
-            </div>
-        </div>
-
-        <ion-row class="top" padding style="color: #737373; font-size: 15px;">
-            <ion-col>
-                Product
-            </ion-col>
-            <ion-col>
-                Price
-            </ion-col>
-            <ion-col>
-                Quantity
-            </ion-col>
-        </ion-row>
-        <ion-row *ngFor="let item of products" padding style="color: #737373; font-size: 13px;">
-            <ion-col>
-                {{item.product}}
-            </ion-col>
-            <ion-col>
-                {{item.currentprice}}
-            </ion-col>
-            <ion-col>
-                {{item.quantity}}
-            </ion-col>
-        </ion-row>
-        <h4 style="font-size: 13px;">Order Notes</h4>
-        <ion-row padding>
-            <p>
-                {{notes}}
-            </p>
-            <p *ngIf="notes == ''">
-                No notes
-            </p>
-        </ion-row>
-        <ion-row padding *ngIf="status == 'open'">
-            Picked  &nbsp; &nbsp; <span class="pick">{{Date  | date: 'dd/MM/yyyy' }}</span>
-        </ion-row>
-        <ion-row padding *ngIf="status == 'open'">
-            To be Picked  &nbsp; &nbsp; <span class="pick">{{pickHour}}</span> &nbsp;:&nbsp;<span class="pick">{{pickMins}}</span> &nbsp;&nbsp;<span class="pick">{{pickDay}}</span>
-        </ion-row>
-    </div>
-</ion-content> -->
-
-
-
-
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-buttons class="go-back" slot="start">
+        <ion-buttons class="go-back" slot="start" style="margin-left: 10px;">
             <ion-icon slot="start" size="small" name="arrow-back" (click)="back()"></ion-icon>
         </ion-buttons>
-        <ion-title class="ion-text-center">Order ID: {{OrderID}}</ion-title>
+        <ion-title *ngIf="prod !== undefined" class="ion-text-center">Order ID: {{prod.OrderID}}</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div>
+    <div *ngIf="view">
         <br><br>
         <!-- FIRST CONTENT -->
         <div class="first-content">
             <ion-row>
                 <ion-col class="first-col">
-                    Ordered by {{username}}
+                    Ordered by {{prod.username}}
                 </ion-col>
                 <ion-col size="2" class="second-col">
-                    <ion-icon name="call" (click)="callCustomer()"></ion-icon>
+                    <ion-icon name="call" (click)="callUserNumber(userDetail.phone)"></ion-icon>
                 </ion-col>
             </ion-row>
         </div>
@@ -93,7 +33,7 @@
                     Qty
                 </ion-col>
             </ion-row>
-            <ion-row class="content-2" *ngFor="let item of products" no-padding>
+            <ion-row class="content-2" *ngFor="let item of prod.products" no-padding>
                 <ion-col size="8">
                     {{item.product}}
                 </ion-col>
@@ -110,33 +50,21 @@
             <h4>Order Notes</h4>
             <ion-row padding>
                 <p>
-                    {{notes}}
+                    {{prod.notes}}
                 </p>
-                <p *ngIf="notes == ''">
+                <p *ngIf="prod.notes == ''">
                     No notes
                 </p>
             </ion-row>
         </div>
-
-        <ion-row padding *ngIf="Complete == 'true'" style="color: var(--ion-color-success)">
-            Order Complete
-        </ion-row>
-        <ion-row padding *ngIf="status == 'canceled'" style="color: var(--ion-color-danger)">
-            Order Canceled
-        </ion-row>
-        <ion-row padding *ngIf="status == 'open'" style="color: var(--ion-color-primary)">
-            Order Open
-        </ion-row>
-
-
         <!-- FOURTH CONTENT -->
-        <!-- <div class="fourth-content" *ngIf="prod.status !== 'canceled'">
+        <div class="fourth-content" *ngIf="prod.status !== 'canceled'">
             <ion-row class="content-2">
                 <ion-col>
                     <h4 color="primary">Delivery Options</h4>
                     <p *ngIf="prod.Delivery === 'deliver'">
                         <strong>
-                            Deliver it to {{prod.Location}}
+                            Deliver it to: {{prod.Location}}
                         </strong>
                     </p>
                     <p *ngIf="prod.Delivery === 'pick'">
@@ -147,24 +75,24 @@
                     </p>
                 </ion-col>
             </ion-row>
-        </div>  -->
+        </div>
         <!-- TOTAL SUM -->
-        <!-- <ion-item class="total">
+        <ion-item class="total">
             <ion-label>Total: Kshs. {{getTotalCart()}}</ion-label>&nbsp;
-            <span style="color: red;" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'deliver'">( To be paid on
+            <span style="color: var(--ion-color-danger);" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'deliver'">( To be paid on
                 Delivery)</span>
-            <span style="color: red;" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'pick'">( To be paid on Pick
+            <span style="color: var(--ion-color-danger);" *ngIf="prod.payment === 'unpaid' && prod.Delivery === 'pick'">( To be paid on Pick
                 up)</span>
-            <span *ngIf="prod.payment === 'paid'" style="color: red;">( Paid )</span>
-        </ion-item> -->
+            <span *ngIf="prod.payment === 'paid'" style="color: var(--ion-color-danger);">( Paid )</span>
+        </ion-item>
         <br>
-        <!-- <div *ngIf="prod.status === 'canceled'" class="ion-text-center">
+        <div *ngIf="prod.status === 'canceled'" class="ion-text-center">
             <br><br>
             <ion-label color="danger">This order is canceled</ion-label>
-        </div> -->
+        </div>
     </div>
 </ion-content>
-<!-- <ion-footer style="background-color: #f3f3f3;text-align: center;">
+<ion-footer *ngIf="view" style="background-color: #f3f3f3;text-align: center;">
     <ion-row>
         <ion-col>
             <ion-button style="font-size: 13px;" expand="full" color="success"
@@ -173,4 +101,4 @@
             </ion-button>
         </ion-col>
     </ion-row>
-</ion-footer> -->
+</ion-footer>
