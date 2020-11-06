@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { Platform } from '@ionic/angular';
 import { Chart } from 'chart.js';
+import { DatabaseService } from '../database.service';
+import { Console, count } from 'console';
 
 @Component({
     selector: 'app-sales',
@@ -21,11 +23,16 @@ export class SalesPage implements OnInit {
     category: any;
     shopname;
     orders: any = [];
+    price: any;
+    monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ]; 
 
     constructor(
         private navCtrl: Router,
         private service: FirestoreService,
         private platform: Platform,
+        private db: DatabaseService,
     ) {
         this.service.hiddenTabs = true;
     }
@@ -35,30 +42,13 @@ export class SalesPage implements OnInit {
     }
 
     ionViewDidEnter() {
-        // this.shopname = this.db.getshopname();
-        this.shopname = "Kakila Organic";
+        this.shopname = this.db.getshopname();
+        // this.shopname = "Kakila Organic";
         console.log("====SHOP NAME ======");
         console.log(this.shopname);
-        this.getOrders();
-        this.createBarChart();
+        this.filterByMonth();
     }
 
-
-    // GET ORDERS
-    getOrders() {
-        let now = new Date();
-        let onejan = new Date(now.getFullYear(), 0, 1);
-        let week = Math.ceil((((now.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
-        console.log("===WEEK NUMBER===");
-        console.log(week);
-
-        this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.orders = res.filter(item => {
-                return item.Date.toDate().getMonth() === this.date.getMonth();
-            });
-            console.log(this.orders);
-        })
-    }
     
     home() {
         this.service.hiddenTabs = false;
@@ -75,22 +65,16 @@ export class SalesPage implements OnInit {
         }
     }
 
-    // FILTER BY WEEK
-    filterByWeek() {
-        console.log("===== FILTER BY WEEK ======");
-        this.getOrders();
-    }
-
+    
     // FILTER BY MONTH
     filterByMonth() {
         console.log("===== FILTER BY MONTH ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-                this.orders = res.filter(item => {
-                    return item.Date.toDate().getMonth()===this.date.getMonth();
-                });
-                console.log(this.orders);
-            })
+            this.orders = res.filter(item => {
+                return item.Date.toDate().getMonth() === this.date.getMonth();
+            });
+            console.log(this.orders);
+            this.createBarChartForMonth();
         })
     }
 
@@ -98,51 +82,121 @@ export class SalesPage implements OnInit {
     filterByYear() {
         console.log("===== FILTER BY YEAR ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-                this.orders = res.filter(item => {
-                    return item.Date.toDate().getFullYear()===this.date.getFullYear();
-                });
-                console.log(this.orders);
-            })
+            this.orders = res.filter(item => {
+                return item.Date.toDate().getFullYear() === this.date.getFullYear();
+            });
+            console.log(this.orders);
+            this.createBarChartForYear();
         })
     }
 
     // CREATE BAR CHART
-    createBarChart() {
-        let labelArr:any = [];
+    createBarChartForYear() {
+        let labelArr: any = [];
+        let totalArr: any = [];
+        let price:any = [];
+        let total:any = [];
+
         this.orders.forEach(element => {
-            if(labelArr.includes(labelArr)) {
+            if(labelArr.includes(this.monthNames[(element.Date.toDate().getMonth())])) {
                 // Do nothing
             } else {
-                labelArr.push(element['username']);
+                labelArr.push(this.monthNames[(element.Date.toDate().getMonth())]);
+                console.log(this.monthNames[(element.Date.toDate().getMonth())]);
             }
-            console.log("===LABEL HERE===");
-            console.log(element);
-            
         });
+
+        labelArr.forEach(element1 => {
+            this.orders.forEach(element2 => {
+                if(this.monthNames[(element2.Date.toDate().getMonth())] === element1) {
+                    console.log("=== Y ===");
+                    console.log(element2);
+                    element2.products.forEach(currentPrice => {
+                        console.log("=== Y VALUES ===");
+                        console.log(currentPrice.currentprice * currentPrice.count);
+                        price.push(currentPrice.currentprice * currentPrice.count);
+                    });
+                }
+            });
+            console.log("===== PRICE HERE ======");
+            console.log(price);
+            total = price.reduce( (previousValue, currentValue) => previousValue + currentValue, 0);
+            totalArr.push({y: total});
+            console.log("===== TOTAL ======");
+            console.log(totalArr);
+
+        });
+
         this.line = new Chart(this.lineChart.nativeElement, {
             type: 'line',
             height: 400,
             data: {
-                labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+                labels: labelArr.reverse(),
                 datasets: [{
                     label: 'Sales Report',
-                    data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-                    backgroundColor: '#00ade5', // array should have same number of elements as number of dataset
-                    borderColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
+                    data: totalArr,
+                    backgroundColor: '#00ade5', 
+                    borderColor: 'rgb(38, 194, 129)', 
                     borderWidth: 1
                 }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+            }
+        });  
+    }
+
+
+
+    // CREATE BAR CHART
+    createBarChartForMonth() {
+        let labelArr: any = [];
+        let totalArr: any = [];
+        let price:any = [];
+        let total: any = [];
+
+        this.orders.forEach(element => {
+            if(labelArr.includes(element.Date.toDate().getDay())) {
+                // Do nothing
+            } else {
+                labelArr.push(element.Date.toDate().getDay());
+                console.log(element.Date.toDate().getDay());
             }
         });
+        console.log("=== LABEL MONTH HERE ===");
+        console.log(labelArr);
+
+        labelArr.forEach(element1 => {
+            this.orders.forEach(element2 => {
+                if(element2.Date.toDate().getDay() === element1) {
+                    console.log("=== Y ===");
+                    console.log(element2);
+                    element2.products.forEach(currentPrice => {
+                        console.log("=== Y VALUES ===");
+                        console.log(currentPrice.currentprice * currentPrice.count);
+                        price.push(currentPrice.currentprice * currentPrice.count);
+                    });
+                }
+            });
+            console.log("===== PRICE HERE ======");
+            console.log(price);
+            total = price.reduce( (previousValue, currentValue) => previousValue + currentValue, 0);
+            totalArr.push({y: total});
+            console.log("===== TOTAL ======");
+            console.log(totalArr);
+        });
+
+        this.line = new Chart(this.lineChart.nativeElement, {
+            type: 'line',
+            height: 400,
+            data: {
+                labels: labelArr,
+                datasets: [{
+                    label: 'Sales Report',
+                    data: totalArr,
+                    backgroundColor: '#00ade5', 
+                    borderColor: 'rgb(38, 194, 129)', 
+                    borderWidth: 1
+                }]
+            }
+        });  
     }
 
 

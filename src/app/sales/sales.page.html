@@ -16,12 +16,12 @@
         </div> -->
 
         <ion-segment style="background-color: white;" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="Week" checked (click)="filterByWeek()">
-                <ion-label style="font-size: 12px; margin-bottom: -5px;">Weekly</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="Month" (click)="filterByMonth()">
+            <ion-segment-button value="Week" checked (click)="filterByMonth()">
                 <ion-label style="font-size: 12px; margin-bottom: -5px;">Monthly</ion-label>
             </ion-segment-button>
+            <!-- <ion-segment-button value="Month" (click)="filterByMonth()">
+                <ion-label style="font-size: 12px; margin-bottom: -5px;">Monthly</ion-label>
+            </ion-segment-button> -->
             <ion-segment-button value="Year" (click)="filterByYear()">
                 <ion-label style="font-size: 12px; margin-bottom: -5px;">Yearly</ion-label>
             </ion-segment-button>

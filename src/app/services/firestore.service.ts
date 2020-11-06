@@ -102,6 +102,10 @@ export class FirestoreService {
             return ref.where('shop', '==', shop).orderBy('Date', 'desc');
         });
     }
+
+    getOrderFromNotification(OrderID) {
+        return this.fs.collection('Orders').doc(OrderID).valueChanges();
+    }
     // getTodaysReadyOrders(shop) {
     //   return this.OderCollection = this.fs.collection('Orders', ref => {
     //     return ref.where('status', '==', 'Ready').where('shop', '==', shop).orderBy('Date', 'asc').where('pickDay', '==', 'Today');

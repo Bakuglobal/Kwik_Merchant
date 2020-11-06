@@ -37,7 +37,7 @@ export class OrderStatsPage implements OnInit {
     
 
     monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "December"
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];  
     last3Months:any[] = []  
 
@@ -56,9 +56,9 @@ export class OrderStatsPage implements OnInit {
     
 
     ionViewWillEnter() {
-        // this.shopname = this.db.getshopname();
-        this.shopname = "Kakila Organic";
-        console.log("====SHOP NAME ======");
+        this.shopname = this.db.getshopname();
+        // this.shopname = "Kakila Organic";
+        // console.log("====SHOP NAME ======");
         console.log(this.shopname);
         this.getLast3Months();
         this.getDeliveredOrders();
