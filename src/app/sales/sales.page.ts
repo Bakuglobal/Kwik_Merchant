@@ -128,7 +128,7 @@ export class SalesPage implements OnInit {
         });
 
         this.line = new Chart(this.lineChart.nativeElement, {
-            type: 'line',
+            type: 'bar',
             height: 400,
             data: {
                 labels: labelArr.reverse(),
@@ -184,7 +184,7 @@ export class SalesPage implements OnInit {
         });
 
         this.line = new Chart(this.lineChart.nativeElement, {
-            type: 'line',
+            type: 'bar',
             height: 400,
             data: {
                 labels: labelArr,
