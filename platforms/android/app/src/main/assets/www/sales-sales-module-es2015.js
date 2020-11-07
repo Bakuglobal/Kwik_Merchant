@@ -33773,7 +33773,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<ion-content color=\"primary\" style=\"background-color: var(--ion-color-primary);\">\n\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"home()\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 10px;\">Sales</ion-title>\n    </ion-toolbar>\n\n\n\n    <div class=\"card-main\">\n        <!-- <div *ngFor=\"let m of orders\">\n            {{m.Date.toDate()  | date: 'dd/MM/yyyy' }}\n        </div> -->\n\n        <ion-segment style=\"background-color: white;\" (ionChange)=\"segmentChanged($event)\">\n            <ion-segment-button value=\"Week\" checked (click)=\"filterByWeek()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Weekly</ion-label>\n            </ion-segment-button>\n            <ion-segment-button value=\"Month\" (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button>\n            <ion-segment-button value=\"Year\" (click)=\"filterByYear()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Yearly</ion-label>\n            </ion-segment-button>\n        </ion-segment>\n\n\n        <div class=\"body\">\n            <ion-card padding style=\"background-color: white;\">\n                <ion-row>\n                    <ion-col size=\"3\">\n                        <ion-icon color=\"primary\" name=\"calendar\" size=\"large\"></ion-icon>\n                    </ion-col>\n                    <ion-col size=\"7\" style=\"margin-top: 3px;\">\n                        <ion-label>Selected {{text}}</ion-label><br>\n                        <!-- <ion-text>{{date.toDate() | date}}</ion-text> -->\n                    </ion-col>\n                    <ion-col size=\"2\">\n                        <ion-icon name=\"create\" color=\"primary\" class=\"edit\" (click)=\"edit()\"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-card>\n\n\n            <div class=\"banner\" padding text-center>\n                <ion-row style=\"margin-top: -10px;\">\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-success);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; padding-top: 10px;\">Total Sales(Ksh)</div>\n                    </ion-col>\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-danger);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; margin-top: 10px;\">Total Leads</div>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n\n            <div style=\"margin-left: 10px; margin-right: 10px;\">\n                <canvas #lineChart class=\"chartlabel\"></canvas>\n            </div>\n\n\n            <div class=\"leads\">\n                <ion-item>\n                    <ion-label color=\"primary\" style=\"font-size: 15px;\">Top Sales</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n\n\n            <div class=\"leads\" style=\"margin-bottom: 15px;\">\n                <ion-item>\n                    <ion-label style=\"font-size: 15px;\" color=\"primary\">Top Leads</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n        </div>\n    </div>\n</ion-content>\n"
+module.exports = "\n<ion-content color=\"primary\" style=\"background-color: var(--ion-color-primary);\">\n\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"home()\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 10px;\">Sales</ion-title>\n    </ion-toolbar>\n\n\n\n    <div class=\"card-main\">\n        <!-- <div *ngFor=\"let m of orders\">\n            {{m.Date.toDate()  | date: 'dd/MM/yyyy' }}\n        </div> -->\n\n        <ion-segment style=\"background-color: white;\" (ionChange)=\"segmentChanged($event)\">\n            <ion-segment-button value=\"Week\" checked (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button>\n            <!-- <ion-segment-button value=\"Month\" (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button> -->\n            <ion-segment-button value=\"Year\" (click)=\"filterByYear()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Yearly</ion-label>\n            </ion-segment-button>\n        </ion-segment>\n\n\n        <div class=\"body\">\n            <ion-card padding style=\"background-color: white;\">\n                <ion-row>\n                    <ion-col size=\"3\">\n                        <ion-icon color=\"primary\" name=\"calendar\" size=\"large\"></ion-icon>\n                    </ion-col>\n                    <ion-col size=\"7\" style=\"margin-top: 3px;\">\n                        <ion-label>Selected {{text}}</ion-label><br>\n                        <!-- <ion-text>{{date.toDate() | date}}</ion-text> -->\n                    </ion-col>\n                    <ion-col size=\"2\">\n                        <ion-icon name=\"create\" color=\"primary\" class=\"edit\" (click)=\"edit()\"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-card>\n\n\n            <div class=\"banner\" padding text-center>\n                <ion-row style=\"margin-top: -10px;\">\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-success);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; padding-top: 10px;\">Total Sales(Ksh)</div>\n                    </ion-col>\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-danger);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; margin-top: 10px;\">Total Leads</div>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n\n            <div style=\"margin-left: 10px; margin-right: 10px;\">\n                <canvas #lineChart class=\"chartlabel\"></canvas>\n            </div>\n\n\n            <div class=\"leads\">\n                <ion-item>\n                    <ion-label color=\"primary\" style=\"font-size: 15px;\">Top Sales</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n\n\n            <div class=\"leads\" style=\"margin-bottom: 15px;\">\n                <ion-item>\n                    <ion-label style=\"font-size: 15px;\" color=\"primary\">Top Leads</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n        </div>\n    </div>\n</ion-content>\n"
 
 /***/ }),
 
@@ -33865,7 +33865,7 @@ SalesPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".body {\n  width: 100%;\n  position: fixed;\n  overflow-y: scroll;\n  bottom: 0px;\n  top: 150px;\n  margin-bottom: 0px;\n  background-color: white;\n}\n\n.card-main {\n  background-color: white;\n  color: var(--ion-color-medium);\n  background-color: white;\n  border-radius: 20px 20px 0px 0px;\n  width: 100%;\n  position: fixed;\n  bottom: 0px;\n  top: 100px;\n  overflow-y: scroll;\n}\n\n.edit {\n  font-size: 1.5em;\n  float: right;\n}\n\nion-card {\n  margin-top: 0px;\n}\n\n.banner {\n  background-color: white;\n}\n\n.banner ion-text {\n  color: black;\n}\n\n.banner ion-label {\n  font-size: 1.5em;\n  font-weight: bold;\n}\n\nion-avatar ion-icon {\n  -o-object-fit: contain;\n     object-fit: contain;\n  width: 50%;\n  height: 50%;\n}\n\n.chartlabel {\n  height: 50%;\n  font-weight: bold;\n}\n\n.leads {\n  margin-top: 20px;\n}\n\nion-select {\n  color: var(--ion-color-primary);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hbGxhcmFzc2VtbWF4d2VsbC9EZXNrdG9wL0t3aWtfTWVyY2hhbnQvc3JjL2FwcC9zYWxlcy9zYWxlcy5wYWdlLnNjc3MiLCJzcmMvYXBwL3NhbGVzL3NhbGVzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQUE7RUFDQSxlQUFBO0VBQ0Esa0JBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLGtCQUFBO0VBQ0EsdUJBQUE7QUNDSjs7QURFQTtFQUNJLHVCQUFBO0VBQ0EsOEJBQUE7RUFDQSx1QkFBQTtFQUNBLGdDQUFBO0VBQ0EsV0FBQTtFQUNBLGVBQUE7RUFDQSxXQUFBO0VBQ0EsVUFBQTtFQUNBLGtCQUFBO0FDQ0o7O0FEQ0E7RUFDSSxnQkFBQTtFQUNBLFlBQUE7QUNFSjs7QURBQTtFQUNJLGVBQUE7QUNHSjs7QUREQTtFQUNJLHVCQUFBO0FDSUo7O0FESEk7RUFDSSxZQUFBO0FDS1I7O0FESEk7RUFDSSxnQkFBQTtFQUNBLGlCQUFBO0FDS1I7O0FEQUk7RUFDSSxzQkFBQTtLQUFBLG1CQUFBO0VBQ0EsVUFBQTtFQUNBLFdBQUE7QUNHUjs7QURBQTtFQUNJLFdBQUE7RUFDQSxpQkFBQTtBQ0dKOztBREFBO0VBQ0ksZ0JBQUE7QUNHSjs7QUREQTtFQUNJLCtCQUFBO0FDSUoiLCJmaWxlIjoic3JjL2FwcC9zYWxlcy9zYWxlcy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYm9keXtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgb3ZlcmZsb3cteTogc2Nyb2xsO1xuICAgIGJvdHRvbTogMHB4O1xuICAgIHRvcDogMTUwcHg7XG4gICAgbWFyZ2luLWJvdHRvbTogMHB4O1xuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xufVxuXG4uY2FyZC1tYWluIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTsgICAgIFxuICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3ItbWVkaXVtKTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTsgXG4gICAgYm9yZGVyLXJhZGl1czogMjBweCAyMHB4IDBweCAwcHg7XG4gICAgd2lkdGg6IDEwMCU7IFxuICAgIHBvc2l0aW9uOiBmaXhlZDsgXG4gICAgYm90dG9tOiAwcHg7IFxuICAgIHRvcDogMTAwcHg7IFxuICAgIG92ZXJmbG93LXk6c2Nyb2xsO1xufVxuLmVkaXR7XG4gICAgZm9udC1zaXplOiAxLjVlbTtcbiAgICBmbG9hdDogcmlnaHQ7XG59XG5pb24tY2FyZHtcbiAgICBtYXJnaW4tdG9wOiAwcHg7XG59XG4uYmFubmVye1xuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xuICAgIGlvbi10ZXh0e1xuICAgICAgICBjb2xvcjogZGFya2VuKCRjb2xvcjogIzAwMDAwMCwgJGFtb3VudDogMCk7XG4gICAgfVxuICAgIGlvbi1sYWJlbHtcbiAgICAgICAgZm9udC1zaXplOiAxLjVlbTtcbiAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgfVxuXG59XG5pb24tYXZhdGFye1xuICAgIGlvbi1pY29ue1xuICAgICAgICBvYmplY3QtZml0OiBjb250YWluO1xuICAgICAgICB3aWR0aDogNTAlO1xuICAgICAgICBoZWlnaHQ6IDUwJTtcbiAgICB9XG59XG4uY2hhcnRsYWJlbHtcbiAgICBoZWlnaHQ6IDUwJTtcbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBcbn1cbi5sZWFkc3tcbiAgICBtYXJnaW4tdG9wOiAyMHB4O1xufVxuaW9uLXNlbGVjdHtcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXByaW1hcnkpO1xufSIsIi5ib2R5IHtcbiAgd2lkdGg6IDEwMCU7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgb3ZlcmZsb3cteTogc2Nyb2xsO1xuICBib3R0b206IDBweDtcbiAgdG9wOiAxNTBweDtcbiAgbWFyZ2luLWJvdHRvbTogMHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cblxuLmNhcmQtbWFpbiB7XG4gIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xuICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLW1lZGl1bSk7XG4gIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xuICBib3JkZXItcmFkaXVzOiAyMHB4IDIwcHggMHB4IDBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgYm90dG9tOiAwcHg7XG4gIHRvcDogMTAwcHg7XG4gIG92ZXJmbG93LXk6IHNjcm9sbDtcbn1cblxuLmVkaXQge1xuICBmb250LXNpemU6IDEuNWVtO1xuICBmbG9hdDogcmlnaHQ7XG59XG5cbmlvbi1jYXJkIHtcbiAgbWFyZ2luLXRvcDogMHB4O1xufVxuXG4uYmFubmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG4uYmFubmVyIGlvbi10ZXh0IHtcbiAgY29sb3I6IGJsYWNrO1xufVxuLmJhbm5lciBpb24tbGFiZWwge1xuICBmb250LXNpemU6IDEuNWVtO1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuaW9uLWF2YXRhciBpb24taWNvbiB7XG4gIG9iamVjdC1maXQ6IGNvbnRhaW47XG4gIHdpZHRoOiA1MCU7XG4gIGhlaWdodDogNTAlO1xufVxuXG4uY2hhcnRsYWJlbCB7XG4gIGhlaWdodDogNTAlO1xuICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuLmxlYWRzIHtcbiAgbWFyZ2luLXRvcDogMjBweDtcbn1cblxuaW9uLXNlbGVjdCB7XG4gIGNvbG9yOiB2YXIoLS1pb24tY29sb3ItcHJpbWFyeSk7XG59Il19 */"
+module.exports = ".body {\n  width: 100%;\n  position: fixed;\n  overflow-y: scroll;\n  bottom: 0px;\n  top: 150px;\n  margin-bottom: 0px;\n  background-color: white;\n}\n\n.card-main {\n  background-color: white;\n  color: var(--ion-color-medium);\n  background-color: white;\n  border-radius: 20px 20px 0px 0px;\n  width: 100%;\n  position: fixed;\n  bottom: 0px;\n  top: 100px;\n  overflow-y: scroll;\n}\n\n.edit {\n  font-size: 1.5em;\n  float: right;\n}\n\nion-card {\n  margin-top: 0px;\n}\n\n.banner {\n  background-color: white;\n}\n\n.banner ion-text {\n  color: black;\n}\n\n.banner ion-label {\n  font-size: 1.5em;\n  font-weight: bold;\n}\n\nion-avatar ion-icon {\n  -o-object-fit: contain;\n     object-fit: contain;\n  width: 50%;\n  height: 50%;\n}\n\n.chartlabel {\n  height: 50%;\n  font-weight: bold;\n}\n\n.leads {\n  margin-top: 20px;\n}\n\nion-select {\n  color: var(--ion-color-primary);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hbGxhcmFzc2VtbWF4d2VsbC9EZXNrdG9wL05ld21hcmsvS3dpa19NZXJjaGFudC9zcmMvYXBwL3NhbGVzL3NhbGVzLnBhZ2Uuc2NzcyIsInNyYy9hcHAvc2FsZXMvc2FsZXMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksV0FBQTtFQUNBLGVBQUE7RUFDQSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxVQUFBO0VBQ0Esa0JBQUE7RUFDQSx1QkFBQTtBQ0NKOztBREVBO0VBQ0ksdUJBQUE7RUFDQSw4QkFBQTtFQUNBLHVCQUFBO0VBQ0EsZ0NBQUE7RUFDQSxXQUFBO0VBQ0EsZUFBQTtFQUNBLFdBQUE7RUFDQSxVQUFBO0VBQ0Esa0JBQUE7QUNDSjs7QURDQTtFQUNJLGdCQUFBO0VBQ0EsWUFBQTtBQ0VKOztBREFBO0VBQ0ksZUFBQTtBQ0dKOztBRERBO0VBQ0ksdUJBQUE7QUNJSjs7QURISTtFQUNJLFlBQUE7QUNLUjs7QURISTtFQUNJLGdCQUFBO0VBQ0EsaUJBQUE7QUNLUjs7QURBSTtFQUNJLHNCQUFBO0tBQUEsbUJBQUE7RUFDQSxVQUFBO0VBQ0EsV0FBQTtBQ0dSOztBREFBO0VBQ0ksV0FBQTtFQUNBLGlCQUFBO0FDR0o7O0FEQUE7RUFDSSxnQkFBQTtBQ0dKOztBRERBO0VBQ0ksK0JBQUE7QUNJSiIsImZpbGUiOiJzcmMvYXBwL3NhbGVzL3NhbGVzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5ib2R5e1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICBvdmVyZmxvdy15OiBzY3JvbGw7XG4gICAgYm90dG9tOiAwcHg7XG4gICAgdG9wOiAxNTBweDtcbiAgICBtYXJnaW4tYm90dG9tOiAwcHg7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG5cbi5jYXJkLW1haW4ge1xuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlOyAgICAgXG4gICAgY29sb3I6IHZhcigtLWlvbi1jb2xvci1tZWRpdW0pO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlOyBcbiAgICBib3JkZXItcmFkaXVzOiAyMHB4IDIwcHggMHB4IDBweDtcbiAgICB3aWR0aDogMTAwJTsgXG4gICAgcG9zaXRpb246IGZpeGVkOyBcbiAgICBib3R0b206IDBweDsgXG4gICAgdG9wOiAxMDBweDsgXG4gICAgb3ZlcmZsb3cteTpzY3JvbGw7XG59XG4uZWRpdHtcbiAgICBmb250LXNpemU6IDEuNWVtO1xuICAgIGZsb2F0OiByaWdodDtcbn1cbmlvbi1jYXJke1xuICAgIG1hcmdpbi10b3A6IDBweDtcbn1cbi5iYW5uZXJ7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG4gICAgaW9uLXRleHR7XG4gICAgICAgIGNvbG9yOiBkYXJrZW4oJGNvbG9yOiAjMDAwMDAwLCAkYW1vdW50OiAwKTtcbiAgICB9XG4gICAgaW9uLWxhYmVse1xuICAgICAgICBmb250LXNpemU6IDEuNWVtO1xuICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICB9XG5cbn1cbmlvbi1hdmF0YXJ7XG4gICAgaW9uLWljb257XG4gICAgICAgIG9iamVjdC1maXQ6IGNvbnRhaW47XG4gICAgICAgIHdpZHRoOiA1MCU7XG4gICAgICAgIGhlaWdodDogNTAlO1xuICAgIH1cbn1cbi5jaGFydGxhYmVse1xuICAgIGhlaWdodDogNTAlO1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIFxufVxuLmxlYWRze1xuICAgIG1hcmdpbi10b3A6IDIwcHg7XG59XG5pb24tc2VsZWN0e1xuICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3ItcHJpbWFyeSk7XG59IiwiLmJvZHkge1xuICB3aWR0aDogMTAwJTtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBvdmVyZmxvdy15OiBzY3JvbGw7XG4gIGJvdHRvbTogMHB4O1xuICB0b3A6IDE1MHB4O1xuICBtYXJnaW4tYm90dG9tOiAwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xufVxuXG4uY2FyZC1tYWluIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG4gIGNvbG9yOiB2YXIoLS1pb24tY29sb3ItbWVkaXVtKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG4gIGJvcmRlci1yYWRpdXM6IDIwcHggMjBweCAwcHggMHB4O1xuICB3aWR0aDogMTAwJTtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBib3R0b206IDBweDtcbiAgdG9wOiAxMDBweDtcbiAgb3ZlcmZsb3cteTogc2Nyb2xsO1xufVxuXG4uZWRpdCB7XG4gIGZvbnQtc2l6ZTogMS41ZW07XG4gIGZsb2F0OiByaWdodDtcbn1cblxuaW9uLWNhcmQge1xuICBtYXJnaW4tdG9wOiAwcHg7XG59XG5cbi5iYW5uZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cbi5iYW5uZXIgaW9uLXRleHQge1xuICBjb2xvcjogYmxhY2s7XG59XG4uYmFubmVyIGlvbi1sYWJlbCB7XG4gIGZvbnQtc2l6ZTogMS41ZW07XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG5pb24tYXZhdGFyIGlvbi1pY29uIHtcbiAgb2JqZWN0LWZpdDogY29udGFpbjtcbiAgd2lkdGg6IDUwJTtcbiAgaGVpZ2h0OiA1MCU7XG59XG5cbi5jaGFydGxhYmVsIHtcbiAgaGVpZ2h0OiA1MCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4ubGVhZHMge1xuICBtYXJnaW4tdG9wOiAyMHB4O1xufVxuXG5pb24tc2VsZWN0IHtcbiAgY29sb3I6IHZhcigtLWlvbi1jb2xvci1wcmltYXJ5KTtcbn0iXX0= */"
 
 /***/ }),
 
@@ -33886,6 +33886,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../database.service */ "./src/app/database.service.ts");
+
 
 
 
@@ -33893,39 +33895,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SalesPage = class SalesPage {
-    constructor(navCtrl, service, platform) {
+    constructor(navCtrl, service, platform, db) {
         this.navCtrl = navCtrl;
         this.service = service;
         this.platform = platform;
+        this.db = db;
         // variables
         this.date = new Date();
         this.text = 'Week';
         this.orders = [];
+        this.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
         this.service.hiddenTabs = true;
     }
     ngOnInit() {
     }
     ionViewDidEnter() {
-        // this.shopname = this.db.getshopname();
-        this.shopname = "Kakila Organic";
+        this.shopname = this.db.getshopname();
+        // this.shopname = "Kakila Organic";
         console.log("====SHOP NAME ======");
         console.log(this.shopname);
-        this.getOrders();
-        this.createBarChart();
-    }
-    // GET ORDERS
-    getOrders() {
-        let now = new Date();
-        let onejan = new Date(now.getFullYear(), 0, 1);
-        let week = Math.ceil((((now.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
-        console.log("===WEEK NUMBER===");
-        console.log(week);
-        this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.orders = res.filter(item => {
-                return item.Date.toDate().getMonth() === this.date.getMonth();
-            });
-            console.log(this.orders);
-        });
+        this.filterByMonth();
     }
     home() {
         this.service.hiddenTabs = false;
@@ -33939,69 +33930,125 @@ let SalesPage = class SalesPage {
         if (this.text === 'Week') {
         }
     }
-    // FILTER BY WEEK
-    filterByWeek() {
-        console.log("===== FILTER BY WEEK ======");
-        this.getOrders();
-    }
     // FILTER BY MONTH
     filterByMonth() {
         console.log("===== FILTER BY MONTH ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-                this.orders = res.filter(item => {
-                    return item.Date.toDate().getMonth() === this.date.getMonth();
-                });
-                console.log(this.orders);
+            this.orders = res.filter(item => {
+                return item.Date.toDate().getMonth() === this.date.getMonth();
             });
+            console.log(this.orders);
+            this.createBarChartForMonth();
         });
     }
     // FILTER BY YEAR
     filterByYear() {
         console.log("===== FILTER BY YEAR ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-                this.orders = res.filter(item => {
-                    return item.Date.toDate().getFullYear() === this.date.getFullYear();
-                });
-                console.log(this.orders);
+            this.orders = res.filter(item => {
+                return item.Date.toDate().getFullYear() === this.date.getFullYear();
             });
+            console.log(this.orders);
+            this.createBarChartForYear();
         });
     }
     // CREATE BAR CHART
-    createBarChart() {
+    createBarChartForYear() {
         let labelArr = [];
+        let totalArr = [];
+        let price = [];
+        let total = [];
         this.orders.forEach(element => {
-            if (labelArr.includes(labelArr)) {
+            if (labelArr.includes(this.monthNames[(element.Date.toDate().getMonth())])) {
                 // Do nothing
             }
             else {
-                labelArr.push(element['username']);
+                labelArr.push(this.monthNames[(element.Date.toDate().getMonth())]);
+                console.log(this.monthNames[(element.Date.toDate().getMonth())]);
             }
-            console.log("===LABEL HERE===");
-            console.log(element);
+        });
+        labelArr.forEach(element1 => {
+            this.orders.forEach(element2 => {
+                if (this.monthNames[(element2.Date.toDate().getMonth())] === element1) {
+                    console.log("=== Y ===");
+                    console.log(element2);
+                    element2.products.forEach(currentPrice => {
+                        console.log("=== Y VALUES ===");
+                        console.log(currentPrice.currentprice * currentPrice.count);
+                        price.push(currentPrice.currentprice * currentPrice.count);
+                    });
+                }
+            });
+            console.log("===== PRICE HERE ======");
+            console.log(price);
+            total = price.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+            totalArr.push({ y: total });
+            console.log("===== TOTAL ======");
+            console.log(totalArr);
         });
         this.line = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.lineChart.nativeElement, {
             type: 'line',
             height: 400,
             data: {
-                labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+                labels: labelArr.reverse(),
                 datasets: [{
                         label: 'Sales Report',
-                        data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+                        data: totalArr,
                         backgroundColor: '#00ade5',
                         borderColor: 'rgb(38, 194, 129)',
                         borderWidth: 1
                     }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+            }
+        });
+    }
+    // CREATE BAR CHART
+    createBarChartForMonth() {
+        let labelArr = [];
+        let totalArr = [];
+        let price = [];
+        let total = [];
+        this.orders.forEach(element => {
+            if (labelArr.includes(element.Date.toDate().getDay())) {
+                // Do nothing
+            }
+            else {
+                labelArr.push(element.Date.toDate().getDay());
+                console.log(element.Date.toDate().getDay());
+            }
+        });
+        console.log("=== LABEL MONTH HERE ===");
+        console.log(labelArr);
+        labelArr.forEach(element1 => {
+            this.orders.forEach(element2 => {
+                if (element2.Date.toDate().getDay() === element1) {
+                    console.log("=== Y ===");
+                    console.log(element2);
+                    element2.products.forEach(currentPrice => {
+                        console.log("=== Y VALUES ===");
+                        console.log(currentPrice.currentprice * currentPrice.count);
+                        price.push(currentPrice.currentprice * currentPrice.count);
+                    });
                 }
+            });
+            console.log("===== PRICE HERE ======");
+            console.log(price);
+            total = price.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+            totalArr.push({ y: total });
+            console.log("===== TOTAL ======");
+            console.log(totalArr);
+        });
+        this.line = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.lineChart.nativeElement, {
+            type: 'line',
+            height: 400,
+            data: {
+                labels: labelArr,
+                datasets: [{
+                        label: 'Sales Report',
+                        data: totalArr,
+                        backgroundColor: '#00ade5',
+                        borderColor: 'rgb(38, 194, 129)',
+                        borderWidth: 1
+                    }]
             }
         });
     }
@@ -34009,7 +34056,8 @@ let SalesPage = class SalesPage {
 SalesPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
     { type: _services_firestore_service__WEBPACK_IMPORTED_MODULE_3__["FirestoreService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"] },
+    { type: _database_service__WEBPACK_IMPORTED_MODULE_6__["DatabaseService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('lineChart', { static: false }),
@@ -34023,7 +34071,8 @@ SalesPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
         _services_firestore_service__WEBPACK_IMPORTED_MODULE_3__["FirestoreService"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"]])
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Platform"],
+        _database_service__WEBPACK_IMPORTED_MODULE_6__["DatabaseService"]])
 ], SalesPage);
 
 

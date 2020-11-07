@@ -11,15 +11,9 @@
 
 
     <div class="card-main">
-        <!-- <div *ngFor="let m of orders">
-            {{m.Date.toDate()  | date: 'dd/MM/yyyy' }}
-        </div> -->
 
         <ion-segment style="background-color: white;" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="Week" checked (click)="filterByWeek()">
-                <ion-label style="font-size: 12px; margin-bottom: -5px;">Weekly</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="Month" (click)="filterByMonth()">
+            <ion-segment-button value="Week" checked (click)="filterByMonth()">
                 <ion-label style="font-size: 12px; margin-bottom: -5px;">Monthly</ion-label>
             </ion-segment-button>
             <ion-segment-button value="Year" (click)="filterByYear()">
@@ -29,23 +23,7 @@
 
 
         <div class="body">
-            <ion-card padding style="background-color: white;">
-                <ion-row>
-                    <ion-col size="3">
-                        <ion-icon color="primary" name="calendar" size="large"></ion-icon>
-                    </ion-col>
-                    <ion-col size="7" style="margin-top: 3px;">
-                        <ion-label>Selected {{text}}</ion-label><br>
-                        <!-- <ion-text>{{date.toDate() | date}}</ion-text> -->
-                    </ion-col>
-                    <ion-col size="2">
-                        <ion-icon name="create" color="primary" class="edit" (click)="edit()"></ion-icon>
-                    </ion-col>
-                </ion-row>
-            </ion-card>
-
-
-            <div class="banner" padding text-center>
+            <!-- <div class="banner" padding text-center>
                 <ion-row style="margin-top: -10px;">
                     <ion-col>
                         <div style="font-size: 17px; color: var(--ion-color-success);">0</div>
@@ -56,15 +34,15 @@
                         <div style="color: #737373; font-size: 14px; margin-top: 10px;">Total Leads</div>
                     </ion-col>
                 </ion-row>
-            </div>
+            </div> -->
 
 
-            <div style="margin-left: 10px; margin-right: 10px;">
+            <div style="margin-left: 10px; margin-right: 10px; margin-top: 40px;">
                 <canvas #lineChart class="chartlabel"></canvas>
             </div>
 
 
-            <div class="leads">
+            <!-- <div class="leads">
                 <ion-item>
                     <ion-label color="primary" style="font-size: 15px;">Top Sales</ion-label>
                     <ion-select style="font-size: 15px;" slot="end" placeholder="Pick Category" [(ngModel)]="category" >
@@ -73,10 +51,10 @@
                         <ion-select-option>Fruits</ion-select-option>
                     </ion-select>
                 </ion-item>
-            </div>
+            </div> -->
 
 
-            <div class="leads" style="margin-bottom: 15px;">
+            <!-- <div class="leads" style="margin-bottom: 15px;">
                 <ion-item>
                     <ion-label style="font-size: 15px;" color="primary">Top Leads</ion-label>
                     <ion-select style="font-size: 15px;" slot="end" placeholder="Pick Category" [(ngModel)]="category" >
@@ -85,7 +63,7 @@
                         <ion-select-option>Fruits</ion-select-option>
                     </ion-select>
                 </ion-item>
-            </div>
+            </div> -->
         </div>
     </div>
 </ion-content>
