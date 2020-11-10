@@ -67,31 +67,31 @@ export class SalesPage implements OnInit {
 
     
     // FILTER BY MONTH
-    filterByMonth() {
-        console.log("===== FILTER BY MONTH ======");
-        this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
-            this.orders = res.filter(item => {
-                return item.Date.toDate().getMonth() === this.date.getMonth();
-            });
-            console.log(this.orders);
-            this.createBarChartForMonth();
-        })
-    }
-
-    // FILTER BY YEAR
     filterByYear() {
         console.log("===== FILTER BY YEAR ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
             this.orders = res.filter(item => {
-                return item.Date.toDate().getFullYear() === this.date.getFullYear();
+                return item.Date.toDate().getFullYear();
             });
             console.log(this.orders);
             this.createBarChartForYear();
         })
     }
 
+    // FILTER BY YEAR
+    filterByMonth() {
+        console.log("===== FILTER BY MONTH ======");
+        this.service.getOrders(this.shopname).valueChanges().subscribe(res => {
+            this.orders = res.filter(item => {
+                return item.Date.toDate().getFullYear() === this.date.getFullYear();
+            });
+            console.log(this.orders);
+            this.createBarChartForMonth();
+        })
+    }
+
     // CREATE BAR CHART
-    createBarChartForYear() {
+    createBarChartForMonth() {
         let labelArr: any = [];
         let totalArr: any = [];
         let price:any = [];
@@ -146,18 +146,18 @@ export class SalesPage implements OnInit {
 
 
     // CREATE BAR CHART
-    createBarChartForMonth() {
+    createBarChartForYear() {
         let labelArr: any = [];
         let totalArr: any = [];
         let price:any = [];
         let total: any = [];
 
         this.orders.forEach(element => {
-            if(labelArr.includes(element.Date.toDate().getDay())) {
+            if(labelArr.includes(element.Date.toDate().getFullYear())) {
                 // Do nothing
             } else {
-                labelArr.push(element.Date.toDate().getDay());
-                console.log(element.Date.toDate().getDay());
+                labelArr.push(element.Date.toDate().getFullYear());
+                console.log(element.Date.toDate().getFullYear());
             }
         });
         console.log("=== LABEL MONTH HERE ===");
@@ -165,7 +165,7 @@ export class SalesPage implements OnInit {
 
         labelArr.forEach(element1 => {
             this.orders.forEach(element2 => {
-                if(element2.Date.toDate().getDay() === element1) {
+                if(element2.Date.toDate().getFullYear() === element1) {
                     console.log("=== Y ===");
                     console.log(element2);
                     element2.products.forEach(currentPrice => {
