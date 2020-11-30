@@ -9,6 +9,7 @@ import { OrderPreviewPage } from '../order-preview/order-preview.page';
 import { Location } from '@angular/common';
 import { Notice } from '../models/notice';
 
+
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
@@ -32,6 +33,7 @@ export class NotificationsPage implements OnInit {
     ) {
         this.shop = localStorage.getItem('shop');
     }
+
     ionViewWillEnter() {
         this.signal.getmyNotification().subscribe(res => {
             this.notices = res;
@@ -128,4 +130,7 @@ export class NotificationsPage implements OnInit {
     //     }
     //   ).catch(err => { console.log(err)});
     // }
+
+
+
 }

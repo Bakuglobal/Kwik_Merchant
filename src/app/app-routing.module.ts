@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'remove-category', loadChildren: './remove-category/remove-category.module#RemoveCategoryPageModule' },
   { path: 'order-preview', loadChildren: './order-preview/order-preview.module#OrderPreviewPageModule' },
   { path: 'view-notification', loadChildren: './view-notification/view-notification.module#ViewNotificationPageModule' },
-  { path: 'image-display', loadChildren: './image-display/image-display.module#ImageDisplayPageModule' },
+  { path: 'image-display', loadChildren: './image-display/image-display.module#ImageDisplayPageModule' },  { path: 'notification-model', loadChildren: './notification-model/notification-model.module#NotificationModelPageModule' },
+
 ];
 @NgModule({
   imports: [

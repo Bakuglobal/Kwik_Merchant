@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header [hidden]=\"hiddenHeader\">\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-menu-button autoHide=\"false\"></ion-menu-button>\n        </ion-buttons>\n        <ion-title text-center>Konnect</ion-title>\n        <ion-searchbar placeholder=\"Search for a shop \" animated type=\"text\" *ngIf=\"showSearch\"></ion-searchbar>\n        <ion-buttons slot=\"end\">\n            <ion-button (click)=\"openPostModal()\">\n                <ion-icon style=\"width: 23px; height: 23px;\" name=\"add-circle-outline\" size=\"small\"></ion-icon>\n            </ion-button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n\n\n<ion-content [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n\n\n    <div class=\"page-content\">\n        <div style=\"margin-left: 5px; margin-right: 5px;\">\n            <ion-searchbar [(ngModel)]=\"searchTerm\" placeholder=\"Search for a shop \" (ionChange)=\"searchShop()\">\n            </ion-searchbar>\n        </div>\n\n        <ion-card class=\"card\" *ngFor=\"let item of Posts\">\n            <div class=\"header\">\n                <div class=\"image\" (click)=\"infoModal('Kakila Organic')\">\n                    <ion-avatar>\n                        <img src=\"{{item.logo}}\">\n                    </ion-avatar>\n                </div>\n                <div class=\"name\" style=\"margin-right: 105px;\" (click)=\"infoModal(item)\">\n                    {{item.shop}}\n                </div>\n                <div class=\"date\">\n                    {{item.time.toDate() | date}}\n                </div>\n            </div>\n            \n            <!-- DESCRIPTION -->\n            <p class=\"description\">\n                {{item.Text}}\n            </p>\n\n            <!-- MAIN IMAGE -->\n            <div class=\"main-image\">\n                <ion-slides>\n                    <ion-slide *ngFor=\"let n of item.Images\">\n                        <img src=\"{{n}}\" (click)=\"showImage(n)\">\n                    </ion-slide>\n                    <ion-slide *ngFor=\"let v of item.Videos\">\n                        <video  controls src=\"{{v}}\"></video>\n                        <!-- <video controls>\n                            <source src=\"{{v}}\">\n                          </video> -->\n                    </ion-slide>\n                </ion-slides>\n\n            </div>\n\n            <!-- LIKE, COMMENT AND SHARE -->\n            <div class=\"like-comment-share\">\n                <ion-row>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"like(item)\">\n                            <ion-icon [ngClass]=\"{'color': item.liked === true}\" size=\"large\" src=\"../../assets/images/heart.svg\">\n                            </ion-icon>\n                            &nbsp;&nbsp;<span class=\"ion-text-lowercase\">{{item.likes}}</span>\n                        </ion-button>\n                    </ion-col>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"comments(item.id)\">\n                            <ion-icon size=\"large\" src=\"../../assets/images/comment.svg\"></ion-icon>\n                            &nbsp;&nbsp;<span class=\"ion-text-lowercase\">{{item.comments}}</span>\n                        </ion-button>\n                    </ion-col>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"share(item)\">\n                            <ion-icon style=\"width: 14.5px; padding-right: 0px;\" size=\"large\"\n                                src=\"../../assets/images/share.svg\"></ion-icon>\n                        </ion-button>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n            <div class=\"line\"></div>\n\n            <!-- LAST USER COMMENT -->\n            <div class=\"user-comment\" *ngIf=\"item.usersComments == 0\">\n\n                <div class=\"user-avatar\">\n                    <ion-avatar>\n                        <img src=\"{{item.lastComment.userLogo}}\">\n                    </ion-avatar>\n                </div>\n                <div class=\"user-name-and-date\">\n                    <div class=\"name\">{{item.lastComment.userName}}</div>\n                    <!-- <div class=\"date\">10 mins ago</div> -->\n                    <!-- <div class=\"date\">{{item.lastComment.time.toDate() | date}}</div> -->\n                </div>\n\n                <div class=\"comment-container\">\n                    <p class=\"comment\">\n                        {{item.lastComment.Text}}\n                    </p>\n                    <div class=\"view-all-comments\" (click)=\"comments(item.id)\">View all comments</div>\n                </div>\n\n            </div>\n        </ion-card><br>\n        <!-- END OF FIRST SOKO POST -->\n    </div>\n    <!-- END OF SOKO POST -->\n\n</ion-content>"
+module.exports = "<ion-header [hidden]=\"hiddenHeader\">\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-menu-button autoHide=\"false\"></ion-menu-button>\n        </ion-buttons>\n        <ion-title text-center>Konnect</ion-title>\n        <ion-searchbar placeholder=\"Search for a shop \" animated type=\"text\" *ngIf=\"showSearch\"></ion-searchbar>\n        <ion-buttons slot=\"end\">\n            <ion-button (click)=\"openPostModal()\">\n                <ion-icon style=\"width: 23px; height: 23px;\" name=\"add-circle-outline\" size=\"small\"></ion-icon>\n            </ion-button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n\n\n<ion-content [scrollEvents]=\"true\" (ionScroll)=\"onScroll($event)\">\n\n\n    <ion-button (click)=\"single_notification()\">\n        Single Notification\n      </ion-button>\n      \n\n    <div class=\"page-content\">\n        <div style=\"margin-left: 5px; margin-right: 5px;\">\n            <ion-searchbar [(ngModel)]=\"searchTerm\" placeholder=\"Search for a shop \" (ionChange)=\"searchShop()\">\n            </ion-searchbar>\n        </div>\n\n        <ion-card class=\"card\" *ngFor=\"let item of Posts\">\n            <div class=\"header\">\n                <div class=\"image\" (click)=\"infoModal('Kakila Organic')\">\n                    <ion-avatar>\n                        <img src=\"{{item.logo}}\">\n                    </ion-avatar>\n                </div>\n                <div class=\"name\" style=\"margin-right: 105px;\" (click)=\"infoModal(item)\">\n                    {{item.shop}}\n                </div>\n                <div class=\"date\">\n                    {{item.time.toDate() | date}}\n                </div>\n            </div>\n            \n            <!-- DESCRIPTION -->\n            <p class=\"description\">\n                {{item.Text}}\n            </p>\n\n            <!-- MAIN IMAGE -->\n            <div class=\"main-image\">\n                <ion-slides>\n                    <ion-slide *ngFor=\"let n of item.Images\">\n                        <img src=\"{{n}}\" (click)=\"showImage(n)\">\n                    </ion-slide>\n                    <ion-slide *ngFor=\"let v of item.Videos\">\n                        <video  controls src=\"{{v}}\"></video>\n                        <!-- <video controls>\n                            <source src=\"{{v}}\">\n                          </video> -->\n                    </ion-slide>\n                </ion-slides>\n\n            </div>\n\n            <!-- LIKE, COMMENT AND SHARE -->\n            <div class=\"like-comment-share\">\n                <ion-row>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"like(item)\">\n                            <ion-icon [ngClass]=\"{'color': item.liked === true}\" size=\"large\" src=\"../../assets/images/heart.svg\">\n                            </ion-icon>\n                            &nbsp;&nbsp;<span class=\"ion-text-lowercase\">{{item.likes}}</span>\n                        </ion-button>\n                    </ion-col>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"comments(item.id)\">\n                            <ion-icon size=\"large\" src=\"../../assets/images/comment.svg\"></ion-icon>\n                            &nbsp;&nbsp;<span class=\"ion-text-lowercase\">{{item.comments}}</span>\n                        </ion-button>\n                    </ion-col>\n                    <ion-col size=\"4\">\n                        <ion-button fill=\"light\" (click)=\"share(item)\">\n                            <ion-icon style=\"width: 14.5px; padding-right: 0px;\" size=\"large\"\n                                src=\"../../assets/images/share.svg\"></ion-icon>\n                        </ion-button>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n            <div class=\"line\"></div>\n\n            <!-- LAST USER COMMENT -->\n            <div class=\"user-comment\" *ngIf=\"item.usersComments == 0\">\n\n                <div class=\"user-avatar\">\n                    <ion-avatar>\n                        <img src=\"{{item.lastComment.userLogo}}\">\n                    </ion-avatar>\n                </div>\n                <div class=\"user-name-and-date\">\n                    <div class=\"name\">{{item.lastComment.userName}}</div>\n                    <!-- <div class=\"date\">10 mins ago</div> -->\n                    <!-- <div class=\"date\">{{item.lastComment.time.toDate() | date}}</div> -->\n                </div>\n\n                <div class=\"comment-container\">\n                    <p class=\"comment\">\n                        {{item.lastComment.Text}}\n                    </p>\n                    <div class=\"view-all-comments\" (click)=\"comments(item.id)\">View all comments</div>\n                </div>\n\n            </div>\n        </ion-card><br>\n        <!-- END OF FIRST SOKO POST -->\n    </div>\n    <!-- END OF SOKO POST -->\n\n</ion-content>"
 
 /***/ }),
 
@@ -87,6 +87,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/social-sharing/ngx */ "./node_modules/@ionic-native/social-sharing/ngx/index.js");
 /* harmony import */ var _image_display_image_display_page__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../image-display/image-display.page */ "./src/app/image-display/image-display.page.ts");
 /* harmony import */ var _database_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../database.service */ "./src/app/database.service.ts");
+/* harmony import */ var _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/local-notifications/ngx */ "./node_modules/@ionic-native/local-notifications/ngx/index.js");
 
 
 
@@ -102,11 +103,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 let Tab3Page = class Tab3Page {
     constructor(navCtrl, modalCtrl, 
     // private fileChooser: FileChooser,
     // private filePath: FilePath,
-    asC, storage, db, service, socialSharing, fs) {
+    asC, storage, db, service, socialSharing, fs, localNotifications) {
         this.navCtrl = navCtrl;
         this.modalCtrl = modalCtrl;
         this.asC = asC;
@@ -115,6 +117,7 @@ let Tab3Page = class Tab3Page {
         this.service = service;
         this.socialSharing = socialSharing;
         this.fs = fs;
+        this.localNotifications = localNotifications;
         this.videoPath = [];
         this.imagePath = [];
         this.likes = { "count": 0, 'userId': [] };
@@ -361,6 +364,37 @@ let Tab3Page = class Tab3Page {
             }
         }).then(modal => modal.present());
     }
+    single_notification() {
+        this.fs.collection('Orders').doc('22GHPD93').set({
+            Complete: 'False',
+            Date: new Date(),
+            Delivery: 'deliver',
+            DeliveryFee: 166,
+            Location: 'T-Mall',
+            OrderID: '22GHPD93',
+            notes: '',
+            payment: 'unpaid',
+            products: [{
+                    barcode: 0,
+                    category: 'Soaps',
+                    count: 1,
+                    currentprice: 700,
+                    description: 'Get  handcrafted Moringa Soap from Kipusa beauty.It contains anti-inflammatory and antiseptic properties ,that prevents premature ageing of the skin and protects it from the environment.It also detoxifies and cleanses the skin',
+                    id: 'tuoktUrkamWy7TnP8Wjq',
+                    image: 'https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/Kipusa%20Beauty%2Fmoringa%20soap.webp?alt=media&token=502a73fe-a1d5-4c85-b52c-945b2b1311fd',
+                    product: 'Moringa Soap',
+                    quantity: 1,
+                    shop: 'Kipusa Beauty',
+                    shopID: '7RKckWZtYFaV0UsiHJbwC55Xt673',
+                    status: 'Available',
+                    stock: 5
+                }],
+            shop: 'Alumni Club by the Caballeros',
+            status: 'open',
+            userID: 'ZJIGdz653TSpLzBLtPDIGJM1mas2',
+            username: 'Stephen Gachoka'
+        });
+    }
 };
 Tab3Page.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
@@ -370,7 +404,8 @@ Tab3Page.ctorParameters = () => [
     { type: _database_service__WEBPACK_IMPORTED_MODULE_12__["DatabaseService"] },
     { type: _services_firestore_service__WEBPACK_IMPORTED_MODULE_9__["FirestoreService"] },
     { type: _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_10__["SocialSharing"] },
-    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"] }
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"] },
+    { type: _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_13__["LocalNotifications"] }
 ];
 Tab3Page = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -385,7 +420,8 @@ Tab3Page = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _database_service__WEBPACK_IMPORTED_MODULE_12__["DatabaseService"],
         _services_firestore_service__WEBPACK_IMPORTED_MODULE_9__["FirestoreService"],
         _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_10__["SocialSharing"],
-        _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"]])
+        _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_8__["AngularFirestore"],
+        _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_13__["LocalNotifications"]])
 ], Tab3Page);
 
 
