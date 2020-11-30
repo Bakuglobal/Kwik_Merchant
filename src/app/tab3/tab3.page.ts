@@ -18,9 +18,8 @@ import { DatabaseService } from '../database.service';
 import { Post } from '../models/post';
 import { Reaction } from '../models/reaction';
 import { post } from 'jquery';
-
-
-
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import {Howl, Howler} from 'howler';
 
 @Component({
     selector: 'app-tab3',
@@ -64,7 +63,8 @@ export class Tab3Page {
         private db: DatabaseService,
         private service: FirestoreService,
         private socialSharing: SocialSharing,
-        private fs: AngularFirestore
+        private fs: AngularFirestore,
+        private localNotifications: LocalNotifications
 
 
     ) {
@@ -311,4 +311,6 @@ export class Tab3Page {
         }).then(modal => modal.present());
 
     }
+
+
 }

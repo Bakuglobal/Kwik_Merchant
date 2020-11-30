@@ -15,6 +15,9 @@ import * as $ from "jquery";
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { map } from 'rxjs/operators';
 import { Network } from '@ionic-native/network/ngx';
+import {Howl, Howler} from 'howler';
+import { NotificationModelPage } from './notification-model/notification-model.page';
+
 
 @Component({
     selector: 'app-root',
@@ -135,6 +138,7 @@ export class AppComponent {
                     this.navCtrl.navigate(['tabs/notifications']);
                     // this.navCtrl.navigate([data.landing_page, data.price]);
                 } else {
+                    this.openNotificationModelPage(data);
                     console.log('Received in foreground');
                     this.serve.sendNotificationTodb(data);
                     this.serve.showNew('Unread');
@@ -284,5 +288,17 @@ export class AppComponent {
                 }
             }, 3000);
         });
+    }
+
+    async openNotificationModelPage(data) {
+        const com = await this.modalCtrl.create({
+            component: NotificationModelPage,
+            componentProps: data
+        })
+        await com.present();
+        // var sound = new Howl({
+        //     src: ['../assets/song/song.wav']
+        //   });
+        //   sound.play();
     }
 }

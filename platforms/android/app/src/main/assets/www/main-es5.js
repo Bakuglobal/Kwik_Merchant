@@ -18,6 +18,9 @@ var map = {
 	"./image-display/image-display.module": [
 		"./src/app/image-display/image-display.module.ts"
 	],
+	"./notification-model/notification-model.module": [
+		"./src/app/notification-model/notification-model.module.ts"
+	],
 	"./order-preview/order-preview.module": [
 		"./src/app/order-preview/order-preview.module.ts"
 	],
@@ -552,6 +555,17 @@ module.exports = "<ion-header style=\"background-color: #3880ff;\">\n  <ion-tool
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/index.js!./src/app/notification-model/notification-model.page.html":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/notification-model/notification-model.page.html ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ion-content>\n    <div>\n        <img src=\"../../assets/images/icon.png\" style=\"margin-top: 50px; margin-left: 41%; width: 70px; height: 70px;\"\n            alt=\"\">\n    </div>\n    <div>\n        <h1 style=\"text-align: center; font-size: 17px; margin-bottom: 100px; color: #737373; font-weight: 600;\">{{ title }}</h1>\n    </div>\n    <div style=\"margin-left: 15px; margin-bottom: 30px;\">\n        {{ body }}\n    </div>\n    <ion-button (click)=\"closeButton()\" style=\"margin-left: 40%;\">Close</ion-button>\n</ion-content>"
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/index.js!./src/app/order-preview/order-preview.page.html":
 /*!*********************************************************************************!*\
   !*** ./node_modules/raw-loader!./src/app/order-preview/order-preview.page.html ***!
@@ -658,6 +672,7 @@ var routes = [
     { path: 'order-preview', loadChildren: './order-preview/order-preview.module#OrderPreviewPageModule' },
     { path: 'view-notification', loadChildren: './view-notification/view-notification.module#ViewNotificationPageModule' },
     { path: 'image-display', loadChildren: './image-display/image-display.module#ImageDisplayPageModule' },
+    { path: 'notification-model', loadChildren: './notification-model/notification-model.module#NotificationModelPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -714,6 +729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _ionic_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/keyboard/ngx */ "./node_modules/@ionic-native/keyboard/ngx/index.js");
 /* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
+/* harmony import */ var _notification_model_notification_model_page__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./notification-model/notification-model.page */ "./src/app/notification-model/notification-model.page.ts");
+
 
 
 
@@ -832,6 +849,7 @@ var AppComponent = /** @class */ (function () {
                     // this.navCtrl.navigate([data.landing_page, data.price]);
                 }
                 else {
+                    _this.openNotificationModelPage(data);
                     console.log('Received in foreground');
                     _this.serve.sendNotificationTodb(data);
                     _this.serve.showNew('Unread');
@@ -1004,6 +1022,25 @@ var AppComponent = /** @class */ (function () {
             }, 3000);
         });
     };
+    AppComponent.prototype.openNotificationModelPage = function (data) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var com;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.modalCtrl.create({
+                            component: _notification_model_notification_model_page__WEBPACK_IMPORTED_MODULE_15__["NotificationModelPage"],
+                            componentProps: data
+                        })];
+                    case 1:
+                        com = _a.sent();
+                        return [4 /*yield*/, com.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     AppComponent.ctorParameters = function () { return [
         { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"] },
         { type: _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__["SplashScreen"] },
@@ -1122,6 +1159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_badge_ngx__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! @ionic-native/badge/ngx */ "./node_modules/@ionic-native/badge/ngx/index.js");
 /* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
 /* harmony import */ var _ionic_native_document_viewer_ngx__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! @ionic-native/document-viewer/ngx */ "./node_modules/@ionic-native/document-viewer/ngx/index.js");
+/* harmony import */ var _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! @ionic-native/local-notifications/ngx */ "./node_modules/@ionic-native/local-notifications/ngx/index.js");
+/* harmony import */ var _notification_model_notification_model_module__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! ./notification-model/notification-model.module */ "./src/app/notification-model/notification-model.module.ts");
 
 
 
@@ -1137,6 +1176,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // FIREBASE
+
+
 
 
 
@@ -1206,7 +1247,8 @@ var AppModule = /** @class */ (function () {
                 _category_category_module__WEBPACK_IMPORTED_MODULE_43__["CategoryPageModule"],
                 _order_preview_order_preview_module__WEBPACK_IMPORTED_MODULE_48__["OrderPreviewPageModule"],
                 _view_notification_view_notification_module__WEBPACK_IMPORTED_MODULE_49__["ViewNotificationPageModule"],
-                _image_display_image_display_module__WEBPACK_IMPORTED_MODULE_50__["ImageDisplayPageModule"]
+                _image_display_image_display_module__WEBPACK_IMPORTED_MODULE_50__["ImageDisplayPageModule"],
+                _notification_model_notification_model_module__WEBPACK_IMPORTED_MODULE_55__["NotificationModelPageModule"]
             ],
             providers: [
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
@@ -1237,6 +1279,7 @@ var AppModule = /** @class */ (function () {
                 _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_52__["Network"],
                 _ionic_native_document_viewer_ngx__WEBPACK_IMPORTED_MODULE_53__["DocumentViewer"],
                 _ionic_native_fcm_ngx__WEBPACK_IMPORTED_MODULE_41__["FCM"],
+                _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_54__["LocalNotifications"],
                 _ionic_native_social_sharing_ngx__WEBPACK_IMPORTED_MODULE_13__["SocialSharing"],
                 { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }
             ],
@@ -2536,6 +2579,130 @@ var NewchatmodalPage = /** @class */ (function () {
             _ionic_native_contacts__WEBPACK_IMPORTED_MODULE_6__["Contacts"]])
     ], NewchatmodalPage);
     return NewchatmodalPage;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/notification-model/notification-model.module.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/notification-model/notification-model.module.ts ***!
+  \*****************************************************************/
+/*! exports provided: NotificationModelPageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationModelPageModule", function() { return NotificationModelPageModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _notification_model_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./notification-model.page */ "./src/app/notification-model/notification-model.page.ts");
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: '',
+        component: _notification_model_page__WEBPACK_IMPORTED_MODULE_6__["NotificationModelPage"]
+    }
+];
+var NotificationModelPageModule = /** @class */ (function () {
+    function NotificationModelPageModule() {
+    }
+    NotificationModelPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forChild(routes)
+            ],
+            declarations: [_notification_model_page__WEBPACK_IMPORTED_MODULE_6__["NotificationModelPage"]]
+        })
+    ], NotificationModelPageModule);
+    return NotificationModelPageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/notification-model/notification-model.page.scss":
+/*!*****************************************************************!*\
+  !*** ./src/app/notification-model/notification-model.page.scss ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL25vdGlmaWNhdGlvbi1tb2RlbC9ub3RpZmljYXRpb24tbW9kZWwucGFnZS5zY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/notification-model/notification-model.page.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/notification-model/notification-model.page.ts ***!
+  \***************************************************************/
+/*! exports provided: NotificationModelPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationModelPage", function() { return NotificationModelPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! howler */ "./node_modules/howler/dist/howler.js");
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+var NotificationModelPage = /** @class */ (function () {
+    function NotificationModelPage(modal) {
+        this.modal = modal;
+    }
+    NotificationModelPage.prototype.ngOnInit = function () {
+        this.playSong();
+    };
+    NotificationModelPage.prototype.playSong = function () {
+        this.sound = new howler__WEBPACK_IMPORTED_MODULE_3__["Howl"]({
+            src: ['../../assets/song/song.wav']
+        });
+        this.sound.play();
+    };
+    NotificationModelPage.prototype.closeButton = function () {
+        this.sound.stop();
+        this.modal.dismiss();
+    };
+    NotificationModelPage.ctorParameters = function () { return [
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"] }
+    ]; };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('title'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+    ], NotificationModelPage.prototype, "title", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('body'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
+    ], NotificationModelPage.prototype, "body", void 0);
+    NotificationModelPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-notification-model',
+            template: __webpack_require__(/*! raw-loader!./notification-model.page.html */ "./node_modules/raw-loader/index.js!./src/app/notification-model/notification-model.page.html"),
+            styles: [__webpack_require__(/*! ./notification-model.page.scss */ "./src/app/notification-model/notification-model.page.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ModalController"]])
+    ], NotificationModelPage);
+    return NotificationModelPage;
 }());
 
 
