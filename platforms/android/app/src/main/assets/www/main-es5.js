@@ -562,7 +562,7 @@ module.exports = "<ion-header style=\"background-color: #3880ff;\">\n  <ion-tool
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content>\n    <div>\n        <img src=\"../../assets/images/icon.png\" style=\"margin-top: 50px; margin-left: 41%; width: 70px; height: 70px;\"\n            alt=\"\">\n    </div>\n    <div>\n        <h1 style=\"text-align: center; font-size: 17px; margin-bottom: 100px; color: #737373; font-weight: 600;\">{{ title }}</h1>\n    </div>\n    <div style=\"margin-left: 15px; margin-bottom: 30px;\">\n        {{ body }}\n    </div>\n    <ion-button (click)=\"closeButton()\" style=\"margin-left: 40%;\">Close</ion-button>\n</ion-content>"
+module.exports = "<ion-content>\n    <div>\n        <img src=\"../../assets/images/icon.png\" style=\"margin-top: 50px; margin-left: 41%; width: 70px; height: 70px;\"\n            alt=\"\">\n    </div>\n    <div>\n        <h1 style=\"text-align: center; font-size: 17px; margin-bottom: 50px; color: #737373; font-weight: 600;\">{{ title }}</h1>\n    </div>\n    <div style=\"margin-left: 15px; margin-right: 15px; margin-bottom: 30px; text-align: center;\">\n        {{ body }}\n    </div>\n    <ion-button (click)=\"closeButton()\" style=\"margin-left: 40%;\">Close</ion-button>\n</ion-content>"
 
 /***/ }),
 
@@ -834,10 +834,12 @@ var AppComponent = /** @class */ (function () {
             _this.fcm.getToken().then(function (token) {
                 console.log('fcm - token' + token);
                 _this.serve.setToken(token);
+                // this.serve.sendTokenToFirebase();
             });
             _this.fcm.onTokenRefresh().subscribe(function (token) {
                 console.log('fcm -token' + token);
                 _this.serve.setToken(token);
+                // this.serve.sendTokenToFirebase();
             });
             //  get notifications
             _this.fcm.onNotification().subscribe(function (data) {
@@ -2749,22 +2751,42 @@ var OneSignalService = /** @class */ (function () {
         // share notice count 
         this.noticeCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](0);
         this.notice = this.noticeCount.asObservable();
-        this.userID = localStorage.getItem('userID');
+        this.userID = localStorage.getItem('user');
         this.shop = localStorage.getItem('shop');
     }
     // set token
     OneSignalService.prototype.setToken = function (token) {
         this.token = token;
+        alert(token);
     };
     // send token to firebase
-    OneSignalService.prototype.sendTokenToFirebase = function (name) {
-        if (this.token === undefined) {
-            return;
-        }
-        var ref = this.fs.collection('MerchantDevices').doc(name);
-        ref.set({
-            'token': this.token,
-            'userID': this.userID
+    OneSignalService.prototype.sendTokenToFirebase = function () {
+        var _this = this;
+        this.userID = localStorage.getItem('user');
+        var ref = this.fs.collection('MerchantDevices').doc(this.userID);
+        ref.get().subscribe(function (snapshot) {
+            var data = snapshot.data();
+            if (snapshot.exists) {
+                if (data.tokens.includes(_this.token)) {
+                    return;
+                }
+                else {
+                    data.tokens.push(_this.token);
+                }
+                var ref_1 = _this.fs.collection('MerchantDevices').doc(_this.userID);
+                ref_1.update({
+                    tokens: data.tokens
+                }).catch(function (err) {
+                    alert("First error: " + err);
+                });
+            }
+            else {
+                ref.set({
+                    tokens: [_this.token]
+                }).catch(function (error) {
+                    alert("Second error: " + error);
+                });
+            }
         });
     };
     OneSignalService.prototype.sendNotificationTodb = function (data) {

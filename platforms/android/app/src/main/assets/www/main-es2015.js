@@ -556,7 +556,7 @@ module.exports = "<ion-header style=\"background-color: #3880ff;\">\n  <ion-tool
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content>\n    <div>\n        <img src=\"../../assets/images/icon.png\" style=\"margin-top: 50px; margin-left: 41%; width: 70px; height: 70px;\"\n            alt=\"\">\n    </div>\n    <div>\n        <h1 style=\"text-align: center; font-size: 17px; margin-bottom: 100px; color: #737373; font-weight: 600;\">{{ title }}</h1>\n    </div>\n    <div style=\"margin-left: 15px; margin-bottom: 30px;\">\n        {{ body }}\n    </div>\n    <ion-button (click)=\"closeButton()\" style=\"margin-left: 40%;\">Close</ion-button>\n</ion-content>"
+module.exports = "<ion-content>\n    <div>\n        <img src=\"../../assets/images/icon.png\" style=\"margin-top: 50px; margin-left: 41%; width: 70px; height: 70px;\"\n            alt=\"\">\n    </div>\n    <div>\n        <h1 style=\"text-align: center; font-size: 17px; margin-bottom: 50px; color: #737373; font-weight: 600;\">{{ title }}</h1>\n    </div>\n    <div style=\"margin-left: 15px; margin-right: 15px; margin-bottom: 30px; text-align: center;\">\n        {{ body }}\n    </div>\n    <ion-button (click)=\"closeButton()\" style=\"margin-left: 40%;\">Close</ion-button>\n</ion-content>"
 
 /***/ }),
 
@@ -820,10 +820,12 @@ let AppComponent = class AppComponent {
             this.fcm.getToken().then(token => {
                 console.log('fcm - token' + token);
                 this.serve.setToken(token);
+                // this.serve.sendTokenToFirebase();
             });
             this.fcm.onTokenRefresh().subscribe(token => {
                 console.log('fcm -token' + token);
                 this.serve.setToken(token);
+                // this.serve.sendTokenToFirebase();
             });
             //  get notifications
             this.fcm.onNotification().subscribe(data => {
@@ -2636,22 +2638,41 @@ let OneSignalService = class OneSignalService {
         // share notice count 
         this.noticeCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](0);
         this.notice = this.noticeCount.asObservable();
-        this.userID = localStorage.getItem('userID');
+        this.userID = localStorage.getItem('user');
         this.shop = localStorage.getItem('shop');
     }
     // set token
     setToken(token) {
         this.token = token;
+        alert(token);
     }
     // send token to firebase
-    sendTokenToFirebase(name) {
-        if (this.token === undefined) {
-            return;
-        }
-        const ref = this.fs.collection('MerchantDevices').doc(name);
-        ref.set({
-            'token': this.token,
-            'userID': this.userID
+    sendTokenToFirebase() {
+        this.userID = localStorage.getItem('user');
+        const ref = this.fs.collection('MerchantDevices').doc(this.userID);
+        ref.get().subscribe(snapshot => {
+            let data = snapshot.data();
+            if (snapshot.exists) {
+                if (data.tokens.includes(this.token)) {
+                    return;
+                }
+                else {
+                    data.tokens.push(this.token);
+                }
+                const ref = this.fs.collection('MerchantDevices').doc(this.userID);
+                ref.update({
+                    tokens: data.tokens
+                }).catch(err => {
+                    alert("First error: " + err);
+                });
+            }
+            else {
+                ref.set({
+                    tokens: [this.token]
+                }).catch(error => {
+                    alert("Second error: " + error);
+                });
+            }
         });
     }
     sendNotificationTodb(data) {
