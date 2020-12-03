@@ -49,6 +49,11 @@ const routes: Routes = [
          // tslint:disable-next-line: max-line-length
          loadChildren: () => import('../notifications/notifications.module').then(m => m.NotificationsPageModule), canActivate :[AuthService]
       },
+      {
+        path: 'notification-model', 
+        // tslint:disable-next-line: max-line-length
+        loadChildren: () => import('../notification-model/notification-model.module').then(m => m.NotificationModelPageModule), canActivate :[AuthService]
+     },
       { 
         path: 'login', 
         loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule), canActivate: [LogsService]

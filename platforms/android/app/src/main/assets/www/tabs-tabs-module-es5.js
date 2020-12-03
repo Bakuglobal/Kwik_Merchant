@@ -192,6 +192,11 @@ var routes = [
                 loadChildren: function () { return __webpack_require__.e(/*! import() | notifications-notifications-module */ "notifications-notifications-module").then(__webpack_require__.bind(null, /*! ../notifications/notifications.module */ "./src/app/notifications/notifications.module.ts")).then(function (m) { return m.NotificationsPageModule; }); }, canActivate: [_Auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]]
             },
             {
+                path: 'notification-model',
+                // tslint:disable-next-line: max-line-length
+                loadChildren: function () { return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../notification-model/notification-model.module */ "./src/app/notification-model/notification-model.module.ts")).then(function (m) { return m.NotificationModelPageModule; }); }, canActivate: [_Auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]]
+            },
+            {
                 path: 'login',
                 loadChildren: function () { return __webpack_require__.e(/*! import() | login-login-module */ "login-login-module").then(__webpack_require__.bind(null, /*! ../login/login.module */ "./src/app/login/login.module.ts")).then(function (m) { return m.LoginPageModule; }); }, canActivate: [_Auth_logs_service__WEBPACK_IMPORTED_MODULE_5__["LogsService"]]
             },

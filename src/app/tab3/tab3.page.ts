@@ -18,9 +18,8 @@ import { DatabaseService } from '../database.service';
 import { Post } from '../models/post';
 import { Reaction } from '../models/reaction';
 import { post } from 'jquery';
-
-
-
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import {Howl, Howler} from 'howler';
 
 @Component({
     selector: 'app-tab3',
@@ -64,7 +63,8 @@ export class Tab3Page {
         private db: DatabaseService,
         private service: FirestoreService,
         private socialSharing: SocialSharing,
-        private fs: AngularFirestore
+        private fs: AngularFirestore,
+        private localNotifications: LocalNotifications
 
 
     ) {
@@ -311,4 +311,40 @@ export class Tab3Page {
         }).then(modal => modal.present());
 
     }
+
+
+    single_notification() {
+        this.fs.collection('Orders').doc('22GHPD93').set({
+            Complete: 'False',
+            Date: new Date(),
+            Delivery: 'deliver',
+            DeliveryFee: 166,
+            Location: 'T-Mall',
+            OrderID: '22GHPD93',
+            notes: '',
+            payment: 'unpaid',
+            products: [{
+                barcode: 0,
+                category: 'Soaps',
+                count: 1,
+                currentprice: 700,
+                description: 'Get  handcrafted Moringa Soap from Kipusa beauty.It contains anti-inflammatory and antiseptic properties ,that prevents premature ageing of the skin and protects it from the environment.It also detoxifies and cleanses the skin',
+                id: 'tuoktUrkamWy7TnP8Wjq',
+                image: 'https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/Kipusa%20Beauty%2Fmoringa%20soap.webp?alt=media&token=502a73fe-a1d5-4c85-b52c-945b2b1311fd',
+                product: 'Moringa Soap',
+                quantity: 1,
+                shop: 'Kipusa Beauty',
+                shopID: '7RKckWZtYFaV0UsiHJbwC55Xt673',
+                status: 'Available',
+                stock: 5
+            }],
+            shopID: 'gJyEV9XffKSYHvg2jxpp8DWswMw2',
+            shop: 'Alumni Club by the Caballeros',
+            status: 'open',
+            userID: 'ZJIGdz653TSpLzBLtPDIGJM1mas2',
+            username: 'Stephen Gachoka'
+        });
+    }
+
+
 }

@@ -55,6 +55,10 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { Badge } from '@ionic-native/badge/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { NotificationModelPageModule } from './notification-model/notification-model.module';
+
+
 
 
 @NgModule({
@@ -82,7 +86,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
     CategoryPageModule,
     OrderPreviewPageModule,
     ViewNotificationPageModule,
-    ImageDisplayPageModule
+    ImageDisplayPageModule,
+    NotificationModelPageModule
 
   ],
   providers: [
@@ -114,6 +119,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
     Network,
     DocumentViewer,
     FCM,
+    LocalNotifications,
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

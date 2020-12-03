@@ -33773,7 +33773,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<ion-content color=\"primary\" style=\"background-color: var(--ion-color-primary);\">\n\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"home()\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 10px;\">Sales</ion-title>\n    </ion-toolbar>\n\n\n\n    <div class=\"card-main\">\n        <!-- <div *ngFor=\"let m of orders\">\n            {{m.Date.toDate()  | date: 'dd/MM/yyyy' }}\n        </div> -->\n\n        <ion-segment style=\"background-color: white;\" (ionChange)=\"segmentChanged($event)\">\n            <ion-segment-button value=\"Week\" checked (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button>\n            <!-- <ion-segment-button value=\"Month\" (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button> -->\n            <ion-segment-button value=\"Year\" (click)=\"filterByYear()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Yearly</ion-label>\n            </ion-segment-button>\n        </ion-segment>\n\n\n        <div class=\"body\">\n            <ion-card padding style=\"background-color: white;\">\n                <ion-row>\n                    <ion-col size=\"3\">\n                        <ion-icon color=\"primary\" name=\"calendar\" size=\"large\"></ion-icon>\n                    </ion-col>\n                    <ion-col size=\"7\" style=\"margin-top: 3px;\">\n                        <ion-label>Selected {{text}}</ion-label><br>\n                        <!-- <ion-text>{{date.toDate() | date}}</ion-text> -->\n                    </ion-col>\n                    <ion-col size=\"2\">\n                        <ion-icon name=\"create\" color=\"primary\" class=\"edit\" (click)=\"edit()\"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-card>\n\n\n            <div class=\"banner\" padding text-center>\n                <ion-row style=\"margin-top: -10px;\">\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-success);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; padding-top: 10px;\">Total Sales(Ksh)</div>\n                    </ion-col>\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-danger);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; margin-top: 10px;\">Total Leads</div>\n                    </ion-col>\n                </ion-row>\n            </div>\n\n\n            <div style=\"margin-left: 10px; margin-right: 10px;\">\n                <canvas #lineChart class=\"chartlabel\"></canvas>\n            </div>\n\n\n            <div class=\"leads\">\n                <ion-item>\n                    <ion-label color=\"primary\" style=\"font-size: 15px;\">Top Sales</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n\n\n            <div class=\"leads\" style=\"margin-bottom: 15px;\">\n                <ion-item>\n                    <ion-label style=\"font-size: 15px;\" color=\"primary\">Top Leads</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div>\n        </div>\n    </div>\n</ion-content>\n"
+module.exports = "\n<ion-content color=\"primary\" style=\"background-color: var(--ion-color-primary);\">\n\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"home()\"></ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 10px;\">Sales</ion-title>\n    </ion-toolbar>\n\n\n\n    <div class=\"card-main\">\n\n        <ion-segment style=\"background-color: white;\" (ionChange)=\"segmentChanged($event)\">\n            <ion-segment-button value=\"Week\" checked (click)=\"filterByMonth()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Monthly</ion-label>\n            </ion-segment-button>\n            <ion-segment-button value=\"Year\" (click)=\"filterByYear()\">\n                <ion-label style=\"font-size: 12px; margin-bottom: -5px;\">Yearly</ion-label>\n            </ion-segment-button>\n        </ion-segment>\n\n\n        <div class=\"body\">\n            <!-- <div class=\"banner\" padding text-center>\n                <ion-row style=\"margin-top: -10px;\">\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-success);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; padding-top: 10px;\">Total Sales(Ksh)</div>\n                    </ion-col>\n                    <ion-col>\n                        <div style=\"font-size: 17px; color: var(--ion-color-danger);\">0</div>\n                        <div style=\"color: #737373; font-size: 14px; margin-top: 10px;\">Total Leads</div>\n                    </ion-col>\n                </ion-row>\n            </div> -->\n\n\n            <div style=\"margin-left: 10px; margin-right: 10px; margin-top: 40px;\">\n                <canvas #lineChart class=\"chartlabel\"></canvas>\n            </div>\n\n\n            <!-- <div class=\"leads\">\n                <ion-item>\n                    <ion-label color=\"primary\" style=\"font-size: 15px;\">Top Sales</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div> -->\n\n\n            <!-- <div class=\"leads\" style=\"margin-bottom: 15px;\">\n                <ion-item>\n                    <ion-label style=\"font-size: 15px;\" color=\"primary\">Top Leads</ion-label>\n                    <ion-select style=\"font-size: 15px;\" slot=\"end\" placeholder=\"Pick Category\" [(ngModel)]=\"category\" >\n                        <ion-select-option>Groceries</ion-select-option>\n                        <ion-select-option>Beverages</ion-select-option>\n                        <ion-select-option>Fruits</ion-select-option>\n                    </ion-select>\n                </ion-item>\n            </div> -->\n        </div>\n    </div>\n</ion-content>\n"
 
 /***/ }),
 
@@ -33934,31 +33934,31 @@ var SalesPage = /** @class */ (function () {
         }
     };
     // FILTER BY MONTH
-    SalesPage.prototype.filterByMonth = function () {
-        var _this = this;
-        console.log("===== FILTER BY MONTH ======");
-        this.service.getOrders(this.shopname).valueChanges().subscribe(function (res) {
-            _this.orders = res.filter(function (item) {
-                return item.Date.toDate().getMonth() === _this.date.getMonth();
-            });
-            console.log(_this.orders);
-            _this.createBarChartForMonth();
-        });
-    };
-    // FILTER BY YEAR
     SalesPage.prototype.filterByYear = function () {
         var _this = this;
         console.log("===== FILTER BY YEAR ======");
         this.service.getOrders(this.shopname).valueChanges().subscribe(function (res) {
             _this.orders = res.filter(function (item) {
-                return item.Date.toDate().getFullYear() === _this.date.getFullYear();
+                return item.Date.toDate().getFullYear();
             });
             console.log(_this.orders);
             _this.createBarChartForYear();
         });
     };
+    // FILTER BY YEAR
+    SalesPage.prototype.filterByMonth = function () {
+        var _this = this;
+        console.log("===== FILTER BY MONTH ======");
+        this.service.getOrders(this.shopname).valueChanges().subscribe(function (res) {
+            _this.orders = res.filter(function (item) {
+                return item.Date.toDate().getFullYear() === _this.date.getFullYear();
+            });
+            console.log(_this.orders);
+            _this.createBarChartForMonth();
+        });
+    };
     // CREATE BAR CHART
-    SalesPage.prototype.createBarChartForYear = function () {
+    SalesPage.prototype.createBarChartForMonth = function () {
         var _this = this;
         var labelArr = [];
         var totalArr = [];
@@ -33993,7 +33993,7 @@ var SalesPage = /** @class */ (function () {
             console.log(totalArr);
         });
         this.line = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.lineChart.nativeElement, {
-            type: 'line',
+            type: 'bar',
             height: 400,
             data: {
                 labels: labelArr.reverse(),
@@ -34008,26 +34008,26 @@ var SalesPage = /** @class */ (function () {
         });
     };
     // CREATE BAR CHART
-    SalesPage.prototype.createBarChartForMonth = function () {
+    SalesPage.prototype.createBarChartForYear = function () {
         var _this = this;
         var labelArr = [];
         var totalArr = [];
         var price = [];
         var total = [];
         this.orders.forEach(function (element) {
-            if (labelArr.includes(element.Date.toDate().getDay())) {
+            if (labelArr.includes(element.Date.toDate().getFullYear())) {
                 // Do nothing
             }
             else {
-                labelArr.push(element.Date.toDate().getDay());
-                console.log(element.Date.toDate().getDay());
+                labelArr.push(element.Date.toDate().getFullYear());
+                console.log(element.Date.toDate().getFullYear());
             }
         });
         console.log("=== LABEL MONTH HERE ===");
         console.log(labelArr);
         labelArr.forEach(function (element1) {
             _this.orders.forEach(function (element2) {
-                if (element2.Date.toDate().getDay() === element1) {
+                if (element2.Date.toDate().getFullYear() === element1) {
                     console.log("=== Y ===");
                     console.log(element2);
                     element2.products.forEach(function (currentPrice) {
@@ -34045,7 +34045,7 @@ var SalesPage = /** @class */ (function () {
             console.log(totalArr);
         });
         this.line = new chart_js__WEBPACK_IMPORTED_MODULE_5__["Chart"](this.lineChart.nativeElement, {
-            type: 'line',
+            type: 'bar',
             height: 400,
             data: {
                 labels: labelArr,
