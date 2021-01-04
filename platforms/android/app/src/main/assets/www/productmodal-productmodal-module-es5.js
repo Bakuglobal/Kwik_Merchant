@@ -145,7 +145,7 @@ var ProductmodalPage = /** @class */ (function () {
         console.log(this.product);
         this.view = true;
         // get categories 
-        this.service.getallcategories(this.shop).valueChanges().subscribe(function (res) {
+        this.service.getallcategories(this.shop).subscribe(function (res) {
             _this.category = res;
         });
         // RESTAURANT FORM

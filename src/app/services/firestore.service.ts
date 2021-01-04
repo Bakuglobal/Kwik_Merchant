@@ -34,6 +34,7 @@ export class FirestoreService {
     OderCollection: AngularFirestoreCollection<Order>;
     Shopdetails: AngularFirestoreCollection<Shop>;
     categories: AngularFirestoreCollection<Category>
+    subCategories: AngularFirestoreCollection<Category>
     allproducts: AngularFirestoreCollection<Product>
 
     constructor(
@@ -153,9 +154,34 @@ export class FirestoreService {
         return this.fs.collection('users').doc<User>(id);
     }
     //get all categories from firestore
-    getallcategories(shop) {
-        console.log(shop);
-        return this.fs.collection('Categories').doc<Category>(shop);
+    getallcategories(type) {
+        console.log(type);
+        this.categories= this.fs.collection<Category>('categories', ref => {
+            return ref.where('type', '==', type).orderBy('Date', 'desc');
+        });
+        return this.categories.snapshotChanges().pipe(
+            map(actions => {
+                return actions.map(a => {
+                    const data = a.payload.doc.data();
+                    const id = a.payload.doc.id;
+                    return { id, ...data };
+                })
+            })
+        )
+
+    }
+
+    getSubcategory(id) {
+        this.subCategories= this.fs.collection('categories').doc(id).collection('subcategories');
+        return this.subCategories.snapshotChanges().pipe(
+            map(actions => {
+                return actions.map(a => {
+                    const data = a.payload.doc.data();
+                    const id = a.payload.doc.id;
+                    return { id, ...data };
+                })
+            })
+        )
     }
     // register user with mail and pass
     register(email, pass) {

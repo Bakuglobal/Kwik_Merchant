@@ -237,14 +237,6 @@ var routes = [
                 path: 'productmodal', loadChildren: function () { return __webpack_require__.e(/*! import() | productmodal-productmodal-module */ "productmodal-productmodal-module").then(__webpack_require__.bind(null, /*! ../productmodal/productmodal.module */ "./src/app/productmodal/productmodal.module.ts")).then(function (m) { return m.ProductmodalPageModule; }); }, canActivate: [_Auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]]
             },
             {
-                // tslint:disable-next-line: max-line-length
-                path: 'category', loadChildren: function () { return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../category/category.module */ "./src/app/category/category.module.ts")).then(function (m) { return m.CategoryPageModule; }); }, canActivate: [_Auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]]
-            },
-            {
-                // tslint:disable-next-line: max-line-length
-                path: 'remove', loadChildren: function () { return __webpack_require__.e(/*! import() | remove-category-remove-category-module */ "remove-category-remove-category-module").then(__webpack_require__.bind(null, /*! ../remove-category/remove-category.module */ "./src/app/remove-category/remove-category.module.ts")).then(function (m) { return m.RemoveCategoryPageModule; }); }, canActivate: [_Auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]]
-            },
-            {
                 path: '',
                 redirectTo: '/tabs/dashboard',
                 pathMatch: 'full'

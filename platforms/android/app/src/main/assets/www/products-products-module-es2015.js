@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content color=\"primary\">\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"back()\">\n            </ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 15px;\">Add to stock</ion-title>\n    </ion-toolbar>\n\n\n    <div class=\"card-main\" style=\"background-color: white;\" *ngIf=\"type\">\n\n        <div class=\"buttons\">\n            <ion-button expand=\"full\" (click)=\"addNewProduct()\">New Product</ion-button><br>\n            <ion-button expand=\"full\" (click)=\"existingProduct()\">Existing Product</ion-button><br>\n            <ion-button expand=\"full\" (click)=\"categoryModal()\">New Category</ion-button>\n        </div>\n    </div>\n\n    <!-- EXISTING PRODUCT -->\n    <div class=\"body\" *ngIf=\"existing\">\n        <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n            <ion-button (click)=\"close()\">\n                <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n            </ion-button>\n        </ion-buttons>\n\n        <ion-row no-padding text-center>\n            <ion-col>\n                <ion-label style=\"font-size: 15px;\" class=\"title\">Choose category to filter</ion-label>\n                <!-- <ion-select placeholder=\"category\" [(ngModel)]=\"category\" (ionChange)=\"setFilteredItems()\">\n                <ion-select-option style=\"font-size: 13px;\" *ngFor=\"let item of categories.categories\">{{item}}</ion-select-option>\n                </ion-select> -->\n                <ion-icon style=\"width: 20px; height: 20px; margin-right: 5px;\" name=\"pricetags\" class=\"image\"\n                    color=\"primary\"></ion-icon>\n            </ion-col>\n            <!-- <ion-col size=\"4\">\n                <ion-icon style=\"width: 20px; height: 20px; margin-right: 5px;\" name=\"pricetags\" class=\"image\" color=\"primary\"></ion-icon>\n            </ion-col> -->\n        </ion-row>\n        <ion-row>\n            <ion-segment scrollable [(ngModel)]=\"category\" (ionChange)=\"setFilteredItems()\">\n                <ion-segment-button selected value=\"\">\n                    <ion-label style=\"font-size: 12px;\">All</ion-label>\n                </ion-segment-button>\n                <ion-segment-button value=\"{{item}}\" *ngFor=\"let item of categories.categories\">\n                    <ion-label style=\"font-size: 12px;\">{{item}}</ion-label>\n                </ion-segment-button>\n            </ion-segment>\n        </ion-row>\n        <ion-item *ngIf=\"category != null\">\n            <ion-input style=\"font-size: 15px;\" type=\"text\" clearInput placeholder=\"Enter product name\"></ion-input>\n            <ion-icon style=\"width: 20px; height: 20px;\" name=\"search\" slot=\"end\"></ion-icon>\n        </ion-item>\n\n        <!-- RESTAURANT -->\n        <div *ngIf=\"shopType === 'food'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"9\" style=\"text-align: left; margin-left: 10px;\">\n                    Meal\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col size=\"9\" style=\"text-align: left; margin-left: 10px;\">\n                    {{item.Meal}}\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div>\n\n        <!-- RECIPES -->\n        <div *ngIf=\"shopType === 'recipes'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"3\">\n                    Icon\n                </ion-col>\n                <ion-col size=\"6\" style=\"text-align: left; padding-left: 5px;\">\n                    Recipe\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col text-center size=\"3\">\n                    <img [src]=\"item.image\" style=\"width: 75px; height: 50px;\">\n                </ion-col>\n                <ion-col size=\"6\" style=\"text-align: left; padding-left: 5px;\">\n                    {{item.recipe}}\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div>\n\n        <!-- SHOP -->\n        <div *ngIf=\"shopType === 'Shops'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"2\">\n                    Icon\n                </ion-col>\n                <ion-col size=\"4\" style=\"text-align: left;\">\n                    Product\n                </ion-col>\n                <ion-col size=\"2\">\n                    Stock\n                </ion-col>\n                <ion-col size=\"2\">\n                    Units\n                </ion-col>\n                <ion-col size=\"2\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col text-center size=\"2\">\n                    <img [src]=\"item.image\"  style=\"width: 75px; height: 50px;\">\n                </ion-col>\n                <ion-col size=\"4\" style=\"text-align: left;\">\n                    {{item.product}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.stock}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.quantity}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div><br><br>\n    </div>\n\n\n    <!-- NEW PRODUCT -->\n    <div *ngIf=\"newProduct\" class=\"body\">\n        <!-- RESTAURANT -->\n        <div *ngIf=\"shopType === 'food'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addRestaurant()\" [formGroup]=\"restaurantForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"Meal\"\n                            placeholder=\"Enter meal name\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" required slot=\"end\" formControlName=\"category\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"currentprice\"\n                            placeholder=\"Enter meal price\" required>\n                        </ion-input>\n                    </ion-item>\n\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!restaurantForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n        <!-- RECIPES -->\n        <div *ngIf=\"shopType === 'recipes'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addRecipes()\" [formGroup]=\"recipesForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" slot=\"end\" formControlName=\"category\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"currentprice\"\n                            placeholder=\"Enter meal price\">\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"newProductUploadImage()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Image:</ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" formControlName=\"image\" value=\"{{image}}\"\n                            readonly required></ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"camera\"></ion-icon>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-textarea rows=\"6\" formControlName=\"ingridients\"\n                          value=\"\" placeholder=\"Ingridients\">\n                        </ion-textarea>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"persons\"\n                            placeholder=\"Persons\">\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"recipe\"\n                            placeholder=\"recipe\">\n                        </ion-input>\n                    </ion-item>\n\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!recipesForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n        <!-- SHOP -->\n        <div *ngIf=\"shopType === 'Shops'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addProduct()\" [formGroup]=\"productForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"product\"\n                            placeholder=\"Enter Product name\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" no-padding type=\"number\"\n                            formControlName=\"barcode\" placeholder=\"Scan or Enter barcode\" value=\"{{scannedcode}}\">\n                        </ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"qr-scanner\" (click)=\"scan()\"></ion-icon>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" required slot=\"end\" formControlName=\"category\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"stock\"\n                            placeholder=\"Enter Quantity available\" required>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"quantity\"\n                            placeholder=\"Enter Product Unit\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"currentprice\"\n                            placeholder=\"Enter Product Price\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-textarea rows=\"6\" style=\"font-size: 13px; color: #737373;\" formControlName=\"description\"\n                            placeholder=\"Enter Description\"></ion-textarea>\n                    </ion-item>\n                    <!-- <ion-item>\n                    <ion-label>Set product status </ion-label>\n                    <ion-select formControlName=\"status\" slot=\"end\" placeholder=\"Select\">\n                        <ion-select-option selected>Available</ion-select-option>\n                        <ion-select-option>Unavailable</ion-select-option>\n                    </ion-select>\n                    <ion-toggle checked slot=\"end\" formControlName=\"status\"></ion-toggle>\n                    </ion-item> -->\n                    <ion-item no-padding (click)=\"newProductUploadImage()\">\n                        <!-- <div style=\"width: 100%; height: 50px;\">\n                            <img src=\"{{image}}\" alt=\"\">\n                        </div> -->\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Image:</ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" formControlName=\"image\" value=\"{{image}}\"\n                            readonly required></ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"camera\"></ion-icon>\n                    </ion-item>\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!productForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n    </div>\n</ion-content>"
+module.exports = "<ion-content color=\"primary\">\n    <ion-toolbar color=\"primary\">\n        <ion-buttons slot=\"start\">\n            <ion-icon style=\"width: 20px; height: 20px; margin-left: 5px;\" name=\"arrow-back\" (click)=\"back()\">\n            </ion-icon>\n        </ion-buttons>\n        <ion-title text-center style=\"margin-right: 15px;\">Add to stock</ion-title>\n    </ion-toolbar>\n\n\n    <div class=\"card-main\" style=\"background-color: white;\" *ngIf=\"type\">\n\n        <div class=\"buttons\">\n            <ion-button expand=\"full\" (click)=\"addNewProduct()\">New Product</ion-button><br>\n            <ion-button expand=\"full\" (click)=\"existingProduct()\">Existing Product</ion-button><br>\n        </div>\n    </div>\n\n    <!-- EXISTING PRODUCT -->\n    <div class=\"body\" *ngIf=\"existing\">\n        <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n            <ion-button (click)=\"close()\">\n                <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n            </ion-button>\n        </ion-buttons>\n\n        <ion-row no-padding text-center>\n            <ion-col>\n                <ion-label style=\"font-size: 15px;\" class=\"title\">Choose category to filter</ion-label>\n                <ion-icon style=\"width: 20px; height: 20px; margin-right: 5px;\" name=\"pricetags\" class=\"image\"\n                    color=\"primary\"></ion-icon>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-segment scrollable [(ngModel)]=\"category\" (ionChange)=\"setFilteredItems()\">\n                <ion-segment-button selected value=\"\">\n                    <ion-label style=\"font-size: 12px;\">All</ion-label>\n                </ion-segment-button>\n                <ion-segment-button value=\"{{item}}\" *ngFor=\"let item of categories.categories\">\n                    <ion-label style=\"font-size: 12px;\">{{item}}</ion-label>\n                </ion-segment-button>\n            </ion-segment>\n        </ion-row>\n        <ion-item *ngIf=\"category != null\">\n            <ion-input style=\"font-size: 15px;\" type=\"text\" clearInput placeholder=\"Enter product name\"></ion-input>\n            <ion-icon style=\"width: 20px; height: 20px;\" name=\"search\" slot=\"end\"></ion-icon>\n        </ion-item>\n\n        <!-- RESTAURANT -->\n        <div *ngIf=\"shopType === 'food'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"9\" style=\"text-align: left; margin-left: 10px;\">\n                    Meal\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col size=\"9\" style=\"text-align: left; margin-left: 10px;\">\n                    {{item.Meal}}\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div>\n\n        <!-- RECIPES -->\n        <div *ngIf=\"shopType === 'recipes'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"3\">\n                    Icon\n                </ion-col>\n                <ion-col size=\"6\" style=\"text-align: left; padding-left: 5px;\">\n                    Recipe\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col text-center size=\"3\">\n                    <img [src]=\"item.image\" style=\"width: 75px; height: 50px;\">\n                </ion-col>\n                <ion-col size=\"6\" style=\"text-align: left; padding-left: 5px;\">\n                    {{item.recipe}}\n                </ion-col>\n                <ion-col size=\"3\" style=\"text-align: right; padding-right: 10px;\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div>\n\n        <!-- SHOP -->\n        <div *ngIf=\"shopType === 'Shops'\">\n            <ion-item no-padding text-center\n                style=\"background-color: #dedede; color: var(--ion-color-primary); font-size: 15px;\">\n                <ion-col size=\"2\">\n                    Icon\n                </ion-col>\n                <ion-col size=\"4\" style=\"text-align: left;\">\n                    Product\n                </ion-col>\n                <ion-col size=\"2\">\n                    Stock\n                </ion-col>\n                <ion-col size=\"2\">\n                    Units\n                </ion-col>\n                <ion-col size=\"2\">\n                    Price\n                </ion-col>\n            </ion-item>\n            <ion-item no-padding text-center (click)=\"viewProduct(item)\" *ngFor=\"let item of products\"\n                style=\"font-size: 13px; color: #737373; \">\n                <ion-col text-center size=\"2\">\n                    <img [src]=\"item.image\"  style=\"width: 75px; height: 50px;\">\n                </ion-col>\n                <ion-col size=\"4\" style=\"text-align: left;\">\n                    {{item.product}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.stock}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.quantity}}\n                </ion-col>\n                <ion-col size=\"2\">\n                    {{item.currentprice}}\n                </ion-col>\n            </ion-item>\n        </div><br><br>\n    </div>\n\n\n    <!-- NEW PRODUCT -->\n    <div *ngIf=\"newProduct\" class=\"body\">\n        <!-- RESTAURANT -->\n        <div *ngIf=\"shopType === 'food'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addRestaurant()\" [formGroup]=\"restaurantForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"productName\"\n                            placeholder=\"Enter meal name\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"discount\"\n                            placeholder=\"Discount in percentage\"></ion-input>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" required slot=\"end\" formControlName=\"subCategory\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"currentprice\"\n                            placeholder=\"Enter meal price\" required>\n                        </ion-input>\n                    </ion-item>\n\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!restaurantForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n        <!-- RECIPES -->\n        <div *ngIf=\"shopType === 'recipes'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addRecipes()\" [formGroup]=\"recipesForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"productName\"\n                            placeholder=\"Product Name\">\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"discount\"\n                            placeholder=\"Discount in percentage\"></ion-input>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" slot=\"end\" formControlName=\"subCategory\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"currentprice\"\n                            placeholder=\"Enter meal price\">\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"newProductUploadImage()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Image:</ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" formControlName=\"image\" value=\"{{image}}\"\n                            readonly required></ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"camera\"></ion-icon>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-textarea rows=\"6\" formControlName=\"ingridients\"\n                          value=\"\" placeholder=\"Ingridients\">\n                        </ion-textarea>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"persons\"\n                            placeholder=\"Persons\">\n                        </ion-input>\n                    </ion-item>\n                    \n\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!recipesForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n        <!-- SHOP -->\n        <div *ngIf=\"shopType === 'Shops'\">\n            <ion-buttons slot=\"start\" style=\"padding-top: 10px; margin-bottom: 5px;\">\n                <ion-button (click)=\"close()\">\n                    <ion-icon size=\"small\" style=\"width: 20px; height: 20px;\" color=\"primary\" name=\"close\"></ion-icon>\n                </ion-button>\n            </ion-buttons>\n            <form (ngSubmit)=\"addProduct()\" [formGroup]=\"productForm\" style=\"margin-right: 15px; margin-left: 15px;\">\n                <ion-list no-padding>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"productName\"\n                            placeholder=\"Enter Product name\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"discount\"\n                            placeholder=\"Discount in percentage\"></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" no-padding type=\"number\"\n                            formControlName=\"barcode\" placeholder=\"Scan or Enter barcode\" value=\"{{scannedcode}}\">\n                        </ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"qr-scanner\" (click)=\"scan()\"></ion-icon>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"selectCategory()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Select Category </ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373; float: right; right: 0px;\" no-padding\n                            placeholder=\"Select Category\" required slot=\"end\" formControlName=\"subCategory\" value=\"{{value}}\">\n                            <ion-icon style=\"width: 20px; height: 20px;\" name=\"arrow-dropdown\" color=\"medium\"></ion-icon>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"number\" formControlName=\"stock\"\n                            placeholder=\"Enter Quantity available\" required>\n                        </ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"quantity\"\n                            placeholder=\"Enter Product Unit\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" type=\"text\" formControlName=\"currentprice\"\n                            placeholder=\"Enter Product Price\" required></ion-input>\n                    </ion-item>\n                    <ion-item no-padding>\n                        <ion-textarea rows=\"6\" style=\"font-size: 13px; color: #737373;\" formControlName=\"description\"\n                            placeholder=\"Enter Description\"></ion-textarea>\n                    </ion-item>\n                    <ion-item no-padding (click)=\"newProductUploadImage()\">\n                        <ion-label style=\"font-size: 13px; color: #737373;\">Image:</ion-label>\n                        <ion-input style=\"font-size: 13px; color: #737373;\" formControlName=\"image\" value=\"{{image}}\"\n                            readonly required></ion-input>\n                        <ion-icon style=\"width: 20px; height: 20px; float: right; right: 0px; position: absolute;\"\n                            slot=\"end\" name=\"camera\"></ion-icon>\n                    </ion-item>\n                    <ion-button expand=\"full \" type=\"submit\" [disabled]=\"!productForm.valid\"\n                        style=\"margin-top: 50px; margin-bottom: 10px;\">Save</ion-button>\n                </ion-list>\n            </form>\n        </div>\n    </div>\n</ion-content>"
 
 /***/ }),
 
@@ -91,17 +91,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic-native/camera/ngx */ "./node_modules/@ionic-native/camera/ngx/index.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _category_category_page__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../category/category.page */ "./src/app/category/category.page.ts");
-/* harmony import */ var _upload_upload_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../upload/upload.service */ "./src/app/upload/upload.service.ts");
-/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic-native/file/ngx */ "./node_modules/@ionic-native/file/ngx/index.js");
-/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
-/* harmony import */ var _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/ionic-webview/ngx */ "./node_modules/@ionic-native/ionic-webview/ngx/index.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
-/* harmony import */ var _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/image-picker/ngx */ "./node_modules/@ionic-native/image-picker/ngx/index.js");
-/* harmony import */ var _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/crop/ngx */ "./node_modules/@ionic-native/crop/ngx/index.js");
-/* harmony import */ var _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic-native/file-chooser/ngx */ "./node_modules/@ionic-native/file-chooser/ngx/index.js");
-/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
-
+/* harmony import */ var _upload_upload_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../upload/upload.service */ "./src/app/upload/upload.service.ts");
+/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/file/ngx */ "./node_modules/@ionic-native/file/ngx/index.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+/* harmony import */ var _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ionic-native/ionic-webview/ngx */ "./node_modules/@ionic-native/ionic-webview/ngx/index.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic-native/image-picker/ngx */ "./node_modules/@ionic-native/image-picker/ngx/index.js");
+/* harmony import */ var _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/crop/ngx */ "./node_modules/@ionic-native/crop/ngx/index.js");
+/* harmony import */ var _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/file-chooser/ngx */ "./node_modules/@ionic-native/file-chooser/ngx/index.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
 
 
 
@@ -155,33 +153,43 @@ let ProductsPage = class ProductsPage {
         this.service.hiddenTabs = true;
         this.date = new Date();
         this.productForm = formBuilder.group({
-            product: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            productName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            discount: [''],
             barcode: [this.scannedcode],
-            category: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            subCategory: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             stock: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             quantity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             currentprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].maxLength(30), _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].pattern('[a-zA-Z ]*')])],
-            status: ['Available'],
             image: [this.image, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required]
         });
         this.restaurantForm = formBuilder.group({
-            Meal: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
-            category: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            productName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            discount: [''],
+            subCategory: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             currentprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
         });
         this.recipesForm = formBuilder.group({
-            category: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            productName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
+            discount: [''],
+            subCategory: [this.value, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             currentprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             image: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             ingridients: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
             persons: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
-            recipe: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_8__["Validators"].required],
         });
         this.shop = localStorage.getItem('shop');
         this.user = localStorage.getItem('user');
-        this.service.getallcategories(this.shop).valueChanges().subscribe(res => {
+        this.service.getallcategories(localStorage.getItem('type')).subscribe(res => {
+            let categoryId = res[0].id;
+            this.service.getSubcategory(categoryId).subscribe(returnData => {
+                this.subCategories = returnData;
+                console.log("====SUBCATEGORY=====");
+                console.log(this.subCategories);
+            });
             this.categories = res;
+            console.log("=====CATEGORY=====");
+            console.log(this.categories);
         });
         this.getproducts();
     }
@@ -237,75 +245,94 @@ let ProductsPage = class ProductsPage {
     addRestaurant() {
         this.Toast('uploading...');
         let data = {
-            "Restaurant": this.shop,
-            "Meal": this.restaurantForm.value.Meal,
-            "category": this.restaurantForm.value.category,
+            "Date": new Date(),
+            "barcode": '',
             "currentprice": this.restaurantForm.value.currentprice,
-            "shopID": this.user,
-            "date": new Date()
+            "description": '',
+            "discount": this.restaurantForm.value.discount,
+            'images': [],
+            "mainCategory": this.mainCategoryId,
+            "merchandID": this.user,
+            "productName": this.restaurantForm.value.productName,
+            "quantity": '',
+            "stock": '',
+            "subCategory": this.subCategoryId,
+            "ingridients": '',
+            "persons": '',
         };
         console.log(data);
-        this.fs.collection(this.shop).add(data).then(res => {
+        this.fs.collection('products').add(data).then(res => {
             this.restaurantForm.reset();
-            this.category = '';
+            this.mainCategoryId = '';
+            this.subCategoryId = '';
             this.upload.presentToast('Meal uploaded successful');
+            this.loading.dismiss();
         }).catch(err => {
+            this.loading.dismiss();
             console.log(err);
         });
     }
     addRecipes() {
         this.Toast('uploading...');
         let data = {
-            "category": this.recipesForm.value.category,
+            "Date": new Date(),
+            "barcode": '',
             "currentprice": this.recipesForm.value.currentprice,
+            "description": '',
+            "discount": this.recipesForm.value.discount,
             "image": this.recipesForm.value.image,
+            "mainCategory": this.mainCategoryId,
+            "merchandID": this.user,
+            "productName": this.recipesForm.value.recipe,
+            "quantity": '',
+            "stock": '',
+            "subCategory": this.subCategoryId,
             "ingridients": this.recipesForm.value.ingridients,
             "persons": this.recipesForm.value.persons,
-            "recipe": this.recipesForm.value.recipe,
-            "shop": this.shop,
-            "shopID": this.user,
-            "Date": new Date()
         };
         console.log(data);
-        this.fs.collection(this.shop).add(data).then(res => {
+        this.fs.collection('products').add(data).then(res => {
             this.restaurantForm.reset();
-            this.category = '';
+            this.mainCategoryId = '';
+            this.subCategoryId = '';
+            this.image = '';
             this.upload.presentToast('Recipes uploaded successful');
+            this.loading.dismiss();
         }).catch(err => {
             console.log(err);
+            this.loading.dismiss();
         });
     }
     addProduct() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             this.Toast('Uploading product...');
-            // alert(1);
             yield this.uploadTostorage(this.image);
-            // alert('shop => ' + this.shop);
             let data = {
-                "shop": this.shop,
-                "currentprice": this.productForm.value.currentprice,
-                "quantity": this.productForm.value.quantity,
-                "product": this.productForm.value.product,
-                "image": this.image,
-                "status": this.productForm.value.status,
-                "stock": this.productForm.value.stock,
-                "category": this.productForm.value.category,
-                "description": this.productForm.value.description,
+                "Date": new Date(),
                 "barcode": this.productForm.value.barcode,
-                "date": new Date()
+                "currentprice": this.productForm.value.currentprice,
+                "description": this.productForm.value.description,
+                "discount": this.productForm.value.discount,
+                "image": this.image,
+                "mainCategory": this.mainCategoryId,
+                "merchandID": this.user,
+                "productName": this.productForm.value.product,
+                "quantity": this.productForm.value.quantity,
+                "stock": this.productForm.value.stock,
+                "subCategory": this.subCategoryId,
+                "ingridients": '',
+                "persons": '',
             };
             console.log(data);
             this.fs.collection(this.shop).add(data).then(res => {
                 this.productForm.reset();
-                this.category = '';
+                this.mainCategoryId = '';
+                this.subCategoryId = '';
                 this.image = '';
                 this.upload.presentToast('Product uploaded successfully');
-                // alert(2)
                 this.loading.dismiss();
             }).catch(err => {
-                // alert(err);
                 this.loading.dismiss();
-                // alert(3)
             });
         });
     }
@@ -328,41 +355,40 @@ let ProductsPage = class ProductsPage {
     }
     createButtons() {
         const buttons = [];
-        console.log(this.categories.categories);
-        // tslint:disable-next-line: forin
-        for (let index in this.categories.categories) {
+        console.log("===LIST SUBCATEGORY===");
+        console.log(this.categories);
+        for (let index in this.subCategories) {
             const button = {
-                text: this.categories.categories[index],
-                // icon: this.Allcategories[index].icon,
+                text: this.subCategories[index].name,
                 handler: () => {
-                    console.log('button text ' + this.categories.categories[index]);
-                    this.value = this.categories.categories[index];
+                    console.log('button text: ' + this.subCategories[index].id);
+                    this.value = this.subCategories[index].name;
+                    this.subCategoryId = this.subCategories[index].id;
+                    this.mainCategoryId = this.subCategories[index].mainCategoryId;
                     return true;
                 }
             };
             buttons.push(button);
         }
-        const adbutton = {
-            text: 'Add New',
-            cssClass: 'asc',
-            handler: () => {
-                console.log('adding new');
-                this.categoryModal();
-            }
-        };
-        buttons.push(adbutton);
+        // const adbutton = {
+        //     text: 'Add New',
+        //     cssClass: 'asc',
+        //     handler: () => {
+        //         console.log('adding new');
+        //         // this.categoryModal();
+        //     }
+        // };
+        // buttons.push(adbutton);
         return buttons;
     }
-    categoryModal() {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            const modal = yield this.modal.create({
-                component: _category_category_page__WEBPACK_IMPORTED_MODULE_10__["CategoryPage"],
-                componentProps: { shopname: this.db.getshopname() }
-            });
-            localStorage.setItem('shop', this.db.getshopname());
-            yield modal.present();
-        });
-    }
+    // async categoryModal() {
+    //     const modal = await this.modal.create({
+    //         component: CategoryPage,
+    //         componentProps: { shopname: this.db.getshopname() }
+    //     });
+    //     localStorage.setItem('shop', this.db.getshopname());
+    //     await modal.present();
+    // }
     Toast(msg) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             this.loading = yield this.loader.create({
@@ -478,18 +504,18 @@ ProductsPage.ctorParameters = () => [
     { type: _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_7__["Camera"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["ModalController"] },
-    { type: _upload_upload_service__WEBPACK_IMPORTED_MODULE_11__["UploadService"] },
-    { type: _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_12__["File"] },
+    { type: _upload_upload_service__WEBPACK_IMPORTED_MODULE_10__["UploadService"] },
+    { type: _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_11__["File"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["LoadingController"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["LoadingController"] },
-    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_13__["Storage"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_12__["Storage"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
-    { type: _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_14__["WebView"] },
-    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_15__["AngularFirestore"] },
-    { type: _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_16__["ImagePicker"] },
-    { type: _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_17__["Crop"] },
-    { type: _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_18__["FileChooser"] },
-    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__["AngularFireStorage"] }
+    { type: _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_13__["WebView"] },
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_14__["AngularFirestore"] },
+    { type: _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_15__["ImagePicker"] },
+    { type: _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_16__["Crop"] },
+    { type: _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_17__["FileChooser"] },
+    { type: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_18__["AngularFireStorage"] }
 ];
 ProductsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -506,18 +532,18 @@ ProductsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_7__["Camera"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["ModalController"],
-        _upload_upload_service__WEBPACK_IMPORTED_MODULE_11__["UploadService"],
-        _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_12__["File"],
+        _upload_upload_service__WEBPACK_IMPORTED_MODULE_10__["UploadService"],
+        _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_11__["File"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["LoadingController"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["LoadingController"],
-        _ionic_storage__WEBPACK_IMPORTED_MODULE_13__["Storage"],
+        _ionic_storage__WEBPACK_IMPORTED_MODULE_12__["Storage"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
-        _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_14__["WebView"],
-        _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_15__["AngularFirestore"],
-        _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_16__["ImagePicker"],
-        _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_17__["Crop"],
-        _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_18__["FileChooser"],
-        _angular_fire_storage__WEBPACK_IMPORTED_MODULE_19__["AngularFireStorage"]])
+        _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_13__["WebView"],
+        _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_14__["AngularFirestore"],
+        _ionic_native_image_picker_ngx__WEBPACK_IMPORTED_MODULE_15__["ImagePicker"],
+        _ionic_native_crop_ngx__WEBPACK_IMPORTED_MODULE_16__["Crop"],
+        _ionic_native_file_chooser_ngx__WEBPACK_IMPORTED_MODULE_17__["FileChooser"],
+        _angular_fire_storage__WEBPACK_IMPORTED_MODULE_18__["AngularFireStorage"]])
 ], ProductsPage);
 
 

@@ -68,7 +68,7 @@ export class ProductmodalPage implements OnInit {
         console.log(this.product);
         this.view = true;
         // get categories 
-        this.service.getallcategories(this.shop).valueChanges().subscribe(res => {
+        this.service.getallcategories(this.shop).subscribe(res => {
             this.category = res;
         });
 
