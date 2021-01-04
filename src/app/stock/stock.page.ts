@@ -40,7 +40,7 @@ export class StockPage implements OnInit {
     ionViewDidEnter() {
         this.shopname = localStorage.getItem('shop');
         console.log(this.shopname);
-        this.service.getallcategories(this.shopname).valueChanges().subscribe(res => {
+        this.service.getallcategories(this.shopname).subscribe(res => {
             this.categories = res;
             this.show = true;
             console.log(this.categories);

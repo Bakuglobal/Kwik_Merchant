@@ -44,7 +44,6 @@ import { SettingsPageModule } from './settings/settings.module';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Firebase } from '@ionic-native/firebase/ngx';
-import { CategoryPageModule } from './category/category.module';
 import { WebView } from '@ionic-native/ionic-webview/ngx' ;
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
@@ -83,7 +82,6 @@ import { NotificationModelPageModule } from './notification-model/notification-m
     OrdersPageModule,
     ReactiveFormsModule,
     SettingsPageModule,
-    CategoryPageModule,
     OrderPreviewPageModule,
     ViewNotificationPageModule,
     ImageDisplayPageModule,

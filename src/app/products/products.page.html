@@ -13,7 +13,6 @@
         <div class="buttons">
             <ion-button expand="full" (click)="addNewProduct()">New Product</ion-button><br>
             <ion-button expand="full" (click)="existingProduct()">Existing Product</ion-button><br>
-            <ion-button expand="full" (click)="categoryModal()">New Category</ion-button>
         </div>
     </div>
 
@@ -28,15 +27,9 @@
         <ion-row no-padding text-center>
             <ion-col>
                 <ion-label style="font-size: 15px;" class="title">Choose category to filter</ion-label>
-                <!-- <ion-select placeholder="category" [(ngModel)]="category" (ionChange)="setFilteredItems()">
-                <ion-select-option style="font-size: 13px;" *ngFor="let item of categories.categories">{{item}}</ion-select-option>
-                </ion-select> -->
                 <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="pricetags" class="image"
                     color="primary"></ion-icon>
             </ion-col>
-            <!-- <ion-col size="4">
-                <ion-icon style="width: 20px; height: 20px; margin-right: 5px;" name="pricetags" class="image" color="primary"></ion-icon>
-            </ion-col> -->
         </ion-row>
         <ion-row>
             <ion-segment scrollable [(ngModel)]="category" (ionChange)="setFilteredItems()">
@@ -157,13 +150,17 @@
             <form (ngSubmit)="addRestaurant()" [formGroup]="restaurantForm" style="margin-right: 15px; margin-left: 15px;">
                 <ion-list no-padding>
                     <ion-item no-padding>
-                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="Meal"
+                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="productName"
                             placeholder="Enter meal name" required></ion-input>
+                    </ion-item>
+                    <ion-item no-padding>
+                        <ion-input style="font-size: 13px; color: #737373;" type="number" formControlName="discount"
+                            placeholder="Discount in percentage"></ion-input>
                     </ion-item>
                     <ion-item no-padding (click)="selectCategory()">
                         <ion-label style="font-size: 13px; color: #737373;">Select Category </ion-label>
                         <ion-input style="font-size: 13px; color: #737373; float: right; right: 0px;" no-padding
-                            placeholder="Select Category" required slot="end" formControlName="category" value="{{value}}">
+                            placeholder="Select Category" required slot="end" formControlName="subCategory" value="{{value}}">
                             <ion-icon style="width: 20px; height: 20px;" name="arrow-dropdown" color="medium"></ion-icon>
                         </ion-input>
                     </ion-item>
@@ -187,10 +184,19 @@
             </ion-buttons>
             <form (ngSubmit)="addRecipes()" [formGroup]="recipesForm" style="margin-right: 15px; margin-left: 15px;">
                 <ion-list no-padding>
+                    <ion-item no-padding>
+                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="productName"
+                            placeholder="Product Name">
+                        </ion-input>
+                    </ion-item>
+                    <ion-item no-padding>
+                        <ion-input style="font-size: 13px; color: #737373;" type="number" formControlName="discount"
+                            placeholder="Discount in percentage"></ion-input>
+                    </ion-item>
                     <ion-item no-padding (click)="selectCategory()">
                         <ion-label style="font-size: 13px; color: #737373;">Select Category </ion-label>
                         <ion-input style="font-size: 13px; color: #737373; float: right; right: 0px;" no-padding
-                            placeholder="Select Category" slot="end" formControlName="category" value="{{value}}">
+                            placeholder="Select Category" slot="end" formControlName="subCategory" value="{{value}}">
                             <ion-icon style="width: 20px; height: 20px;" name="arrow-dropdown" color="medium"></ion-icon>
                         </ion-input>
                     </ion-item>
@@ -216,11 +222,7 @@
                             placeholder="Persons">
                         </ion-input>
                     </ion-item>
-                    <ion-item no-padding>
-                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="recipe"
-                            placeholder="recipe">
-                        </ion-input>
-                    </ion-item>
+                    
 
                     <ion-button expand="full " type="submit" [disabled]="!recipesForm.valid"
                         style="margin-top: 50px; margin-bottom: 10px;">Save</ion-button>
@@ -237,8 +239,12 @@
             <form (ngSubmit)="addProduct()" [formGroup]="productForm" style="margin-right: 15px; margin-left: 15px;">
                 <ion-list no-padding>
                     <ion-item no-padding>
-                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="product"
+                        <ion-input style="font-size: 13px; color: #737373;" type="text" formControlName="productName"
                             placeholder="Enter Product name" required></ion-input>
+                    </ion-item>
+                    <ion-item no-padding>
+                        <ion-input style="font-size: 13px; color: #737373;" type="number" formControlName="discount"
+                            placeholder="Discount in percentage"></ion-input>
                     </ion-item>
                     <ion-item no-padding>
                         <ion-input style="font-size: 13px; color: #737373;" no-padding type="number"
@@ -250,7 +256,7 @@
                     <ion-item no-padding (click)="selectCategory()">
                         <ion-label style="font-size: 13px; color: #737373;">Select Category </ion-label>
                         <ion-input style="font-size: 13px; color: #737373; float: right; right: 0px;" no-padding
-                            placeholder="Select Category" required slot="end" formControlName="category" value="{{value}}">
+                            placeholder="Select Category" required slot="end" formControlName="subCategory" value="{{value}}">
                             <ion-icon style="width: 20px; height: 20px;" name="arrow-dropdown" color="medium"></ion-icon>
                         </ion-input>
                     </ion-item>
@@ -271,18 +277,7 @@
                         <ion-textarea rows="6" style="font-size: 13px; color: #737373;" formControlName="description"
                             placeholder="Enter Description"></ion-textarea>
                     </ion-item>
-                    <!-- <ion-item>
-                    <ion-label>Set product status </ion-label>
-                    <ion-select formControlName="status" slot="end" placeholder="Select">
-                        <ion-select-option selected>Available</ion-select-option>
-                        <ion-select-option>Unavailable</ion-select-option>
-                    </ion-select>
-                    <ion-toggle checked slot="end" formControlName="status"></ion-toggle>
-                    </ion-item> -->
                     <ion-item no-padding (click)="newProductUploadImage()">
-                        <!-- <div style="width: 100%; height: 50px;">
-                            <img src="{{image}}" alt="">
-                        </div> -->
                         <ion-label style="font-size: 13px; color: #737373;">Image:</ion-label>
                         <ion-input style="font-size: 13px; color: #737373;" formControlName="image" value="{{image}}"
                             readonly required></ion-input>

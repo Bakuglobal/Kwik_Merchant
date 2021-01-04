@@ -95,14 +95,6 @@ const routes: Routes = [
         path: 'productmodal', loadChildren: () => import('../productmodal/productmodal.module').then(m => m.ProductmodalPageModule), canActivate: [AuthService]
       },
       {
-        // tslint:disable-next-line: max-line-length
-        path: 'category' , loadChildren: () => import('../category/category.module').then(m => m.CategoryPageModule), canActivate: [AuthService]
-      },
-      {
-        // tslint:disable-next-line: max-line-length
-        path: 'remove', loadChildren: () => import('../remove-category/remove-category.module').then(m => m.RemoveCategoryPageModule), canActivate: [AuthService]
-      },
-      {
         path: '',
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full'

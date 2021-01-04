@@ -117,7 +117,7 @@ var StockPage = /** @class */ (function () {
         var _this = this;
         this.shopname = localStorage.getItem('shop');
         console.log(this.shopname);
-        this.service.getallcategories(this.shopname).valueChanges().subscribe(function (res) {
+        this.service.getallcategories(this.shopname).subscribe(function (res) {
             _this.categories = res;
             _this.show = true;
             console.log(_this.categories);

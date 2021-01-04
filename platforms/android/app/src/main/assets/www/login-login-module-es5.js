@@ -182,13 +182,12 @@ var LoginPage = /** @class */ (function () {
         var id = resp.user.uid;
         console.log('user id is----:' + id);
         localStorage.setItem('user', id);
-        this.loading.dismiss();
         this.ref.getUserDet(id);
-        var shopname = this.db.getshopname();
-        this.notice.sendTokenToFirebase(shopname);
+        this.notice.sendTokenToFirebase();
         this.service.hiddenTabs = false;
         this.menuCtrl.enable(true);
         this.navCtrl.navigate(['tabs/dashboard']);
+        this.loading.dismiss();
     };
     // Loader
     LoginPage.prototype.presentLoading = function () {

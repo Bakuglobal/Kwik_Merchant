@@ -8,7 +8,6 @@ import { DatabaseService } from '../database.service';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActionSheetController, ModalController, ToastController, LoadingController } from '@ionic/angular';
-import { CategoryPage } from '../category/category.page';
 import { UploadService } from '../upload/upload.service';
 import { File } from '@ionic-native/file/ngx';
 import { Storage } from '@ionic/storage';
@@ -37,10 +36,13 @@ export class ProductsPage implements OnInit {
     restaurantForm: FormGroup;
     recipesForm: FormGroup;
     value = '';
+    subCategoryId;
+    mainCategoryId;
     scannedcode = '';
     image = '';
     images = [];
     categories;
+    subCategories;
     products;
     unfilteredProducts;
     shop;
@@ -78,36 +80,46 @@ export class ProductsPage implements OnInit {
         this.service.hiddenTabs = true;
         this.date = new Date();
         this.productForm = formBuilder.group({
-            product: ['', Validators.required],
+            productName: ['', Validators.required],
+            discount: [''],
             barcode: [this.scannedcode],
-            category: [this.value, Validators.required],
+            subCategory: [this.value, Validators.required],
             stock: ['', Validators.required],
             quantity: ['', Validators.required],
             currentprice: ['', Validators.required],
             description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
-            status: ['Available'],
             image: [this.image, Validators.required]
         });
 
         
         this.restaurantForm = formBuilder.group({
-            Meal: ['', Validators.required],
-            category: [this.value, Validators.required],
+            productName: ['', Validators.required],
+            discount: [''],
+            subCategory: [this.value, Validators.required],
             currentprice: ['', Validators.required],
         });
 
         this.recipesForm = formBuilder.group({
-            category: [this.value, Validators.required],
+            productName: ['', Validators.required],
+            discount: [''],
+            subCategory: [this.value, Validators.required],
             currentprice: ['', Validators.required],
             image: ['', Validators.required],
             ingridients: ['', Validators.required],
             persons: ['', Validators.required],
-            recipe: ['', Validators.required],
         });
         this.shop = localStorage.getItem('shop');
         this.user = localStorage.getItem('user');
-        this.service.getallcategories(this.shop).valueChanges().subscribe(res => {
+        this.service.getallcategories(localStorage.getItem('type')).subscribe(res => {
+            let categoryId = res[0].id;
+            this.service.getSubcategory(categoryId).subscribe(returnData=> {
+                this.subCategories = returnData;
+                console.log("====SUBCATEGORY=====");
+                console.log(this.subCategories);
+            })
             this.categories = res;
+            console.log("=====CATEGORY=====");
+            console.log(this.categories);
         })
         this.getproducts();
     }
@@ -167,85 +179,106 @@ export class ProductsPage implements OnInit {
 
     addRestaurant() {
         this.Toast('uploading...');
-        let data: Restaurant = {
-            "Restaurant": this.shop,
-            "Meal": this.restaurantForm.value.Meal,
-            "category": this.restaurantForm.value.category,
+        let data = {
+            "Date": new Date(),
+            "barcode": '',
             "currentprice": this.restaurantForm.value.currentprice,
-            "shopID": this.user,
-            "date": new Date()
+            "description": '',
+            "discount": this.restaurantForm.value.discount,
+            'images': [],
+            "mainCategory": this.mainCategoryId,
+            "merchandID": this.user,
+            "productName": this.restaurantForm.value.productName,
+            "quantity": '',
+            "stock": '',
+            "subCategory": this.subCategoryId,
+            "ingridients": '',
+            "persons": '',
         }
         console.log(data);
-        this.fs.collection(this.shop).add(data).then(res => {
+        this.fs.collection('products').add(data).then(res => {
             this.restaurantForm.reset();
-            this.category = '';
+            this.mainCategoryId = '';
+            this.subCategoryId = '';
             this.upload.presentToast('Meal uploaded successful');
+            this.loading.dismiss();
         }).catch(err => {
+            this.loading.dismiss();
             console.log(err);
         })
     }
 
     addRecipes() {
         this.Toast('uploading...');
-        let data: Recipes = {
-            "category": this.recipesForm.value.category,
+        let data = {
+            "Date": new Date(),
+            "barcode": '',
             "currentprice": this.recipesForm.value.currentprice,
+            "description": '',
+            "discount": this.recipesForm.value.discount,
             "image": this.recipesForm.value.image,
+            "mainCategory": this.mainCategoryId,
+            "merchandID": this.user,
+            "productName": this.recipesForm.value.recipe,
+            "quantity": '',
+            "stock": '',
+            "subCategory": this.subCategoryId,
             "ingridients": this.recipesForm.value.ingridients,
             "persons": this.recipesForm.value.persons,
-            "recipe": this.recipesForm.value.recipe,
-            "shop": this.shop,
-            "shopID": this.user,
-            "Date": new Date()
         }
         console.log(data);
-        this.fs.collection(this.shop).add(data).then(res => {
+        this.fs.collection('products').add(data).then(res => {
             this.restaurantForm.reset();
-            this.category = '';
+            this.mainCategoryId = '';
+            this.subCategoryId = '';
+            this.image = '';
             this.upload.presentToast('Recipes uploaded successful');
+            this.loading.dismiss();
         }).catch(err => {
             console.log(err);
+            this.loading.dismiss();
         })
     }
 
     async addProduct() {
         this.Toast('Uploading product...');
-        // alert(1);
        await  this.uploadTostorage(this.image);
-        // alert('shop => ' + this.shop);
-        let data: Product = {
-            "shop": this.shop,
-            "currentprice": this.productForm.value.currentprice,
-            "quantity": this.productForm.value.quantity,
-            "product": this.productForm.value.product,
-            "image": this.image,
-            "status": this.productForm.value.status,
-            "stock": this.productForm.value.stock,
-            "category": this.productForm.value.category,
-            "description": this.productForm.value.description,
+        let data = {
+            "Date": new Date(),
             "barcode": this.productForm.value.barcode,
-            "date": new Date()
+            "currentprice": this.productForm.value.currentprice,
+            "description": this.productForm.value.description,
+            "discount": this.productForm.value.discount,
+            "image": this.image,
+            "mainCategory": this.mainCategoryId,
+            "merchandID": this.user,
+            "productName": this.productForm.value.product,
+            "quantity": this.productForm.value.quantity,
+            "stock": this.productForm.value.stock,
+            "subCategory": this.subCategoryId,
+            "ingridients": '',
+            "persons": '',
         }
         console.log(data);
         this.fs.collection(this.shop).add(data).then(res => {
             this.productForm.reset();
-            this.category = '';
+            this.mainCategoryId = '';
+            this.subCategoryId = '';
             this.image = '';
             this.upload.presentToast('Product uploaded successfully');
-            // alert(2)
              this.loading.dismiss();
         }).catch(err => {
-            // alert(err);
             this.loading.dismiss();
-            // alert(3)
         })
     }
+
     scan() {
         this.scannner.scan().then(code => {
             if (code.cancelled) { return; }
             this.scannedcode = code.text;
         });
     }
+
     async selectCategory() {
         const actionSheet = await this.asc.create({
             header: 'Categories',
@@ -257,40 +290,42 @@ export class ProductsPage implements OnInit {
 
     createButtons() {
         const buttons = [];
-        console.log(this.categories.categories)
-        // tslint:disable-next-line: forin
-        for (let index in this.categories.categories) {
+        console.log("===LIST SUBCATEGORY===");
+        console.log(this.categories);
+        
+        for (let index in this.subCategories) {
             const button = {
-                text: this.categories.categories[index],
-                // icon: this.Allcategories[index].icon,
+                text: this.subCategories[index].name,
                 handler: () => {
-                    console.log('button text ' + this.categories.categories[index]);
-                    this.value = this.categories.categories[index];
+                    console.log('button text: ' + this.subCategories[index].id);
+                    this.value = this.subCategories[index].name;
+                    this.subCategoryId = this.subCategories[index].id;
+                    this.mainCategoryId = this.subCategories[index].mainCategoryId;
                     return true;
                 }
             };
             buttons.push(button);
         }
-        const adbutton = {
-            text: 'Add New',
-            cssClass: 'asc',
-            handler: () => {
-                console.log('adding new');
-                this.categoryModal();
-            }
-        };
-        buttons.push(adbutton);
+        // const adbutton = {
+        //     text: 'Add New',
+        //     cssClass: 'asc',
+        //     handler: () => {
+        //         console.log('adding new');
+        //         // this.categoryModal();
+        //     }
+        // };
+        // buttons.push(adbutton);
         return buttons;
     }
 
-    async categoryModal() {
-        const modal = await this.modal.create({
-            component: CategoryPage,
-            componentProps: { shopname: this.db.getshopname() }
-        });
-        localStorage.setItem('shop', this.db.getshopname());
-        await modal.present();
-    }
+    // async categoryModal() {
+    //     const modal = await this.modal.create({
+    //         component: CategoryPage,
+    //         componentProps: { shopname: this.db.getshopname() }
+    //     });
+    //     localStorage.setItem('shop', this.db.getshopname());
+    //     await modal.present();
+    // }
 
     async Toast(msg) {
         this.loading = await this.loader.create({
