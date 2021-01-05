@@ -94,12 +94,12 @@ export class SignupPage implements OnInit {
       address: this.formBuilder.array([this.newAddrGroup()]),
 
       type: ['', Validators.compose([Validators.required])],
-      kraPin: ['', Validators.compose([Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9_-]*$/), Validators.required])],
+      kraPin: ['', Validators.compose([Validators.maxLength(20), Validators.pattern(/^[a-zA-Z0-9_-]*$/)])],
       businessPermitNumber: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[0-9 ]*')])],
       Open: ['', Validators.compose([Validators.required])],
       Close: ['', Validators.compose([Validators.required])],
-      Website: ['', Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.required])],
+      Website: ['',],
+      description: ['',],
       sameDayDelivery: [''],
       nextDayDelivery: [''],
       daysDelivery: [''],
@@ -114,20 +114,20 @@ export class SignupPage implements OnInit {
       bankName: ['', Validators.compose([Validators.maxLength(100)])],
       bankCode: ['', Validators.compose([Validators.maxLength(4), Validators.pattern('[0-9 ]*')])],
       bankBranch: ['', Validators.compose([Validators.maxLength(100)])],
-      mpesaRegisteredName: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
-      mpesaNumber: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[0-9 ]*'), Validators.required])],
-      mpesaTillRegisteredName: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+      mpesaRegisteredName: ['', Validators.compose([Validators.maxLength(100),])],
+      mpesaNumber: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[0-9 ]*'),])],
+      mpesaTillRegisteredName: ['', Validators.compose([Validators.maxLength(100),])],
       mpesaTillNumber: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[0-9 ]*')])],
-      mpesaPaybillRegisteredName: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+      mpesaPaybillRegisteredName: ['', Validators.compose([Validators.maxLength(100),])],
       mpesaPaybillNumber: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[0-9 ]*')])]
     })
 
 
     // know Your CustomerForm
     this.knowYourCustomerForm = this.formBuilder.group({
-      nationalIdOrPassportNumber: ['', Validators.required],
-      frontImage: ['', Validators.required],
-      backImage: ['', Validators.required]
+      nationalIdOrPassportNumber: ['',],
+      frontImage: ['',],
+      backImage: ['',]
     })
 
 
@@ -146,11 +146,11 @@ export class SignupPage implements OnInit {
   }
   newAddrGroup() {
     return this.formBuilder.group({
-      Primary: [false, Validators.compose([Validators.maxLength(100), Validators.required])],
-      address1: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+      Primary: [false, Validators.compose([Validators.maxLength(100),])],
+      address1: ['', Validators.compose([Validators.maxLength(100),])],
       postalCode: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[0-9 ]*')])],
-      cityOrTown: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
-      country: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+      cityOrTown: ['', Validators.compose([Validators.maxLength(100),])],
+      country: ['', Validators.compose([Validators.maxLength(100),])],
     })
   }
   get altInput() {
