@@ -84,7 +84,7 @@ export class ProductsPage implements OnInit {
             stock: ['', Validators.required],
             quantity: ['', Validators.required],
             currentprice: ['', Validators.required],
-            description: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])],
+            description: [''],
             status: ['Available'],
             image: [this.image, Validators.required]
         });
