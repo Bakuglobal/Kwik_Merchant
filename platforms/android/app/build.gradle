@@ -98,11 +98,11 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../phonegap-plugin-barcodescanner/merchant-barcodescanner.gradle"
+apply from: "../cordova-plugin-badge/merchant-badge.gradle"
 apply from: "../cordova-plugin-fcm-with-dependecy-updated/merchant-FCMPlugin.gradle"
 apply from: "../cordova-plugin-telerik-imagepicker/merchant-ignorelinterrors.gradle"
 apply from: "../cordova-plugin-telerik-imagepicker/merchant-androidtarget.gradle"
-apply from: "../cordova-plugin-badge/merchant-badge.gradle"
+apply from: "../phonegap-plugin-barcodescanner/merchant-barcodescanner.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -299,11 +299,11 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "com.soundcloud.android:android-crop:1.0.0@aar"
     implementation "com.google.firebase:firebase-core:16.0.9"
     implementation "com.google.firebase:firebase-messaging:18.0.0"
+    implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation "com.soundcloud.android:android-crop:1.0.0@aar"
     // SUB-PROJECT DEPENDENCIES END
 }
 
