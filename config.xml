@@ -24,7 +24,6 @@
     <preference name="AutohideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="30000" />
-    <preference name="resizeOnFullScreen" value="true" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
             <activity android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />

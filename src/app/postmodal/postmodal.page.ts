@@ -141,12 +141,12 @@ export class PostmodalPage implements OnInit {
         if (value == 'image') {
             //pick images
             const options: CameraOptions = {
-                quality: 100,
+                quality: 75,
                 destinationType: this.camera.DestinationType.DATA_URL,
                 sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-                encodingType: this.camera.EncodingType.JPEG,
+                // encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetHeight: 100,
+                targetHeight: 400,
                 allowEdit: true
             }
             this.camera.getPicture(options).then((image) => {

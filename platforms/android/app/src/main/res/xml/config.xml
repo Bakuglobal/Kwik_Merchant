@@ -143,5 +143,4 @@
     <preference name="AutohideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="loadUrlTimeoutValue" value="30000" />
-    <preference name="resizeOnFullScreen" value="true" />
 </widget>
